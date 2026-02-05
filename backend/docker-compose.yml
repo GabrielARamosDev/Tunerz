@@ -1,0 +1,70 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: tunerz_php
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+    depends_on:
+      - mysql
+    networks:
+      - tunerz
+
+  # api:
+  #   env_file:
+  #     - .env
+
+  nginx:
+    image: nginx:alpine
+    container_name: tunerz_nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - tunerz
+
+  mysql:
+    image: mysql:8.0
+    container_name: tunerz_mysql
+    env_file:
+      - .env
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - tunerz
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: tunerz_phpmyadmin
+    env_file:
+      - .env
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - tunerz
+
+networks:
+  tunerz:
+
+volumes:
+  mysql_data:
