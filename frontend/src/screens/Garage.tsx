@@ -11,9 +11,7 @@ export default function Garage() {
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("Carregando Garagem...");
 
-  const { vehicles: garageVehicles, addVehicle, removeVehicle } = useGarage();
-  
-  const [vehicles, setVehicles] = useState([]);
+  const { vehicles, addVehicle, removeVehicle } = useGarage();
 
   /* * */
 
@@ -24,22 +22,11 @@ export default function Garage() {
       });
   }, []);
 
-  useEffect(() => {
-    api.get("/vehicles")
-      .then(response => {
-        setVehicles(response.data);
-      })
-      .catch(err => {
-        console.error("Erro ao buscar veículos", err);
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
   /* * */
 
   const handleAddVehicle = () => {
-    const newVehicle = { id: Date.now(), model: "Astra", year: 2020 };
-    addVehicle(newVehicle);
+    // const newVehicle = { id: Date.now(), model: "Astra", year: 2020 };
+    // addVehicle(newVehicle);
   };
 
   /* * */
