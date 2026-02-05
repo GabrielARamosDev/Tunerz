@@ -1,9 +1,10 @@
 
 export interface Engine {
-    code?: string;
-    cylinderCapacity?: number;
-    compressionRate?: number;
-    factoryPower?: number;
-    stockTurboLimit?: number;
-    valves?: number;
+    id: number;
+    code: string;
+    cylinderCapacity: number;
+    compressionRate: number;
+    factoryPower: number;
+    stockTurboLimit: number;
+    valves: number;
 }

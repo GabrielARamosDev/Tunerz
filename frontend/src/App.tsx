@@ -1,34 +1,34 @@
 
-import { useState } from "react";
+import './App.css';
 
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import './App.css'
-
-import { vehicles } from "./data/vehicles.ts";
-import { avaliarTurbo } from "./logic/compatibility";
+import { GarageProvider } from "./contexts/GarageContext";
+import Garage from "./screens/Garage";
+import { StageProvider } from "./contexts/StageContext.tsx";
+import Stages from "./screens/Stages";
 
 export default function App() {
-
-  const [pressao, setPressao] = useState(0.5);
-  
-  const vehicle = vehicles[0];
-  const resultado = avaliarTurbo(vehicle.engine, pressao);
-
   return (
-    <div style={{ padding: 20 }}>
-      <h2>{vehicle.model}</h2>
-      <label>Pressão do turbo (bar):</label>
-      <input
-        type="number"
-        step="0.1"
-        value={pressao}
-        onChange={(e) => setPressao(Number(e.target.value))}
-      />
-
-      <p><strong>Status:</strong> {resultado.status}</p>
-      <p><strong>Aviso:</strong> {resultado.aviso}</p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route 
+          path="/" 
+          element={
+            <GarageProvider>
+              <Garage />
+            </GarageProvider>
+          }
+        />
+        {/* <Route 
+          path="/stages" 
+          element={
+            <StageProvider>
+              <Stages />
+            </StageProvider>
+          } 
+        /> */}
+      </Routes>
+    </BrowserRouter>
   );
 }

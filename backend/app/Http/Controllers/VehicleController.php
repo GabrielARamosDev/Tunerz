@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Models\Vehicle;
 
 class VehicleController extends Controller
-{
+{    
     public function index()
     {
         $vehicles = Vehicle::all();
@@ -16,5 +18,24 @@ class VehicleController extends Controller
     {
         $vehicle = Vehicle::findOrFail($id);
         return response()->json($vehicle);
+    }
+
+    public function store(Request $request)
+    {
+        $vehicle = Vehicle::create($request->all());
+        return response()->json($vehicle, 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $vehicle = Vehicle::findOrFail($id);
+        $vehicle->update($request->all());
+        return response()->json($vehicle);
+    }
+
+    public function destroy($id)
+    {
+        Vehicle::destroy($id);
+        return response()->json(null, 204);
     }
 }
