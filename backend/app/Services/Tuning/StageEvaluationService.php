@@ -2,7 +2,8 @@
 
 namespace App\Services\Tuning;
 
-use App\Models\Stage;
+use App\Models\EngineStage;
+
 use App\Services\Tuning\Rules\BoostRule;
 use App\Services\Tuning\Rules\CompressionRule;
 use App\Services\Tuning\StageEvaluationResult;
@@ -19,7 +20,7 @@ class StageEvaluationService
         ];
     }
 
-    public function evaluate(Stage $stage): StageEvaluationResult
+    public function evaluate(EngineStage $stage): StageEvaluationResult
     {
         $engine = $stage->vehicle->engine;
 

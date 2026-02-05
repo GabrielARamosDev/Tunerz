@@ -6,20 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\StageResource;
 use App\Services\Tuning\StageEvaluationService;
 
-use App\Models\Stage;
+use App\Models\EngineStage;
 
 class StageController extends Controller
 {
     public function byVehicle($id)
     {
-        return Stage::where('vehicle_id', $id)
+        return EngineStage::where('vehicle_id', $id)
             ->with(['requirements','warnings'])
             ->get();
     }
 
     public function show($id, StageEvaluationService $service)
     {
-        $stage = Stage::with('vehicle.engine')->findOrFail($id);
+        $stage = EngineStage::with('vehicle.engine')->findOrFail($id);
 
         $evaluation = $service->evaluate($stage);
 
@@ -34,7 +34,7 @@ class StageController extends Controller
     public function resourceByVehicle($id)
     {
         return StageResource::collection(
-            Stage::where('vehicle_id', $id)
+            EngineStage::where('vehicle_id', $id)
             ->with(['requirements','warnings'])
             ->get()
         );
