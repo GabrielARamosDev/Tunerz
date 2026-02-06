@@ -1,15 +1,15 @@
 
-import api from "../services/api";
+import api from "../../services/api";
 
 import { useEffect, useState } from "react";
 
-import { useStage } from "../contexts/StageContext";
+import { useStage } from "../../contexts/StageContext";
 
-import type { Stage, StageContextType } from "../types/stage";
-import type { Vehicle } from "../types/vehicle";
-import type { Engine } from "../types/engine";
+import type { Stage, StageContextType } from "../../types/stage";
+import type { Vehicle } from "../../types/vehicle";
+import type { Engine } from "../../types/engine";
 
-export default function Stages({ vehicleId }: { vehicleId: number }) {
+const Stages = ({ vehicleId }: { vehicleId: number }) => {
 
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("Carregando Estágios...");
@@ -88,3 +88,5 @@ export default function Stages({ vehicleId }: { vehicleId: number }) {
     </div>
   );
 }
+
+export default Stages;
