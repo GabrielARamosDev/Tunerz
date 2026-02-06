@@ -32,8 +32,8 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         api.get("/vehicles")
             .then((response) => {
-                setVehicles(response.data);
                 setStatus("Garagem carregada com sucesso.");
+                setVehicles(response.data);
                 setFetched(true);
             })
             .catch(() => {
@@ -47,9 +47,26 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
     /* * */
 
     const fetchVehicles = async () => {
-        const response = await fetch("/api/vehicles");
-        const data = await response.json();
-        setVehicles(data);
+
+        setFetched(false);
+        setLoading(true);
+
+        setStatus("Atualizando garagem...");
+
+        api.get("/vehicles")
+            .then((response) => {
+                setStatus("Garagem atualizada.");
+                setFetched(true);
+                setLoading(false);
+        
+                setVehicles(response.data);
+            })
+            .catch(() => {
+                setStatus("Erro ao atualizar a garagem.");
+                setLoading(false);
+            });
+
+        return;
     };
 
     const addVehicle = (vehicle: Vehicle) => {
@@ -73,6 +90,8 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
                 alert("Erro ao remover veículo");
             });
     };
+
+    /* * */
 
     return (
         <GarageContext.Provider 
