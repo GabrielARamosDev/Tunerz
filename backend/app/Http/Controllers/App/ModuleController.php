@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
+
+use App\Http\Controllers\CrudController;
 
 use App\Models\Module;
 
-class ModuleController extends Controller
+class ModuleController extends CrudController
 {
     public function byVehicle($vehicleId)
     {

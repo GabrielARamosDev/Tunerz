@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
+
+use App\Http\Controllers\CrudController;
 
 use Illuminate\Http\Request;
 
 use App\Models\Vehicle;
 
-class VehicleController extends Controller
+class VehicleController extends CrudController
 {    
-    public function index()
+    public function index(Request $request)
     {
         $vehicles = Vehicle::with(['engines.stages', 'engines.specs'])->get();
         return response()->json($vehicles);
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $vehicle = Vehicle::with(['engines.stages', 'engines.specs'])->findOrFail($id);
         return response()->json($vehicle);

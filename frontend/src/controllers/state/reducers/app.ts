@@ -1,9 +1,12 @@
+
+import type { State as StateType, StateAction } from "../../../types/state";
+
 const INITIAL_STATE = {
     loaded: false,
     user: null,
 };
 
-export default (state = INITIAL_STATE, action) => {
+export default (state: StateType = INITIAL_STATE, action: StateAction) => {
     switch (action.type) {
         case 'APP_LOADED':
             return {

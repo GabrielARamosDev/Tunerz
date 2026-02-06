@@ -24,6 +24,7 @@ class _main {
   #currentUser;
 
   constructor() {
+    
     this.#auth = auth;
     this.#dialog = dialog;
     this.#notifications = notifications;

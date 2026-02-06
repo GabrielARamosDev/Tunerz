@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import PropTypes from 'prop-types';
 
-// import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
@@ -11,10 +12,12 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import notificationController from '../../controllers/notifications';
 
-import { connect } from 'react-redux';
+import type { State as StateType } from '../../types/state';
+import type { Notification as NotificationType } from '../../types/notification';
 
-const NotificationBar = ({ notifications }) => {
-    const [messageInfo, setMessageInfo] = React.useState(undefined);
+const NotificationBar = ({ notifications }: NotificationType) => {
+
+    const [messageInfo, setMessageInfo]: [any, any] = React.useState(undefined);
 
     React.useEffect(() => {
         if (notifications.length) {
@@ -22,7 +25,7 @@ const NotificationBar = ({ notifications }) => {
         }
     }, [notifications]);
 
-    const handleClose = (_event, reason) => {
+    const handleClose = (_event: any, reason: string) => {
         if (reason === 'clickaway' || !notifications.length) {
             return;
         }
@@ -74,7 +77,7 @@ NotificationBar.propTypes = {
     })),
 };
 
-const mapStateToProps = (state) => ({ notifications: state.notifications.items });
+const mapStateToProps = (state: StateType) => ({ notifications: state.notifications.items });
 
 export default connect(mapStateToProps)(NotificationBar);
 

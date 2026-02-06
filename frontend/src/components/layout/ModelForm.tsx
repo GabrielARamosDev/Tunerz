@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormInput from '../../components/inputs/FormInput';
+import FormInput from '../inputs/FormInput';
 import FormSubmitButton from './FormSubmitButton';
 
 import Stack from '@mui/material/Stack';

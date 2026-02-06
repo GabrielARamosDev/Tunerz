@@ -29,13 +29,14 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
 import Loading from '../loading.tsx';
-import Footer from './Footer';
-import NotificationBar from '../dialog/NotificationBar';
-import DialogBar from '../dialog/DialogBar';
 
-import useWindowWidth from '../../hooks/useWindowWidth';
-import useWindowHeight from '../../hooks/useWindowHeight';
-import useFooterConfig from '../../hooks/useFooterConfig';
+import NotificationBar from '../dialog/NotificationBar.tsx';
+import DialogBar from '../dialog/DialogBar.tsx';
+import Footer from './Footer';
+
+import useWindowWidth from '../../hooks/useWindowWidth.ts';
+import useWindowHeight from '../../hooks/useWindowHeight.ts';
+import useFooterConfig from '../../hooks/useFooterConfig.ts';
 
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -43,28 +44,34 @@ import MenuIcon from '@mui/icons-material/Menu';
 import dialog from '../../controllers/dialog';
 import auth from '../../controllers/auth';
 
+import type { Layout as LayoutType } from '../../types/layout.ts';
+import type { State as StateType } from '../../types/state.ts';
+import type { Theme as ThemeType } from '../../types/style.ts';
+
 const NAV_BAR_WIDTH = 300;
 const NAV_BAR_WIDTH_MOBILE = 250;
 
 const APP_BAR_HEIGHT = 64;
 const APP_BAR_HEIGHT_MOBILE = 56;
 
-const Layout = ({ currentPage }) => {
+const Layout = ({ currentPage }: LayoutType) => {
+    
     /* =========================== State ============================ */
-    const userName = useSelector((state) => state.app.user?.name);
-    const filters = useSelector((state) => {
-        const temp = {};
+    const userName = useSelector((state: StateType) => state.app.user?.name);
 
-        currentPage.filters.forEach((filter) => {
+    const filters = useSelector((state: StateType) => {
+
+        const temp: any = {};
+
+        currentPage.filters.forEach((filter: any) => {
             temp[filter] = state.filter[filter];
         });
 
         return temp;
     });
-    // console.log('filters: ', filters);
     /* ============================================================== */
 
-    const theme = useTheme();
+    const theme: ThemeType = useTheme();
 
     const isTablet = useMediaQuery({ query: '(min-width: 768px)' });
     const windowWidth = useWindowWidth();
@@ -81,13 +88,9 @@ const Layout = ({ currentPage }) => {
     const navBarWidth = isTablet ? NAV_BAR_WIDTH : NAV_BAR_WIDTH_MOBILE;
     const appBarHeight = isTablet ? APP_BAR_HEIGHT : APP_BAR_HEIGHT_MOBILE;
 
-    if (!userName) {
-        return (
-            <Loading />
-        );
-    }
+    /* * */
 
-    const toggleDrawer = (open) => (event) => {
+    const toggleDrawer = (open: boolean) => (event: any) => {
         if (
             event.type === 'keydown'
             && (event.key === 'Tab'
@@ -97,8 +100,7 @@ const Layout = ({ currentPage }) => {
         }
 
         setDrawerOpen(open);
-    }
-        ;
+    };
 
     const handleLogout = () => {
         const dialogOptions = {
@@ -155,8 +157,12 @@ const Layout = ({ currentPage }) => {
         );
     };
 
+    /* * */
+
+    if (!userName) return <Loading />
+
     return (
-        <React.Fragment>
+        <>
             <Stack>
                 <Stack
                     direction="row"
@@ -218,6 +224,7 @@ const Layout = ({ currentPage }) => {
                                             onClose={toggleDrawer(false)}
                                         >
                                             <NavMenu
+                                                width="100%"
                                                 toggleDrawer={toggleDrawer}
                                                 isTablet={isTablet}
                                             />
@@ -227,24 +234,14 @@ const Layout = ({ currentPage }) => {
 
                                 {renderPageTitle()}
 
-                                <Typography
-                                    variant="h6"
-                                    component="div"
-                                    sx={{ flexGrow: 1 }}
-                                >
-                                    {/* ANY HEADER TEXT */}
-                                </Typography>
-
                                 {/* Pop-up user menu */}
                                 <Button
                                     id="popMenu-btn"
                                     variant="avatar"
-                                    // color="inherit"
-                                    aria-controls={open ? 'popMenu' : undefined}
+                                    aria-controls={drawerOpen ? 'popMenu' : undefined}
                                     aria-haspopup="true"
-                                    aria-expanded={open ? 'true' : undefined}
-                                    onClick={(e) => setPopAnchorEl(e.currentTarget)}
-                                // sx={{ height: '52.5px' }}
+                                    aria-expanded={drawerOpen ? 'true' : undefined}
+                                    onClick={(e: any) => setPopAnchorEl(e.currentTarget)}
                                 >
                                     <Avatar
                                         alt={userName}
@@ -253,15 +250,8 @@ const Layout = ({ currentPage }) => {
                                     >
                                         {/* {userName?.charAt(0)} */}
                                     </Avatar>
-
-                                    {/* <Box display="flex" sx={{ height: '100%', alignItems: 'center', justifyContent: 'center' }} >
-                                        <Typography variant="body3" sx={{ margin: 'auto' }} >
-                                            {userName.split(' ')[0]}
-                                        </Typography>
-
-                                        <ExpandMoreIcon />
-                                    </Box> */}
                                 </Button>
+
                                 <Menu
                                     id="popMenu"
                                     anchorEl={popAnchorEl}
@@ -286,7 +276,6 @@ const Layout = ({ currentPage }) => {
                         <Box
                             sx={{
                                 height: windowHeight - appBarHeight - footerBarHeight,
-                                // p: (theme) => theme.spacing(3),
                                 p: '24px 31px',
                                 overflowY: 'auto',
                                 flexGrow: 1,
@@ -303,12 +292,12 @@ const Layout = ({ currentPage }) => {
             <NotificationBar />
             <DialogBar />
 
-        </React.Fragment>
+        </>
     );
 };
 
 Layout.propTypes = { currentPage: PropTypes.object.isRequired };
 
-const mapStateToProps = (state) => ({ currentPage: state.currentPage });
+const mapStateToProps = (state: StateType) => ({ currentPage: state.currentPage });
 
 export default connect(mapStateToProps)(Layout);

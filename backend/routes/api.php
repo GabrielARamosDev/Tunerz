@@ -3,9 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\VehicleController;
-use App\Http\Controllers\ModuleController;
-use App\Http\Controllers\StageController;
+use App\Http\Controllers\App\UserController;
+use App\Http\Controllers\App\VehicleController;
+use App\Http\Controllers\App\ModuleController;
+use App\Http\Controllers\App\StageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,16 +27,54 @@ Route::get('/ping', function () {
 
 /* * */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'middleware' => [ 'auth:sanctum' ],
+    'namespace' => 'App',
+    'prefix' => 'app',
+], function () {
+
+    // Route::get('/user', function (Request $request) {
+    //     return $request->user();
+    // });
+
+    Route::get('/me', [UserController::class, 'me']);
+
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
+
+    Route::get('/vehicles', [VehicleController::class, 'index']);
+    Route::get('/vehicles/{id}', [VehicleController::class, 'show']);
+
+    Route::get('/vehicles/{id}/stages', [StageController::class, 'byVehicle']);
+    Route::get('/stages/{id}', [StageController::class, 'show']);
+
+    Route::get('/vehicles/{id}/modules', [ModuleController::class, 'byVehicle']);
+
+});
+
+Route::group([
+    'middleware' => [
+        'auth:api', 
+        'role:admin', 
+    ],
+    'namespace' => 'App',
+    'prefix' => 'app',
+], function () {
+    
+
+
 });
 
 /* * */
 
-Route::get('/vehicles', [VehicleController::class, 'index']);
-Route::get('/vehicles/{id}', [VehicleController::class, 'show']);
-
-Route::get('/vehicles/{id}/modules', [ModuleController::class, 'byVehicle']);
-
-Route::get('/vehicles/{id}/stages', [StageController::class, 'byVehicle']);
-Route::get('/stages/{id}', [StageController::class, 'show']);
+// Route::prefix('v2')->group(function () {
+//     Route::group([
+//         // 'middleware' => ['auth:api', 'role:wp'],
+//         // 'namespace' => 'App\Http\Controllers\Widgets',
+//         'prefix' => 'scout',
+//     ], function () {
+//         // Widgets
+//         Route::get('/widgets', 'WidgetControllerV2@getAll'); // listar todos
+//         Route::get('/widgets/{widgetName}', 'WidgetControllerV2@makeWidget'); // Gerar uma url para cada tipo de widget
+//     });
+// });

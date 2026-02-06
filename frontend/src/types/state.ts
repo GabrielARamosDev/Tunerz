@@ -1,6 +1,9 @@
 
 export interface State {
-    id: number;
-    name: string;
-    country: string;
+    [key: string]: any;
+}
+
+export interface StateAction {
+    type: string,
+    payload: any,
 }

@@ -18,3 +18,11 @@ declare module '@mui/material/Typography' {
     'tableCell-3': true;
   }
 }
+
+import '@mui/material/Button';
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {
+    'avatar': true;
+  }
+}

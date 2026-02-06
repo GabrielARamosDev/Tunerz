@@ -1,13 +1,23 @@
-import React from 'react';
+/* eslint-disable-next-line react-hooks/exhaustive-deps */
 
 import axios from 'axios';
-// import state from '../controllers/state';
-// import { useParams } from 'react-router-dom';
-
-import notifications from '../controllers/notifications';
 import objectHash from 'object-hash';
 
-export default (options, dependencies = []) => {
+import React from 'react';
+
+import notifications from '../controllers/notifications';
+
+import type { BaseModel } from '../types/basemodel';
+
+interface Options {
+    model: BaseModel;
+    page?: number;
+    initialRowsPerPage: number;
+    url?: string;
+    query?: object;
+}
+
+export default (options: Options, dependencies: any = []) => {
     const {
         model: Model,
         page = 1,
@@ -32,16 +42,19 @@ export default (options, dependencies = []) => {
         },
     });
 
-    const urlFinal = React.useMemo(
-        () => `/api/${url}?${new URLSearchParams({
+    const urlFinal = React.useMemo(() => {
+
+        const params = {
             page,
             per_page: rowsPerPage,
             q,
             ...query,
-        }).toString()}`
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        , [page, q, objectHash(query), rowsPerPage, url],
-    );
+        }.toString();
+
+        const urlParams = new URLSearchParams(params);
+
+        return `/api/${url}?${urlParams.toString()}`;
+    }, [page, q, objectHash(query), rowsPerPage, url]);
 
     const [isLoading, setIsLoading] = React.useState(true);
 
@@ -115,7 +128,7 @@ export default (options, dependencies = []) => {
         items: instantiatedItems,
         setRowsPerPage,
         search,
-        setSearchInput: (search) => {
+        setSearchInput: (search: string) => {
             if (search === '') {
                 setQ('');
             }

@@ -8,16 +8,19 @@ import useFetchList from '../../hooks/useFetchList';
 import Country from '../../models/Country';
 import State from '../../models/State';
 import City from '../../models/City';
-import School from '../../models/School';
-import Classroom from '../../models/Classroom';
+// import School from '../../models/School';
+// import Classroom from '../../models/Classroom';
 
-import Season from '../../models/Season';
-import League from '../../models/League';
-import Game from '../../models/Game';
-import SubComponent from '../../models/SubComponent';
+// import Season from '../../models/Season';
+// import League from '../../models/League';
+// import Game from '../../models/Game';
+// import SubComponent from '../../models/SubComponent';
 
-import Filter from './Filter';
-import FilterField from './FilterField';
+import Filter from './Filter.tsx';
+import FilterField from './FilterField.tsx';
+
+import type { State as StateType } from '../../types/state';
+import type { Filter as FilterType } from '../../types/filter';
 
 const DEFAULT_OBJ = {
     label: 'label',
@@ -36,8 +39,9 @@ const FilterBar = ({
     seasonIds,
     leagueIds,
     gameIds,
-}) => {
-    const user = useSelector((state) => state.app.user);
+}: FilterType) => {
+
+    const user = useSelector((state: StateType) => state.app.user);
     const userRole = user.roles[0];
 
     // Locations
@@ -55,45 +59,41 @@ const FilterBar = ({
         initialRowsPerPage: 9999,
         query: { state_ids: stateIds },
     }, [stateIds.length]);
-    const { items: schools } = useFetchList({
-        model: School,
-        initialRowsPerPage: 9999,
-        query: {
-            country_ids: countryIds,
-            state_ids: stateIds,
-            city_ids: cityIds,
-        },
-    }, [cityIds.length]);
-    const { items: classrooms } = useFetchList({
-        model: Classroom,
-        initialRowsPerPage: 9999,
-        query: { school_ids: schoolIds },
-    }, [schoolIds.length]);
+    // const { items: schools } = useFetchList({
+    //     model: School,
+    //     initialRowsPerPage: 9999,
+    //     query: {
+    //         country_ids: countryIds,
+    //         state_ids: stateIds,
+    //         city_ids: cityIds,
+    //     },
+    // }, [cityIds.length]);
+    // const { items: classrooms } = useFetchList({
+    //     model: Classroom,
+    //     initialRowsPerPage: 9999,
+    //     query: { school_ids: schoolIds },
+    // }, [schoolIds.length]);
 
-    // Phases
-    const { items: seasons } = useFetchList({
-        model: Season,
-        initialRowsPerPage: 9999,
-    });
-    const { items: leagues } = useFetchList({
-        model: League,
-        initialRowsPerPage: 9999,
-    });
-    const { items: games } = useFetchList({
-        model: Game,
-        initialRowsPerPage: 9999,
-        // query: {
-        //     season_ids: seasonIds,
-        //     league_ids: leagueIds,
-        // }
-    } /* [seasonIds.length, leagueIds.length]*/);
-    const { items: subComponents } = useFetchList({
-        model: SubComponent,
-        initialRowsPerPage: 9999,
-        query: { game_ids: gameIds },
-    }, [gameIds.length]);
+    // // Phases
+    // const { items: seasons } = useFetchList({
+    //     model: Season,
+    //     initialRowsPerPage: 9999,
+    // });
+    // const { items: leagues } = useFetchList({
+    //     model: League,
+    //     initialRowsPerPage: 9999,
+    // });
+    // const { items: games } = useFetchList({
+    //     model: Game,
+    //     initialRowsPerPage: 9999,
+    // });
+    // const { items: subComponents } = useFetchList({
+    //     model: SubComponent,
+    //     initialRowsPerPage: 9999,
+    //     query: { game_ids: gameIds },
+    // }, [gameIds.length]);
 
-    const FILTER_LOCATIONS = {
+    const FILTER_LOCATIONS: any = {
         variant: 'gradient-cyan',
         items: [
             {
@@ -124,69 +124,69 @@ const FilterBar = ({
                 },
                 permitted: [1, 2], // de acordo com a 'roleId'
             },
-            {
-                props: {
-                    ...DEFAULT_OBJ,
-                    label: 'Escola',
-                    key: 'schools',
-                    options: schools,
-                },
-                permitted: [1, 2, 3, 5], // de acordo com a 'roleId'
-            },
-            {
-                props: {
-                    ...DEFAULT_OBJ,
-                    label: 'Turma',
-                    key: 'classrooms',
-                    options: classrooms,
-                    disabled: schoolIds.length === 0,
-                },
-                permitted: [], // de acordo com a 'roleId'
-            },
+            // {
+            //     props: {
+            //         ...DEFAULT_OBJ,
+            //         label: 'Escola',
+            //         key: 'schools',
+            //         options: schools,
+            //     },
+            //     permitted: [1, 2, 3, 5], // de acordo com a 'roleId'
+            // },
+            // {
+            //     props: {
+            //         ...DEFAULT_OBJ,
+            //         label: 'Turma',
+            //         key: 'classrooms',
+            //         options: classrooms,
+            //         disabled: schoolIds.length === 0,
+            //     },
+            //     permitted: [], // de acordo com a 'roleId'
+            // },
         ],
     };
-    const FILTER_PHASES = {
+    const FILTER_PHASES: any = {
         variant: 'gradient-orange',
         items: [
-            {
-                ...DEFAULT_OBJ,
-                label: 'Temporada',
-                key: 'seasons',
-                options: seasons,
-            },
-            {
-                ...DEFAULT_OBJ,
-                label: 'Liga',
-                key: 'leagues',
-                options: leagues,
-            },
-            {
-                ...DEFAULT_OBJ,
-                label: 'Partida',
-                key: 'games',
-                options: games,
-                // disabled: (seasonIds.length === 0 && leagueIds.length === 0)
-            },
-            {
-                ...DEFAULT_OBJ,
-                label: 'Unid. Temática',
-                key: 'subComponents',
-                options: subComponents,
-                tableColumn: 'description',
-                disabled: gameIds.length === 0 || ['monitoring'].includes(currentPage.name),
-            },
+            // {
+            //     ...DEFAULT_OBJ,
+            //     label: 'Temporada',
+            //     key: 'seasons',
+            //     options: seasons,
+            // },
+            // {
+            //     ...DEFAULT_OBJ,
+            //     label: 'Liga',
+            //     key: 'leagues',
+            //     options: leagues,
+            // },
+            // {
+            //     ...DEFAULT_OBJ,
+            //     label: 'Partida',
+            //     key: 'games',
+            //     options: games,
+            //     // disabled: (seasonIds.length === 0 && leagueIds.length === 0)
+            // },
+            // {
+            //     ...DEFAULT_OBJ,
+            //     label: 'Unid. Temática',
+            //     key: 'subComponents',
+            //     options: subComponents,
+            //     tableColumn: 'description',
+            //     disabled: gameIds.length === 0 || ['monitoring'].includes(currentPage.name),
+            // },
         ],
     };
 
-    React.useEffect(() => {
-        if (schools.length > 0) {
-            if ([4].includes(userRole.id)) {
-                schoolIds.push(schools[0].id);
-            }
-        }
-    }, [schools.length]);
+    // React.useEffect(() => {
+    //     if (schools.length > 0) {
+    //         if ([4].includes(userRole.id)) {
+    //             schoolIds.push(schools[0].id);
+    //         }
+    //     }
+    // }, [schools.length]);
 
-    const verifyPermission = (module) => {
+    const verifyPermission = (module: any) => {
         if (module.permitted.length <= 0) {
             return true;
         }
@@ -203,7 +203,7 @@ const FilterBar = ({
                 title="Filtrar por Território"
             >
                 {FILTER_LOCATIONS.items
-                    .map((location) => {
+                    .map((location: any) => {
                         // eslint-disable-next-line prefer-destructuring
                         const {
                             key,
@@ -223,7 +223,7 @@ const FilterBar = ({
                                         label={label}
                                         name={key}
 
-                                        options={options.map((opt) => opt.serialize())}
+                                        options={options.map((opt: any) => opt.serialize())}
                                         columnName={tableColumn}
 
                                         disabled={disabled}
@@ -242,7 +242,7 @@ const FilterBar = ({
                 title="Filtrar por Etapa"
             >
                 {FILTER_PHASES.items
-                    .map((phase) => {
+                    .map((phase: any) => {
                         const {
                             key,
                             label,
@@ -260,7 +260,7 @@ const FilterBar = ({
                                 label={label}
                                 name={key}
 
-                                options={options.map((opt) => opt.serialize())}
+                                options={options.map((opt: any) => opt.serialize())}
                                 columnName={tableColumn}
 
                                 disabled={disabled}
@@ -286,14 +286,14 @@ FilterBar.propTypes = {
     gameIds: PropTypes.instanceOf(Array).isRequired,
 };
 
-const mapStateToProps = ({ filter, currentPage }) => ({
+const mapStateToProps = ({ filter, currentPage }: StateType) => ({
     currentPage,
-    countryIds: filter.countries.map((country) => country.id),
-    stateIds: filter.states.map((state) => state.id),
-    cityIds: filter.cities.map((city) => city.id),
-    schoolIds: filter.schools.map((school) => school.id),
-    seasonIds: filter.seasons.map((season) => season.id),
-    leagueIds: filter.leagues.map((league) => league.id),
-    gameIds: filter.games.map((game) => game.id),
+    countryIds: filter.countries.map((country: any) => country.id),
+    stateIds: filter.states.map((state: any) => state.id),
+    cityIds: filter.cities.map((city: any) => city.id),
+    schoolIds: filter.schools.map((school: any) => school.id),
+    seasonIds: filter.seasons.map((season: any) => season.id),
+    leagueIds: filter.leagues.map((league: any) => league.id),
+    gameIds: filter.games.map((game: any) => game.id),
 });
 export default connect(mapStateToProps)(FilterBar);
