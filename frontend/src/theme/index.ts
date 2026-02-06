@@ -896,6 +896,7 @@ const AppTheme = createTheme({
                 {
                     props: { variant: 'no-deco' },
                     style: {
+                        margin: 0,
                         background: 'transparent',
                         border: 'none',
                     },

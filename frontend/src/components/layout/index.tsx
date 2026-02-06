@@ -4,7 +4,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import axios from 'axios';
 import { connect, useSelector } from 'react-redux';
 
 import { Sidebar, useProSidebar } from 'react-pro-sidebar';
@@ -19,7 +18,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-// import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import Avatar from '@mui/material/Avatar';
@@ -30,9 +28,7 @@ import MenuList from '@mui/material/MenuList';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-// import School from '../../models/School';
-
-import Loading from '../Loading';
+import Loading from '../loading.tsx';
 import Footer from './Footer';
 import NotificationBar from '../dialog/NotificationBar';
 import DialogBar from '../dialog/DialogBar';
@@ -41,7 +37,6 @@ import useWindowWidth from '../../hooks/useWindowWidth';
 import useWindowHeight from '../../hooks/useWindowHeight';
 import useFooterConfig from '../../hooks/useFooterConfig';
 
-// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 

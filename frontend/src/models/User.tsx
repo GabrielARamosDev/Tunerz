@@ -1,31 +1,33 @@
 /* eslint-disable quotes */
 
-import React from 'react';
+import Model from '../contracts/Model.tsx';
+import State from './State.ts';
+import Role from './Role.ts';
 
-import Model from '../contracts/Model';
-import Role from './Role';
-import State from './State';
-
-import Avatar from '@mui/material/Avatar';
-// import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
+import Avatar from '@mui/material/Avatar';
 
-export const NEW_USER = {
+import type { FormFields } from '../types/basemodel.ts';
+import type { User as UserType } from '../types/user.ts';
+
+export const NEW_USER: UserType = {
     id: 0,
     name: '',
     email: '',
     role_id: 0,
     state_id: 0,
+    roles: [],
+    states: [],
 };
 
-export default class User extends Model {
+class User extends Model {
 
     #roles;
     #states;
 
-    constructor(props = NEW_USER) {
+    constructor(props: UserType = NEW_USER) {
         const {
             roles = [],
             states = [],
@@ -55,11 +57,11 @@ export default class User extends Model {
         updated_at: this.updatedAt,
     });
 
-    static getApiLink = () => `app/users`;
+    getApiLink = () => `app/users`;
 
     getLink = () => `v1/gestao/usuarios/${this.id}`;
 
-    static getFormFields = (args) => [
+    static getFormFields = (args: FormFields) => [
         {
             name: 'name',
             label: 'Nome',
@@ -67,7 +69,6 @@ export default class User extends Model {
             value: '',
             col: 6,
             required: true,
-            // disabled: args.isProfile,
         },
         {
             name: 'email',
@@ -76,7 +77,6 @@ export default class User extends Model {
             value: '',
             col: 6,
             required: true,
-            // disabled: args.isProfile,
         },
         {
             type: 'password',
@@ -85,7 +85,7 @@ export default class User extends Model {
             placeholder: 'Insira uma senha',
             value: '',
             col: 6,
-            required: (params) => params.mode == 'create',
+            required: (params: { mode: string }) => params.mode == 'create',
             autoComplete: 'new-password',
         },
         {
@@ -95,7 +95,7 @@ export default class User extends Model {
             placeholder: 'Confirme sua senha senha',
             value: '',
             col: 6,
-            required: (params) => params.mode == 'create',
+            required: (params: { mode: string }) => params.mode == 'create',
         },
         {
             type: 'select',
@@ -105,7 +105,6 @@ export default class User extends Model {
             options: args.roles,
             col: 6,
             required: true,
-            // disabled: args.isProfile,
         },
         {
             type: 'select',
@@ -115,14 +114,9 @@ export default class User extends Model {
             options: args.states,
             col: 3,
             required: true,
-            // disabled: args.isProfile,
             visible: [5].includes(args.role),
         },
     ];
-
-    // getAbilitiesCode = () => this.attributes.abilities.map((abl) => {
-    //     return abl.code;
-    // });
 
     static getTableHead = () => ({
         name: {
@@ -173,3 +167,5 @@ export default class User extends Model {
     });
 
 }
+
+export default User;

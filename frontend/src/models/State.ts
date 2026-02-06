@@ -1,16 +1,17 @@
 /* eslint-disable quotes */
 
 import Model from '../contracts/Model';
+import type { State as StageType } from '../types/state';
 
-export const NEW_STATE = {
+export const NEW_STATE: StageType = {
     id: 0,
     name: '',
     country: '',
 };
 
-export default class State extends Model {
+class State extends Model {
 
-    constructor(props = NEW_STATE) {
+    constructor(props: StageType = NEW_STATE) {
         const { ...stateProps } = props;
 
         super(stateProps, 'state');
@@ -19,3 +20,5 @@ export default class State extends Model {
     static getApiLink = () => `app/state`;
 
 }
+
+export default State;

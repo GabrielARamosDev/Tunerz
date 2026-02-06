@@ -1,9 +1,5 @@
-// import { applyMiddleware, compose } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
-// import thunkMiddleware from 'redux-thunk';
 
-// import monitorReducersEnhancer from './enhancers/monitorReducers';
-// import loggerMiddleware from './middleware/logger';
 import rootReducer from './reducers';
 
 import { createLogger } from 'redux-logger';

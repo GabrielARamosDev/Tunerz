@@ -1,12 +1,12 @@
 
 import { createBrowserRouter } from 'react-router-dom';
 
-import Layout from '../components/layout/Layout';
+import Layout from '../components/layout/index.tsx';
 
-import HomePage from '../screens/Home';
-import ProfilePage from '../screens/Profile';
+// import HomePage from '../screens/Home.tsx';
+// import ProfilePage from '../screens/Profile.tsx';
 
-import { GarageProvider } from "../contexts/GarageContext";
+import { GarageProvider } from "../contexts/GarageContext.tsx";
 
 import Garage from "../screens/Garage/index.tsx";
 
@@ -17,14 +17,14 @@ class Router {
             path: '/',
             element: <Layout />,
             children: [
-                {
-                    path: '/',
-                    element: <HomePage />,
-                },
-                {
-                    path: '/perfil',
-                    element: <ProfilePage />,
-                },
+                // {
+                //     path: '/',
+                //     element: <HomePage />,
+                // },
+                // {
+                //     path: '/perfil',
+                //     element: <ProfilePage />,
+                // },
             ],
         },
         {
