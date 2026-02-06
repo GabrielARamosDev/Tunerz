@@ -3,23 +3,21 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+
 use App\Models\Engine;
 
 class EnginesSeeder extends Seeder
 {
     public function run(): void
     {
-        Engine::insert([
+        $engines = [
             [
                 'code' => 'X20XEV',
                 'manufacturer' => 'General Motors',
                 'displacement' => 1998,
-                'cylinders' => 4,
                 'valve_count' => 8,
-                'compression_ratio' => 9.8,
-                'aspiration' => 'NA',
-                'stock_power_hp' => 116,
-                'stock_torque_nm' => 178,
+                'propulsion' => 'Combustion',
+                'fuel_type' => 'Gasoline',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -27,15 +25,29 @@ class EnginesSeeder extends Seeder
                 'code' => 'EA888',
                 'manufacturer' => 'Volkswagen',
                 'displacement' => 1998,
-                'cylinders' => 4,
                 'valve_count' => 16,
-                'compression_ratio' => 10.5,
-                'aspiration' => 'NA',
-                'stock_power_hp' => 150,
-                'stock_torque_nm' => 210,
+                'propulsion' => 'Combustion',
+                'fuel_type' => 'Gasoline',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        ]);
+            [
+                'code' => 'F22SE',
+                'manufacturer' => 'General Motors',
+                'displacement' => 2203,
+                'valve_count' => 8,
+                'propulsion' => 'Combustion',
+                'fuel_type' => 'Gasoline',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ];
+
+        foreach ($engines as $e) {
+            Engine::updateOrCreate(
+                ['code' => $e['code']],  // chave única para evitar duplicatas
+                $e     // campos a atualizar
+            );
+        }
     }
 }

@@ -10,15 +10,14 @@ class VehiclesSeeder extends Seeder
 {
     public function run(): void
     {
-        Vehicle::insert([
+        $vehicles = [
             [
                 'brand' => 'Chevrolet',
                 'model' => 'Astra',
                 'model_year'  => 2004,
                 'trim'  => 'CD 2.0 8V',
                 'body_type'  => 'Sedan',
-                'drivetrain'  => 'FWD',
-                'fuel_type'  => 'Gasoline',
+                'image_url' => '',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -28,11 +27,22 @@ class VehiclesSeeder extends Seeder
                 'model_year'  => 2001,
                 'trim'  => '1.6',
                 'body_type'  => 'Hatchback',
-                'drivetrain'  => 'FWD',
-                'fuel_type'  => 'Gasoline',
+                'image_url' => '',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        ]);
+        ];
+        
+        foreach ($vehicles as $v) {
+            Vehicle::updateOrCreate(
+                [
+                    'brand' => $v['brand'], 
+                    'model' => $v['model'], 
+                    'model_year' => $v['model_year'], 
+                    'trim' => $v['trim']
+                ],  // chave única para evitar duplicatas
+                $v     // campos a atualizar
+            );
+        }
     }
 }

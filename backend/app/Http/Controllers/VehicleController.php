@@ -10,13 +10,13 @@ class VehicleController extends Controller
 {    
     public function index()
     {
-        $vehicles = Vehicle::all();
+        $vehicles = Vehicle::with(['engines.stages', 'engines.specs'])->get();
         return response()->json($vehicles);
     }
 
     public function show($id)
     {
-        $vehicle = Vehicle::findOrFail($id);
+        $vehicle = Vehicle::with(['engines.stages', 'engines.specs'])->findOrFail($id);
         return response()->json($vehicle);
     }
 

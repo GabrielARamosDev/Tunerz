@@ -8,19 +8,11 @@ import type { Vehicle } from "../types/vehicle";
 
 export default function Garage() {
 
-  const [loading, setLoading] = useState(true);
-  const [status, setStatus] = useState("Carregando Garagem...");
-
-  const { vehicles, addVehicle, removeVehicle } = useGarage();
-
-  /* * */
-
-  useEffect(() => {
-    api.get("/ping")
-      .then((response) => {
-        setStatus(response.data.message);
-      });
-  }, []);
+  const { 
+    loading, fetched, status,
+    vehicles, fetchVehicles, 
+    addVehicle, removeVehicle, 
+  } = useGarage();
 
   /* * */
 
@@ -32,6 +24,8 @@ export default function Garage() {
   /* * */
 
   if (loading) return <p>{status}</p>;
+
+  if (!fetched) return <p>{status}</p>;
 
   return (
     <div>
@@ -56,6 +50,7 @@ export default function Garage() {
       ) : ( <p>Nenhum veículo na garagem.</p> )}
 
       <button onClick={handleAddVehicle}>Adicionar Veículo</button>
+      <button onClick={fetchVehicles}>Atualizar Garagem</button>
     </div>
   );
 }

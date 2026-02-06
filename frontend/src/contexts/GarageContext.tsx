@@ -1,7 +1,7 @@
 
 import api from "../services/api";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 
 import type { GarageContextType } from "../types/garage";
@@ -13,7 +13,38 @@ const GarageContext = createContext<GarageContextType | undefined>(undefined);
 // Provider
 export const GarageProvider = ({ children }: { children: ReactNode }) => {
 
+    const [loading, setLoading] = useState(true);
+    const [fetched, setFetched] = useState(false);
+
+    const [status, setStatus] = useState("Carregando Garagem...");
+
     const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+
+    /* * */
+
+    useEffect(() => {
+        api.get("/ping")
+            .then((response) => {
+                console.log("API is alive! ", response.data);
+            });
+    }, []);
+
+    useEffect(() => {
+        api.get("/vehicles")
+            .then((response) => {
+                setVehicles(response.data);
+                setStatus("Garagem carregada com sucesso.");
+                setFetched(true);
+            })
+            .catch(() => {
+                setStatus("Erro ao carregar a garagem.");
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, []);
+
+    /* * */
 
     const fetchVehicles = async () => {
         const response = await fetch("/api/vehicles");
@@ -46,10 +77,9 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
     return (
         <GarageContext.Provider 
             value={{ 
-                vehicles, 
-                fetchVehicles, 
-                addVehicle, 
-                removeVehicle, 
+                loading, fetched, status,
+                vehicles, fetchVehicles, 
+                addVehicle, removeVehicle, 
             }}
         >
             {children}
