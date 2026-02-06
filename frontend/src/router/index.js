@@ -3,12 +3,12 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import Layout from '../components/layout/Layout';
 
-import HomePage from '../pages/v1/HomePage';
-import ProfilePage from '../pages/v1/ProfilePage';
+import HomePage from '../screens/Home';
+import ProfilePage from '../screens/Profile';
 
-import { GarageProvider } from "./contexts/GarageContext";
+import { GarageProvider } from "../contexts/GarageContext";
 
-import Garage from "./screens/Garage/index.tsx";
+import Garage from "../screens/Garage/index.tsx";
 
 class Router {
 
