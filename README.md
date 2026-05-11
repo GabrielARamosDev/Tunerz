@@ -1,7 +1,7 @@
 
-# Tunerz 🚗⚙️
+# Tuner-Z 🚗⚙️
 
-Tunerz é um aplicativo web/mobile focado em simulação realista de setups automotivos,
+Tuner-Z é um aplicativo web/mobile focado em simulação realista de setups automotivos,
 permitindo ao usuário configurar motores, admissões, estágios e compatibilidades mecânicas
 baseadas em dados do mundo real.
 
@@ -13,7 +13,7 @@ baseadas em dados do mundo real.
 - Target: Web + PWA (mobile-first)
 
 ## Estrutura
-tunerz/
+tuner-z/
 ├── backend/
 └── frontend/
 
