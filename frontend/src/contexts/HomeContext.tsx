@@ -4,16 +4,16 @@ import api from "../services/api";
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 
-import type { GarageContextType } from "../types/garage";
+import type { HomeContextType } from "../types/home";
 import type { Vehicle } from "../types/vehicle";
 
-import { useApp } from "./AppContext";
+import { useApp } from "./AppContext.tsx";
 
 // Contexto em si
-const GarageContext = createContext<GarageContextType | undefined>(undefined);
+const HomeContext = createContext<HomeContextType | undefined>(undefined);
 
 // Provider
-export const GarageProvider = ({ children }: { children: ReactNode }) => {
+export const HomeProvider = ({ children }: { children: ReactNode }) => {
 
     const {
         loading, setLoading,
@@ -35,12 +35,12 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         api.get("/vehicles")
             .then((response) => {
-                setStatus("Garagem carregada com sucesso.");
+                setStatus("Veículos carregados com sucesso.");
                 setVehicles(response.data);
                 setFetched(true);
             })
             .catch(() => {
-                setStatus("Erro ao carregar a garagem.");
+                setStatus("Erro ao carregar os veículos.");
             })
             .finally(() => {
                 setLoading(false);
@@ -54,67 +54,44 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
         setFetched(false);
         setLoading(true);
 
-        setStatus("Atualizando garagem...");
+        setStatus("Atualizando...");
 
         api.get("/vehicles")
             .then((response) => {
-                setStatus("Garagem atualizada.");
+                setStatus("Veículos atualizados.");
                 setFetched(true);
                 setLoading(false);
 
                 setVehicles(response.data);
             })
             .catch(() => {
-                setStatus("Erro ao atualizar a garagem.");
+                setStatus("Erro ao atualizar os veículos.");
                 setLoading(false);
             });
 
         return;
     };
 
-    const addVehicle = (vehicle: Vehicle) => {
-        api.post("/vehicles", vehicle)
-            .then(() => {
-                alert("Veículo criado");
-                setVehicles(prev => [...prev, vehicle]);
-            })
-            .catch(() => {
-                alert("Erro ao criar veículo");
-            });
-    };
-
-    const removeVehicle = (id: number) => {
-        api.delete(`/vehicles/${id}`)
-            .then(() => {
-                alert("Veículo removido");
-                setVehicles(prev => prev.filter(c => c.id !== id));
-            })
-            .catch(() => {
-                alert("Erro ao remover veículo");
-            });
-    };
-
     /* * */
 
     return (
-        <GarageContext.Provider
+        <HomeContext.Provider
             value={{
-                vehicles, fetchVehicles,
-                addVehicle, removeVehicle
+                vehicles, fetchVehicles
             }}
         >
             {children}
-        </GarageContext.Provider>
+        </HomeContext.Provider>
     );
 };
 
 // Hook para usar o contexto mais facilmente
-export const useGarage = () => {
+export const useHome = () => {
 
-    const context = useContext(GarageContext);
+    const context = useContext(HomeContext);
 
     if (!context) {
-        throw new Error("useGarage must be used within a GarageProvider");
+        throw new Error("useHome must be used within a HomeProvider");
     }
     return context;
 };

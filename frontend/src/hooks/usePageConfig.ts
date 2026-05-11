@@ -2,14 +2,14 @@
 
 import React from 'react';
 
-import state from '../controllers/state';
+import main from '../main';
 
-export default (options, dependencies = []) => {
+export default (options: any, dependencies = []) => {
     // console.log('update current page: ', options.name);
 
     React.useEffect(() => {
         // envia a configuração atual
-        state.dispatch({
+        main.state.dispatch({
             type: 'CURRENT_PAGE',
             payload: options,
         });
@@ -19,7 +19,7 @@ export default (options, dependencies = []) => {
         // reseta o titulo qnd sair da pagina
         return () => {
             document.title = 'Base de Dados';
-            state.dispatch({ type: 'RESET_PAGE' });
+            main.state.dispatch({ type: 'RESET_PAGE' });
         };
     }, [options.name, ...dependencies]);
 };

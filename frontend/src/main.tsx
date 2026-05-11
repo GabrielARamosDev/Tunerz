@@ -24,7 +24,7 @@ class _main {
   #currentUser;
 
   constructor() {
-    
+
     this.#auth = auth;
     this.#dialog = dialog;
     this.#notifications = notifications;
@@ -49,12 +49,13 @@ class _main {
           });
         });
 
-        axios.get('/api/me').then((response) => {
-          state.dispatch({
-            type: 'APP_CREDENTIALS',
-            payload: response.data,
+        axios.get('/api/me')
+          .then((response) => {
+            state.dispatch({
+              type: 'APP_CREDENTIALS',
+              payload: response.data,
+            });
           });
-        });
       });
     }
   }

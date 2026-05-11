@@ -155,8 +155,8 @@ const NavMenu = ({
     const navigate = useNavigate();
 
     const user = useSelector((state) => state.app.user);
-    const userRole = user.roles[0];
-    const userRoleAbilitiesIds = userRole.role_abilities.map((ra) => ra.ability);
+    const userRole = user?.roles[0] || null; // Assuming the user has at least one role, otherwise default to an empty role
+    // const userRoleAbilitiesIds = userRole?.role_abilities.map((ra) => ra.ability) || [];
 
     const [selectedIndex, setSelectedIndex] = React.useState('/v1/dashboard/cts');
 
@@ -168,27 +168,27 @@ const NavMenu = ({
         }
     };
 
-    const verifyPermission = (module) => {
-        if (module.permitted.length <= 0) {
-            return true;
-        }
-        if (module.permitted.length > 0) {
-            let bool = false;
+    // const verifyPermission = (module) => {
+    //     if (module.permitted.length <= 0) {
+    //         return true;
+    //     }
+    //     if (module.permitted.length > 0) {
+    //         let bool = false;
 
-            module.permitted.forEach((permission) => {
-                if (userRoleAbilitiesIds.includes(permission)) {
-                    bool = true;
-                }
-            });
-            return bool;
-        }
+    //         module.permitted.forEach((permission) => {
+    //             if (userRoleAbilitiesIds.includes(permission)) {
+    //                 bool = true;
+    //             }
+    //         });
+    //         return bool;
+    //     }
 
-        return false;
-    };
+    //     return false;
+    // };
 
     const renderItems = (module, i) => (
         <React.Fragment key={i}>
-            {verifyPermission(module) && (
+            {/* {verifyPermission(module) && ( */}
                 <List sx={{ p: '7.5% 0 0' }}>
                     {module.name !== '' && (
                         <ListSubheader
@@ -233,7 +233,7 @@ const NavMenu = ({
                         ))
                     }
                 </List>
-            )}
+            // )}
         </React.Fragment>
     );
 
@@ -266,12 +266,12 @@ const NavMenu = ({
                     </Button>
                 </Stack>
 
-                <FilterBar />
+                {/* <FilterBar /> */}
 
                 <Stack
                     sx={{
-                        'overflow-y': 'auto',
-                        'max-height': 'calc(66.25vh - 38px) !important',
+                        'overflowY': 'auto',
+                        'maxHeight': 'calc(66.25vh - 38px) !important',
                     }}
                 >
                     {MENU_ITEMS.map(renderItems)}

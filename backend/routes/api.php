@@ -28,9 +28,8 @@ Route::get('/ping', function () {
 /* * */
 
 Route::group([
-    'middleware' => [ 'auth:sanctum' ],
+    'middleware' => [  ],
     'namespace' => 'App',
-    'prefix' => 'app',
 ], function () {
 
     // Route::get('/user', function (Request $request) {
@@ -38,6 +37,17 @@ Route::group([
     // });
 
     Route::get('/me', [UserController::class, 'me']);
+
+    Route::post('/login', [UserController::class, 'login']);
+    Route::post('/register', [UserController::class, 'register']);
+
+});
+
+Route::group([
+    'middleware' => [ 'auth:sanctum' ],
+    'namespace' => 'App',
+    // 'prefix' => 'app',
+], function () {
 
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{id}', [UserController::class, 'show']);
@@ -57,12 +67,10 @@ Route::group([
         'auth:api', 
         'role:admin', 
     ],
-    'namespace' => 'App',
-    'prefix' => 'app',
+    'namespace' => 'Admin_App',
+    'prefix' => 'admin',
 ], function () {
     
-
-
 });
 
 /* * */

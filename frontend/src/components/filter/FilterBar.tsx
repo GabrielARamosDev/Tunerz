@@ -42,7 +42,7 @@ const FilterBar = ({
 }: FilterType) => {
 
     const user = useSelector((state: StateType) => state.app.user);
-    const userRole = user.roles[0];
+    const userRole = user?.roles[0] || null; // Assuming the user has at least one role, otherwise default to an empty role
 
     // Locations
     const { items: countries } = useFetchList({

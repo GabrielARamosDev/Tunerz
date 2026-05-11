@@ -4,6 +4,14 @@ import rootReducer from './reducers';
 
 import { createLogger } from 'redux-logger';
 
+const PRELOADED = {
+    app: {}, 
+    currentPage: {}, 
+    filter: {},
+    notifications: {},
+    resources: {},
+};
+
 const loggerMiddleware = createLogger({
     // ...options
 });
@@ -12,7 +20,7 @@ class State {
 
     #store;
 
-    constructor(preloadedState) {
+    constructor(preloadedState: any) {
         this.#store = configureStore({
             reducer: rootReducer,
             middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(loggerMiddleware),
@@ -28,6 +36,6 @@ class State {
 
 }
 
-const state = new State(/* preloadedState */);
+const state = new State(/* PRELOADED */);
 
 export default state;

@@ -10,9 +10,9 @@ import type { Vehicle } from "../../types/vehicle";
 const Garage = () => {
 
   const { 
-    loading, fetched, status,
+    loading, fetched, status, 
     vehicles, fetchVehicles, 
-    addVehicle, removeVehicle, 
+    addVehicle, removeVehicle
   } = useGarage();
 
   /* * */
@@ -31,7 +31,6 @@ const Garage = () => {
   return (
     <>
       <div>
-        <p>Tunerz is alive 🚗🔥</p>
         <h2>Minha Garagem</h2>
 
         {vehicles.length > 0 ? (

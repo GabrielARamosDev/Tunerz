@@ -1,57 +1,77 @@
 
 import { createBrowserRouter } from 'react-router-dom';
 
-import Layout from '../components/layout/index.tsx';
+import AppLayout from '../components/layout/index.tsx';
 
-// import HomePage from '../screens/Home.tsx';
-// import ProfilePage from '../screens/Profile.tsx';
-
+import { AppProvider } from '../contexts/AppContext.tsx';
+import { LoginProvider } from '../contexts/LoginContext.tsx';
+import { HomeProvider } from '../contexts/HomeContext.tsx';
 import { GarageProvider } from "../contexts/GarageContext.tsx";
 
-import Garage from "../screens/Garage/index.tsx";
+import LoginPage from '../pages/Profile/Login.tsx';
+import HomePage from '../pages/Home/index.tsx';
+// import ProfilePage from '../pages/Profile/index.tsx';
+import Garage from "../pages/Garage/index.tsx";
 
 class Router {
 
     createRouter = () => createBrowserRouter([
         {
             path: '/',
-            element: <Layout />,
-            children: [
-                // {
-                //     path: '/',
-                //     element: <HomePage />,
-                // },
-                // {
-                //     path: '/perfil',
-                //     element: <ProfilePage />,
-                // },
-            ],
-        },
-        {
-            path: '/garage/',
-            element: <Layout />,
+            element: (
+                <AppProvider>
+                    <AppLayout />
+                </AppProvider>
+            ),
             children: [
                 {
-                    path: '/garage/dashboard',
+                    path: '/login',
+                    element: (
+                        <LoginProvider>
+                            <LoginPage />
+                        </LoginProvider>
+                    ),
                     children: [
-                        {
-                            path: '/garage/dashboard/relatorios',
-                            element: (
-                                <GarageProvider>
-                                    <Garage />
-                                </GarageProvider>
-                            ),
-                        },
+                        // {
+                        //     path: '/login/register',
+                        //     element: <RegisterPage />
+                        // },
                     ],
                 },
                 {
-                    path: '/garage/settings',
+                    path: '/home',
+                    element: (
+                        <HomeProvider>
+                            <HomePage />
+                        </HomeProvider>
+                    ),
                     children: [
-
+                        // {
+                        //     path: '/home/profile',
+                        //     element: <ProfilePage />
+                        // },
                     ],
                 },
+                {
+                    path: '/garage',
+                    element: (
+                        <GarageProvider>
+                            <Garage />
+                        </GarageProvider>
+                    ),
+                    children: [
+                        // {
+                        //     path: '/garage/dashboard',
+                        //     element: <GarageDashboardPage />
+                        // },
+                        // {
+                        //     path: '/garage/settings',
+                        //     element: <GarageSettingsPage />
+                        // },
+                    ],
+                }
             ],
-        },
+        }
     ]);
 
 }
