@@ -8,23 +8,20 @@ import { useHome } from "../../contexts/HomeContext";
 
 import type { Vehicle } from "../../types/vehicle";
 
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+
 const Home = () => {
 
-    const {
-        loading, status, fetched
-    } = useApp();
-
-    const {
-        vehicles, fetchVehicles
-    } = useHome();
+    const { loading, status } = useApp();
 
     /* * */
 
     return (
         <>
-            <div>
-                <p>Tuner-Z is alive 🚗🔥</p>
-            </div>
+            <Stack>
+                <Typography>Tuner-Z is alive 🚗🔥</Typography>
+            </Stack>
         </>
     );
 }

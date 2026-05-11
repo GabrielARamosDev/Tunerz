@@ -129,6 +129,13 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }, [navigateHook]);
 
     React.useEffect(() => {
+        api.get("ping")
+            .then((response) => {
+                console.log("API is alive! ", response.data);
+            });
+    }, []);
+
+    React.useEffect(() => {
         setLoading(true);
 
         if (!authenticated) {

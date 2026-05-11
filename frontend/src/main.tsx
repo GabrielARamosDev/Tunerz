@@ -3,9 +3,8 @@ import { createRoot } from 'react-dom/client'
 
 import App from './App.tsx'
 
-import './index.css'
-
 import axios from 'axios';
+import api from './services/api.ts';
 import router from './router';
 
 import auth from './controllers/auth/index.ts';
@@ -49,7 +48,7 @@ class _main {
           });
         });
 
-        axios.get('/api/me')
+        api.get('me')
           .then((response) => {
             state.dispatch({
               type: 'APP_CREDENTIALS',

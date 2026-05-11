@@ -23,14 +23,16 @@ export default (options, dependencies = []) => {
 
     const handleSubmit = (additionalPayload = {}) => (e) => {
         e.preventDefault();
-        collection.item.save(additionalPayload).then((saved) => {
-            if (saved) {
-                navigate(-1);
-            }
-        })
-            .catch((err) => {
+
+        if (collection.item !== null) {
+            collection.item.save(additionalPayload).then((saved) => {
+                if (saved) {
+                    navigate(-1);
+                }
+            }).catch((err) => {
                 console.log(err);
             });
+        }
     };
 
     React.useEffect(() => {

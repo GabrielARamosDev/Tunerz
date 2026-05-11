@@ -6,13 +6,20 @@ import { useEffect, useState } from "react";
 import { useApp } from "../../contexts/AppContext";
 import { useGarage } from "../../contexts/GarageContext";
 
-import type { Vehicle } from "../../types/vehicle";
+import type { Vehicle as VehicleType } from "../../types/vehicle";
+
+import Vehicle from "../../models/Vehicle.tsx";
+
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import ListItem from "@mui/material/ListItem";
+
+import PaginatedList from "../../components/layout/PaginatedList.tsx";
 
 const Garage = () => {
 
-  const {
-    loading, fetched, status
-  } = useApp();
+  const { loading, fetched, status } = useApp();
 
   const { 
     vehicles, fetchVehicles, 
@@ -28,27 +35,31 @@ const Garage = () => {
 
   return (
     <>
-      <div>
-        <h2>Minha Garagem</h2>
+      <Stack>
+        <Typography variant="h2">Minha Garagem</Typography>
 
         {vehicles.length > 0 ? (
           <>
-            <ul>
-              {vehicles.map((vehicle: Vehicle) => (
-                <li key={vehicle.id}>
-                  <div style={{ padding: 10, borderBottom: "1px solid #ddd" }}>
+            <PaginatedList
+              Model={Vehicle}
+              title="Veículos na Garagem"
+              items={vehicles}
+            >
+              {vehicles.map((vehicle: VehicleType) => (
+                <ListItem key={vehicle.id}>
+                  <Stack style={{ padding: 10, borderBottom: "1px solid #ddd" }}>
                     <strong>{vehicle.manufacturer} {vehicle.model}</strong>
-                    <p>{vehicle.trim}</p>
-                  </div>
-                </li>
+                    <Typography>{vehicle.trim}</Typography>
+                  </Stack>
+                </ListItem>
               ))}
-            </ul>
+            </PaginatedList>
           </>
-        ) : ( <p>Nenhum veículo na garagem.</p> )}
+        ) : ( <Typography>Nenhum veículo na garagem.</Typography> )}
 
-        <button onClick={handleAddVehicle}>Adicionar Veículo</button>
-        <button onClick={fetchVehicles}>Atualizar Garagem</button>
-      </div>
+        <Button onClick={handleAddVehicle}>Adicionar Veículo</Button>
+        <Button onClick={fetchVehicles}>Atualizar Garagem</Button>
+      </Stack>
     </>
   );
 }

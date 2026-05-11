@@ -1,7 +1,7 @@
 
 import api from "../../services/api";
 
-import { useEffect, useState } from "react";
+import React from "react";
 
 import { useStage } from "../../contexts/StageContext";
 
@@ -11,22 +11,22 @@ import type { Engine } from "../../types/engine";
 
 const Stages = ({ vehicleId }: { vehicleId: number }) => {
 
-  const [loading, setLoading] = useState(true);
-  const [status, setStatus] = useState("Carregando Estágios...");
+  const [loading, setLoading] = React.useState(true);
+  const [status, setStatus] = React.useState("Carregando Estágios...");
 
   const { avaliarTurbo } = useStage();
-  
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-  const [vehicle, setVehicle] = useState<Vehicle | null>(null);
-  
-  const [stages, setStages] = useState<Stage[]>([]);
 
-  const [pressao, setPressao] = useState(0.5);  
-  const [resultado, setResultado] = useState<{ status: string; aviso: string }>({ status: "loading", aviso: "" });
+  const [vehicles, setVehicles] = React.useState<Vehicle[]>([]);
+  const [vehicle, setVehicle] = React.useState<Vehicle | null>(null);
+
+  const [stages, setStages] = React.useState<Stage[]>([]);
+
+  const [pressao, setPressao] = React.useState(0.5);
+  const [resultado, setResultado] = React.useState<{ status: string; aviso: string }>({ status: "loading", aviso: "" });
 
   /* * */
 
-  useEffect(() => {
+  React.useEffect(() => {
 
     const found = vehicles.find(v => v.id === vehicleId);
 
@@ -39,14 +39,14 @@ const Stages = ({ vehicleId }: { vehicleId: number }) => {
     }
   }, [vehicleId, vehicles]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (vehicle) {
       const result = avaliarTurbo(vehicle.engine, pressao);
       setResultado(result);
     }
   }, [vehicle, pressao]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     api.get(`/vehicles/${vehicleId}/stages`)
       .then(res => setStages(res.data))
       .catch(err => console.error(err));

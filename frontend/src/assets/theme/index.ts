@@ -937,7 +937,7 @@ const AppTheme = createTheme({
         },
         MainView: {
             background: PALETTE.background.default,
-            borderLeft: '2px dashed #5E5E5E80',
+            // borderLeft: '2px dashed #5E5E5E80',
         },
         SearchInput: {
             color: PALETTE.common.gray['700'],

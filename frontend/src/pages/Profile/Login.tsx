@@ -6,15 +6,8 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
-import { Outlet } from 'react-router-dom';
-
-import NavMenu from '../../components/layout/NavMenu.tsx';
-
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Toolbar from '@mui/material/Toolbar';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
@@ -22,14 +15,7 @@ import Typography from '@mui/material/Typography';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-import Loading from '../../components/loading.tsx';
-
-import NotificationBar from '../../components/dialog/NotificationBar.tsx';
-import DialogBar from '../../components/dialog/DialogBar.tsx';
-import Footer from '../../components/layout/Footer.tsx';
-
-import dialog from '../../controllers/dialog/index.ts';
-import auth from '../../controllers/auth/index.ts';
+import FormInput from '../../components/inputs/FormInput.tsx';
 
 import type { Layout as LayoutType } from '../../types/layout.ts';
 import type { State as StateType } from '../../types/state.ts';
@@ -39,16 +25,8 @@ import { useLogin } from '../../contexts/LoginContext.tsx';
 
 const LoginLayout = ({ currentPage }: LayoutType) => {
 
-    const {
-        loading, setLoading, 
-        theme, appBarHeight,
-        footerWindowDiff,
-        renderPageTitle
-    } = useApp();
-
+    const { loading, setLoading, navigate } = useApp();
     const { handleLogin, getSavedEmail } = useLogin();
-
-    /* * */
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -56,26 +34,11 @@ const LoginLayout = ({ currentPage }: LayoutType) => {
 
     React.useEffect(() => {
         const savedEmail = getSavedEmail();
-        
         if (savedEmail) {
             setEmail(savedEmail);
             setRememberMe(true);
         }
     }, [getSavedEmail]);
-
-    /* * */
-
-    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(event.target.value);
-    };
-
-    const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(event.target.value);
-    };
-
-    const handleRememberMeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRememberMe(event.target.checked);
-    };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -99,34 +62,33 @@ const LoginLayout = ({ currentPage }: LayoutType) => {
                     <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 3, textAlign: 'center' }}>
                         Login
                     </Typography>
+
                     <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                        <TextField
-                            label="Email"
+                        <FormInput
                             type="email"
-                            fullWidth
-                            required
+                            name="email"
+                            label="Email"
+                            placeholder="Digite seu email"
                             value={email}
-                            onChange={handleEmailChange}
-                            disabled={loading}
+                            onChange={(e: any) => setEmail(e.target.value)}
                         />
-                        <TextField
-                            label="Password"
+                        <FormInput
                             type="password"
-                            fullWidth
-                            required
+                            name="password"
+                            label="Senha"
+                            placeholder="Digite sua senha"
                             value={password}
-                            onChange={handlePasswordChange}
-                            disabled={loading}
+                            onChange={(e: any) => setPassword(e.target.value)}
                         />
                         <FormControlLabel
                             control={
                                 <Checkbox
                                     checked={rememberMe}
-                                    onChange={handleRememberMeChange}
+                                    onChange={(e) => setRememberMe(e.target.checked)}
                                     disabled={loading}
                                 />
                             }
-                            label="Remember me"
+                            label="Lembrar-me"
                         />
                         
                         <Button
@@ -137,8 +99,34 @@ const LoginLayout = ({ currentPage }: LayoutType) => {
                             disabled={loading}
                             sx={{ mt: 2 }}
                         >
-                            {loading ? 'Logging in...' : 'Login'}
+                            {loading ? 'Conectando...' : 'Conectar'}
                         </Button>
+
+                        <Box sx={{ mt: 2, textAlign: 'center' }}>
+                            <Typography variant="body2">
+                                Não tem conta? 
+                                <Button
+                                    size="small"
+                                    sx={{ textTransform: 'none', ml: 0.5 }}
+                                    onClick={() => navigate('register')}
+                                    disabled={loading}
+                                >
+                                    Registre-se aqui!
+                                </Button>
+                            </Typography>
+
+                            <Typography variant="body2" sx={{ mt: 1 }}>
+                                Esqueceu sua senha? 
+                                <Button
+                                    size="small"
+                                    sx={{ textTransform: 'none', ml: 0.5 }}
+                                    onClick={() => navigate('forgot-password')}
+                                    disabled={loading}
+                                >
+                                    Redefina aqui!
+                                </Button>
+                            </Typography>
+                        </Box>                            
                     </Box>
                 </Paper>
             </Container>

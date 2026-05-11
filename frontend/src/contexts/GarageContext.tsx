@@ -1,7 +1,7 @@
 
 import api from "../services/api";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext } from "react";
 import type { ReactNode } from "react";
 
 import type { GarageContextType } from "../types/garage";
@@ -21,18 +21,11 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
         status, setStatus
     } = useApp();
 
-    const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+    const [vehicles, setVehicles] = React.useState<Vehicle[]>([]);
 
     /* * */
 
-    useEffect(() => {
-        api.get("/ping")
-            .then((response) => {
-                console.log("API is alive! ", response.data);
-            });
-    }, []);
-
-    useEffect(() => {
+    React.useEffect(() => {
         api.get("/vehicles")
             .then((response) => {
                 setStatus("Garagem carregada com sucesso.");

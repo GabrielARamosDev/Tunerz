@@ -1,7 +1,7 @@
 
 import api from "../services/api";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext } from "react";
 import type { ReactNode } from "react";
 
 import type { HomeContextType } from "../types/home";
@@ -21,19 +21,12 @@ export const HomeProvider = ({ children }: { children: ReactNode }) => {
         status, setStatus
     } = useApp();
 
-    const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+    const [vehicles, setVehicles] = React.useState<Vehicle[]>([]);
 
     /* * */
 
-    useEffect(() => {
-        api.get("/ping")
-            .then((response) => {
-                console.log("API is alive! ", response.data);
-            });
-    }, []);
-
-    useEffect(() => {
-        api.get("/vehicles")
+    React.useEffect(() => {
+        api.get("vehicles")
             .then((response) => {
                 setStatus("Veículos carregados com sucesso.");
                 setVehicles(response.data);

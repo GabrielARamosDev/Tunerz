@@ -40,7 +40,13 @@ class AuthController extends Controller
         ];
 
         if (Auth::check()) {
+
             $user = Auth::user();
+
+            if ($user) {
+                $user = User::find($user->id);
+                $user = array_merge($user->toArray(), [ 'status' => 'authenticated' ]);
+            }
         }
         // dd($user);
 
@@ -66,24 +72,15 @@ class AuthController extends Controller
         }
         // dd($user);
 
-        if (($user && Hash::check($request->password, $user->password)) && Auth::attempt($credentials)) {
+        if ($user && Hash::check($request->password, $user->password)) {
 
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            $remember_me = $request->remember_me ?? false;
-
-            Auth::login($user, $remember_me);
-
-            session()->flash('success', 'Autenticado com sucesso!');
-
-            if ($user->role === 'ADMIN') {
-                $request->session()->put('isAdmin', 1);
-                $request->session()->put('adminId', Auth::id());
-            }
+            $user_roles = array_column($user->roles->toArray(), 'name');
 
             return response()->json([
                 'data' => [
-                    'user' => $user,
+                    'user' => array_merge($user->toArray(), [ 'status' => 'authenticated' ]),
                     'access_token' => $token,
                     'token_type' => 'Bearer',
                 ],
@@ -119,38 +116,29 @@ class AuthController extends Controller
             return str_word_count($value) > 1;
         });
 
-        // if ($request->cpf) {
-        //     $request['cpf'] = (int) preg_replace('/[^0-9]/', '', $request->cpf);
-        // }
-
         $rules = [
             'name' => 'required|max:255',
-            // 'username' => 'required|max:30|unique:users',
             'email' => 'required|email|unique:users',
             'password' => Password::min(8)
-                ->mixedCase()     // allows both uppercase and lowercase
-                ->letters()       // accepts letter
-                ->numbers()       // accepts numbers
-                ->symbols()       // accepts special character
-                ->uncompromised() // check to be sure that there is no data leak
-                ->rules([         // additional rules
+                ->mixedCase()
+                ->letters()
+                ->numbers()
+                ->symbols()
+                ->uncompromised()
+                ->rules([
                     'required',
                     'confirmed',
                 ]),
-            // 'cpf' => 'required|min:11|max:14|unique:users',
-            'phone' => 'required',
-            // 'birthday' => 'required|date|before:-18 years',
+            // 'phone' => 'required',
         ];
 
-        $messages = array_merge([
-            // 'username.required' => 'O campo nome de usuário é obrigatório.',
-            // 'username.max' => 'O campo nome de usuário deve ter no máximo 30 caracteres',
-            // 'username.unique' => 'Este nome de usuário já está registrado.',
-            //
+        $messages = [
+            'name.required' => 'O campo nome é obrigatório.',
+            'name.max' => 'O nome não deve ter mais de 255 caracteres.',
+            'name.name' => 'O campo nome deve conter nome e sobrenome.',
             'email.required' => 'O campo e-mail é obrigatório.',
             'email.email' => 'Digite um endereço de e-mail válido.',
             'email.unique' => 'Este e-mail já está registrado.',
-            //
             'password.required' => 'O campo senha é obrigatório.',
             'password.confirmed' => 'As senhas não coincidem.',
             'password.min' => 'A senha deve ter pelo menos 8 caracteres.',
@@ -158,92 +146,138 @@ class AuthController extends Controller
             'password.numbers' => 'A senha deve conter ao menos 1 número.',
             'password.symbols' => 'A senha deve conter ao menos 1 caracter especial.',
             'password.uncompromised' => 'Sua senha é muito fraca!',
-        ], [
-            'name.required' => 'O campo nome é obrigatório.',
-            'name.max' => 'O nome não deve ter mais de 255 caracteres.',
-            'name.name' => 'O campo nome deve conter nome e sobrenome.',
-            // 'cpf.required' => 'O campo CPF é obrigatório.',
-            // 'cpf.unique' => 'Este CPF já está registrado.',
-            'phone.required' => 'O campo telefone é obrigatório.',
-            // 'birthday.required' => 'O campo data de nascimento é obrigatório.',
-            // 'birthday.date' => 'Digite uma data de nascimento válida.',
-            // 'birthday.before' => 'Você deve ter mais de 18 anos para se cadastrar.',
-        ]);
+            // 'phone.required' => 'O campo telefone é obrigatório.',
+        ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        } else if ($validator->validate()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+                'message' => 'Erro na validação dos dados.'
+            ], 422);
+        }
+
+        try {
             $user = User::create([
                 'name' => $request->name,
-                // 'username' => $request->username,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
-                'phone' => $request->phone,
-                // 'birthday' => $request->birthday,
-                // 'cpf' => $request->cpf,
-                // 'profession' => $request->profession,
-                // 'instagram' => $request->instagram,
-                // 'token' => Str::random(60),
+                // 'phone' => $request->phone,
             ]);
 
             if ($user) {
-
                 $user->roles()->sync([Roles::USER]);
 
-                // $rules = [
-                //     'street_address' => 'required',
-                //     'number' => 'required',
-                //     'complement' => 'nullable',
-                //     'city' => 'required',
-                //     'neighborhood' => 'required',
-                //     'state' => 'required',
-                //     'postal_code' => 'required',
-                // ];
-
-                // $messages = [
-                //     'street_address.required' => 'O campo endereço é obrigatório.',
-                //     'number.required' => 'O campo número é obrigatório.',
-                //     'city.required' => 'O campo cidade é obrigatório.',
-                //     'neighborhood.required' => 'O campo bairro é obrigatório.',
-                //     'state.required' => 'O campo estado é obrigatório.',
-                //     'postal_code.required' => 'O campo CEP é obrigatório.',
-                // ];
-
-                // $validator = Validator::make($request->all(), $rules, $messages);
-
-                // $address = new UserAddress();
-                // $address->user_id = auth()->user()->id;
-                // $address->street_address = $request->street_address;
-                // $address->number = $request->number;
-                // $address->complement = $request->complement;
-                // $address->city = $request->city;
-                // $address->neighborhood = $request->neighborhood;
-                // $address->state = $request->state;
-                // $address->postal_code = $request->postal_code;
-                // $address->save();
-
-                // $address = UserAddress::create([
-                //     'user_id' => $user->id,
-                //     'street_address' => $request->street_address,
-                //     'number' => $request->number,
-                //     'complement' => $request->complement,
-                //     'city' => $request->city,
-                //     'neighborhood' => $request->neighborhood,
-                //     'state' => $request->state,
-                //     'postal_code' => $request->postal_code,
-                // ]);
-
-                // if ($address) {
-                return redirect()->route('login')->with('success', 'Registrado com sucesso.');
-                // }
-
-                // return redirect()->route('register')->with('error', 'Erro ao registrar endereço de usuário. Tente novamente.');
+                return response()->json([
+                    'data' => [
+                        'user' => array_merge($user->toArray(), [ 'status' => 'authenticated' ]),
+                    ],
+                    'message' => 'Registrado com sucesso. Faça login para continuar.'
+                ], 201);
             }
-
-            return redirect()->route('register')->with('error', 'Erro ao registrar usuário. Tente novamente.');
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao registrar usuário: ' . $e->getMessage()
+            ], 500);
         }
+
+        return response()->json([
+            'message' => 'Erro ao registrar usuário. Tente novamente.'
+        ], 500);
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ], [
+            'email.required' => 'O campo e-mail é obrigatório.',
+            'email.email' => 'Digite um endereço de e-mail válido.',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'E-mail não encontrado.'
+            ], 404);
+        }
+
+        $resetToken = Str::random(60);
+        $user->reset_token = $resetToken;
+        $user->reset_token_expires_at = Carbon::now()->addMinutes(60);
+        $user->save();
+
+        $resetUrl = env('APP_URL') . "/reset-password?token=$resetToken&email=" . urlencode($user->email);
+
+        try {
+            Mail::send('emails.reset-password', ['url' => $resetUrl, 'name' => $user->name], function ($message) use ($user) {
+                $message->to($user->email)->subject('Redefinir Senha');
+            });
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao enviar e-mail: ' . $e->getMessage()
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'E-mail de redefinição de senha enviado com sucesso.'
+        ], 200);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => Password::min(8)
+                ->mixedCase()
+                ->letters()
+                ->numbers()
+                ->symbols()
+                ->uncompromised()
+                ->rules([
+                    'required',
+                    'confirmed',
+                ]),
+        ], [
+            'token.required' => 'Token inválido.',
+            'email.required' => 'E-mail é obrigatório.',
+            'email.email' => 'E-mail inválido.',
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.confirmed' => 'As senhas não coincidem.',
+            'password.min' => 'A senha deve ter pelo menos 8 caracteres.',
+            'password.mixedCase' => 'A senha deve conter ao menos 1 letra maiúscula e 1 letra minúscula.',
+            'password.numbers' => 'A senha deve conter ao menos 1 número.',
+            'password.symbols' => 'A senha deve conter ao menos 1 caracter especial.',
+            'password.uncompromised' => 'Sua senha é muito fraca!',
+        ]);
+
+        $user = User::where('email', $request->email)
+            ->where('reset_token', $request->token)
+            ->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Token ou e-mail inválido.'
+            ], 401);
+        }
+
+        if (Carbon::now()->isAfter($user->reset_token_expires_at)) {
+            return response()->json([
+                'message' => 'Token expirado. Solicite uma nova redefinição de senha.'
+            ], 401);
+        }
+
+        $user->password = bcrypt($request->password);
+        $user->reset_token = null;
+        $user->reset_token_expires_at = null;
+        $user->save();
+
+        return response()->json([
+            'message' => 'Senha redefinida com sucesso. Faça login com sua nova senha.'
+        ], 200);
     }
 
     // public static function orderCheckoutValidation(Request $request, $payment_type)

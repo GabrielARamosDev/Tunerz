@@ -8,7 +8,8 @@ import PropTypes from 'prop-types';
 import useFetchList from '../../hooks/useFetchList';
 
 import { useTheme } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+// import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';

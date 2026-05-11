@@ -32,105 +32,40 @@ import PsychologyIcon from '@mui/icons-material/Psychology';
 // import SchoolIcon from '@mui/icons-material/School';
 // import DownhillSkiingIcon from '@mui/icons-material/DownhillSkiing';
 
+import { useApp } from '../../contexts/AppContext';
+
 const MENU_ITEMS = [
     // Add items to menu here
     {
-        name: 'Dashboard',
+        name: 'Home',
         items: [
             {
                 component: Link,
-                to: '/v1/dashboard/cts',
+                to: '/home',
                 icon: (
                     <img
                         alt=""
                         src="/img/icons/football_field_gray.png"
                     />
                 ),
-                name: "CT's",
+                name: "Safe House",
                 shouldAppear: () => true,
             },
             {
                 component: Link,
-                to: '/v2/dashboard/relatorios',
+                to: '/garage',
                 icon: (
                     <img
                         alt=""
-                        src="/img/icons/reports_gray.png"
+                        src="/img/icons/football_field_gray.png"
                     />
                 ),
-                name: 'Relatórios',
+                name: "Garagem",
                 shouldAppear: () => true,
             },
             {
                 component: Link,
-                to: '/v1/dashboard/utilizacao',
-                icon: (
-                    <img
-                        alt=""
-                        src="/img/icons/reports_gray.png"
-                    />
-                ),
-                name: 'Utilização',
-                shouldAppear: () => true,
-            },
-        ],
-        permitted: [], // de acordo com a 'roleAbilityId'
-    },
-    {
-        name: 'Gestão',
-        items: [
-            {
-                component: Link,
-                to: '/v1/gestao/funcoes',
-                icon: <PsychologyIcon />,
-                name: 'Funções',
-                shouldAppear: () => true,
-            },
-            {
-                component: Link,
-                to: '/v1/gestao/usuarios',
-                icon: (
-                    <img
-                        alt=""
-                        src="/img/icons/users-2.png"
-                    />
-                ),
-                name: 'Usuários',
-                shouldAppear: () => true,
-            },
-            {
-                component: Link,
-                to: '/v1/gestao/escolas',
-                icon: (
-                    <img
-                        alt=""
-                        src="/img/icons/escolas_gray.png"
-                    />
-                ),
-                name: 'Escolas',
-                shouldAppear: () => true,
-            },
-            {
-                component: Link,
-                to: '/v1/gestao/habilidades',
-                icon: (
-                    <img
-                        alt=""
-                        src="/img/icons/badge-check-2.png"
-                    />
-                ),
-                name: 'Habilidades',
-                shouldAppear: () => true,
-            },
-        ],
-        permitted: ['ability_manager_menu'], // de acordo com a 'roleAbilityId'
-    },
-    {
-        name: 'Configurações',
-        items: [
-            {
-                component: Link,
-                to: '/perfil',
+                to: '/profile',
                 icon: (
                     <img
                         alt=""
@@ -141,22 +76,19 @@ const MENU_ITEMS = [
                 shouldAppear: () => true,
             },
         ],
-        permitted: [], // de acordo com a 'roleAbilityId'
     },
 ];
 
-const NavMenu = ({
-    width,
-    toggleDrawer,
-    isTablet = true,
-}) => {
+const NavMenu = ({ width, toggleDrawer }) => {
 
     const theme = useTheme();
     const navigate = useNavigate();
 
-    const user = useSelector((state) => state.app.user);
-    const userRole = user?.roles[0] || null; // Assuming the user has at least one role, otherwise default to an empty role
-    // const userRoleAbilitiesIds = userRole?.role_abilities.map((ra) => ra.ability) || [];
+    const { isTablet } = useApp();
+
+    /* =========================== State ============================ */
+
+    /* ============================================================== */
 
     const [selectedIndex, setSelectedIndex] = React.useState('/v1/dashboard/cts');
 
@@ -168,72 +100,52 @@ const NavMenu = ({
         }
     };
 
-    // const verifyPermission = (module) => {
-    //     if (module.permitted.length <= 0) {
-    //         return true;
-    //     }
-    //     if (module.permitted.length > 0) {
-    //         let bool = false;
-
-    //         module.permitted.forEach((permission) => {
-    //             if (userRoleAbilitiesIds.includes(permission)) {
-    //                 bool = true;
-    //             }
-    //         });
-    //         return bool;
-    //     }
-
-    //     return false;
-    // };
-
     const renderItems = (module, i) => (
         <React.Fragment key={i}>
-            {/* {verifyPermission(module) && ( */}
-                <List sx={{ p: '7.5% 0 0' }}>
-                    {module.name !== '' && (
-                        <ListSubheader
-                            variant="nav-menu"
-                            sx={{ top: -1 }}
+            <List sx={{ p: '7.5% 0 0' }}>
+                {/* {module.name !== '' && (
+                    <ListSubheader
+                        variant="nav-menu"
+                        sx={{ top: -1 }}
+                    >
+                        {module.name}
+                    </ListSubheader>
+                )} */}
+
+                {module.items
+                    .filter((item) => item.shouldAppear())
+                    .map((item) => (
+                        <ListItem
+                            disablePadding
+                            key={item.name}
+                            sx={{ mb: 0.75 }}
                         >
-                            {module.name}
-                        </ListSubheader>
-                    )}
+                            <ListItemButton
+                                component={item.component}
+                                variant="text"
+                                color="purple"
+                                to={item.to}
 
-                    {module.items
-                        .filter((item) => item.shouldAppear())
-                        .map((item) => (
-                            <ListItem
-                                disablePadding
-                                key={item.name}
-                                sx={{ mb: 0.75 }}
+                                onClick={() => handleListItemClick(item.to)}
+                                selected={selectedIndex === item.to}
                             >
-                                <ListItemButton
-                                    component={item.component}
-                                    variant="text"
-                                    color="purple"
-                                    to={item.to}
-
-                                    onClick={() => handleListItemClick(item.to)}
-                                    selected={selectedIndex === item.to}
+                                <ListItemIcon
+                                    sx={{
+                                        ...theme.customized.layout.flex.ACenter_JCenter,
+                                        minWidth: '40px',
+                                    }}
                                 >
-                                    <ListItemIcon
-                                        sx={{
-                                            ...theme.customized.layout.flex.ACenter_JCenter,
-                                            minWidth: '40px',
-                                        }}
-                                    >
-                                        {item.icon}
-                                    </ListItemIcon>
+                                    {item.icon}
+                                </ListItemIcon>
 
-                                    <Typography variant="nav-listItemButton" >
-                                        {item.name}
-                                    </Typography>
-                                </ListItemButton>
-                            </ListItem>
-                        ))
-                    }
-                </List>
-            // )}
+                                <Typography variant="nav-listItemButton" >
+                                    {item.name}
+                                </Typography>
+                            </ListItemButton>
+                        </ListItem>
+                    ))
+                }
+            </List>
         </React.Fragment>
     );
 

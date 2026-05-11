@@ -9,6 +9,9 @@ import { HomeProvider } from '../contexts/HomeContext.tsx';
 import { GarageProvider } from "../contexts/GarageContext.tsx";
 
 import LoginPage from '../pages/Profile/Login.tsx';
+import RegisterPage from '../pages/Profile/Register.tsx';
+import ForgotPasswordPage from '../pages/Profile/ForgotPassword.tsx';
+import ResetPasswordPage from '../pages/Profile/ResetPassword.tsx';
 import HomePage from '../pages/Home/index.tsx';
 // import ProfilePage from '../pages/Profile/index.tsx';
 import Garage from "../pages/Garage/index.tsx";
@@ -32,10 +35,18 @@ class Router {
                         </LoginProvider>
                     ),
                     children: [
-                        // {
-                        //     path: '/login/register',
-                        //     element: <RegisterPage />
-                        // },
+                        {
+                            path: '/login/register',
+                            element: <RegisterPage />
+                        },
+                        {
+                            path: '/login/forgot-password',
+                            element: <ForgotPasswordPage />
+                        },
+                        {
+                            path: '/login/reset-password',
+                            element: <ResetPasswordPage />
+                        },
                     ],
                 },
                 {

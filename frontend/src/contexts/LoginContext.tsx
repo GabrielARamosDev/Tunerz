@@ -1,6 +1,4 @@
 
-import axios from 'axios';
-
 import api from "../services/api";
 
 import React, { createContext, useContext } from "react";
@@ -45,13 +43,6 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
     /* * */
 
     React.useEffect(() => {
-        api.get("/ping")
-            .then((response) => {
-                console.log("API is alive! ", response.data);
-            });
-    }, []);
-
-    React.useEffect(() => {
         main.state.dispatch({
             type: 'CURRENT_PAGE',
             payload: {
@@ -78,7 +69,7 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
         setLoading(true);
 
         try {
-            const { data: response } = await axios.post<LoginResponse>('/api/login', {
+            const { data: response } = await api.post<LoginResponse>('login', {
                 email, 
                 password, 
                 remember_me: rememberMe,
@@ -123,12 +114,81 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const handleRegister = async (registerData: any) => {
+        setLoading(true);
+
+        try {
+            const { data: response } = await api.post('register', registerData);
+            console.log('Register response:', response);
+
+            setStatus(response.message);
+
+            // Redirect to login after successful registration
+            setTimeout(() => {
+                navigate('login');
+            }, 2000);
+        } catch (error) {
+            console.error('Register error:', error);
+            setStatus('Erro ao registrar.');
+
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleForgotPassword = async (email: string) => {
+        setLoading(true);
+
+        try {
+            const { data: response } = await api.post('forgot-password', {
+                email,
+            });
+            console.log('Forgot password response:', response);
+
+            setStatus(response.message);
+        } catch (error) {
+            console.error('Forgot password error:', error);
+            setStatus('Erro ao processar solicitação.');
+
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleResetPassword = async (resetData: any) => {
+        setLoading(true);
+
+        try {
+            const { data: response } = await api.post('reset-password', resetData);
+            console.log('Reset password response:', response);
+
+            setStatus(response.message);
+
+            // Redirect to login after successful password reset
+            setTimeout(() => {
+                navigate('login');
+            }, 2000);
+        } catch (error) {
+            console.error('Reset password error:', error);
+            setStatus('Erro ao redefinir senha.');
+
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    };
+
     /* * */
 
     return (
         <LoginContext.Provider
             value={{
                 handleLogin,
+                handleRegister,
+                handleForgotPassword,
+                handleResetPassword,
                 getSavedEmail
             }}
         >

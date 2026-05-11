@@ -7,8 +7,8 @@ import { Provider as ReduxProvider } from 'react-redux';
 import main from "./main.tsx";
 import router from './router';
 
-import './App.css';
-import AppTheme from './theme';
+import '../src/assets/css/App.css';
+import AppTheme from './assets/theme/index.ts';
 import { ThemeProvider } from '@mui/material';
 
 const App = () => {

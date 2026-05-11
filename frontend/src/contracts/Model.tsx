@@ -1,7 +1,7 @@
 
 import _ from 'lodash';
 
-import axios from 'axios';
+import api from '../services/api';
 import React from 'react';
 
 import Chip from '@mui/material/Chip';
@@ -63,15 +63,12 @@ class Model {
                 try {
                     console.log(`save the item ${this.resourceKey}`, attributes);
 
-                    const url = `/api/${this.getApiLink()}${this.id != 0 ? `/${this.id}` : ''}`;
+                    const url = `${this.getApiLink()}${this.id != 0 ? `/${this.id}` : ''}`;
 
                     // eslint-disable-next-line no-unused-vars
-                    const response = await axios({
-                        url,
-                        method: 'POST',
-                        data: attributes,
-                    });
+                    const response = await api.post(url, attributes);
                     // console.log(response);
+
                     if (response.status === 200) {
                         notifications.create('Dados salvos com sucesso!', 'success');
 
@@ -101,14 +98,12 @@ class Model {
         try {
             console.log(`delete the item ${this.resourceKey}`);
 
-            const url = `/api/${this.getApiLink()}/${this.id}`;
+            const url = `${this.getApiLink()}/${this.id}`;
 
             // eslint-disable-next-line no-unused-vars
-            const response = await axios({
-                url,
-                method: 'DELETE',
-            });
+            const response = await api.delete(url);
             // console.log(response);
+
             if (response.status === 200) {
                 notifications.create('Dado deletado com sucesso!', 'success');
                 return true;

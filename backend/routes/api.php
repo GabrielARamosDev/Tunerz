@@ -29,7 +29,7 @@ Route::get('/ping', function () {
 /* * */
 
 Route::group([
-    'middleware' => ['web'],
+    'middleware' => [ ],
     'namespace' => 'App',
 ], function () {
 
@@ -37,10 +37,11 @@ Route::group([
     //     return $request->user();
     // });
 
-    Route::get('/me', [AuthController::class, 'me']);
-
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
+    
+    Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
 });
 
@@ -49,6 +50,8 @@ Route::group([
     'namespace' => 'App',
     // 'prefix' => 'app',
 ], function () {
+
+    Route::get('/me', [AuthController::class, 'me']);
 
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{id}', [UserController::class, 'show']);
@@ -65,7 +68,7 @@ Route::group([
 
 Route::group([
     'middleware' => [
-        'auth:api', 
+        'auth:sanctum', 
         'role:admin', 
     ],
     'namespace' => 'Admin_App',
