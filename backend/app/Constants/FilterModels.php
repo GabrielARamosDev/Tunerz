@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Base\Constants;
+namespace App\Constants;
 
 use App\Models\v1\City;
 use App\Models\v1\Classroom;

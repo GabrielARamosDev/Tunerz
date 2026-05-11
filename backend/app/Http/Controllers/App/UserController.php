@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 
-use App\Base\Constants\Roles;
+use App\Constants\Roles;
+use App\Constants\UserStatus;
+
 use App\Http\Controllers\CrudController;
 
 use App\Models\User;
@@ -15,7 +17,66 @@ class UserController extends CrudController
 {
     protected $entity = User::class;
 
-    public function me() { return response()->json(auth()->user()); }
+    public function me() {
+
+        $data = auth()->user();
+
+        if (!$data) {
+            return response()->json([
+                'id' => null,
+                'name' => 'Guest #' . time() . rand(1, 999),
+                'email' => null,
+                'roles' => [[ 'id' => Roles::GUEST, 'name' => 'Guest' ]],
+                'status' => 'unauthenticated'
+            ], 200);
+        }
+        return response()->json($data, 200); 
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'message' => 'Invalid credentials'
+            ], 401);
+        }
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'data' => [
+                'user' => $user,
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+            ],
+            'message' => 'Login successful'
+        ], 200);
+    }
+
+    public function register(Request $request)
+    {
+        $this->validateForCreate($request);
+
+        $user = new User();
+        $this->fill($request, $user);
+        $user->save();
+
+        $this->afterModelSaved($request, $user);
+
+        return response()->json([
+            'data' => $user,
+            'message' => 'User registered successfully'
+        ], 201);
+    }
+
+    /* * */
 
     public function validateForCreate(Request $request)
     {
@@ -23,7 +84,7 @@ class UserController extends CrudController
             'name' => 'required',
             'email' => 'required|email',
             'role_id' => 'required|exists:roles,id',
-            'state_id' => 'required_if:role_id,' . Roles::STATE_AGENT . '|exclude_unless:role_id,' . Roles::STATE_AGENT . '|exists:states,id',
+            'state_id' => 'required_if:role_id,' . Roles::ADMIN . '|exclude_unless:role_id,' . Roles::ADMIN . '|exists:states,id',
             'password' => 'required|confirmed',
         ]);
     }
@@ -34,7 +95,7 @@ class UserController extends CrudController
             'name' => 'string',
             'email' => 'string|email',
             'role_id' => 'exists:roles,id',
-            'state_id' => 'exclude_unless:role_id,' . Roles::STATE_AGENT . '|exists:states,id',
+            'state_id' => 'exclude_unless:role_id,' . Roles::ADMIN . '|exists:states,id',
             'password' => 'confirmed',
         ]);
     }

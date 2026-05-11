@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Base\Constants;
+namespace App\Constants;
 
 class RoleAbilities
 {

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Base\Constants\Roles;
-use App\Base\Services\Wordpress\Wordpress;
+use App\Constants\Roles;
+use App\Services\Wordpress\Wordpress;
 use App\Http\Controllers\Controller;
 use App\Models\v1\User;
 use App\Providers\RouteServiceProvider;
