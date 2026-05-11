@@ -3,14 +3,18 @@ import api from "../../services/api";
 
 import { useEffect, useState } from "react";
 
+import { useApp } from "../../contexts/AppContext";
 import { useGarage } from "../../contexts/GarageContext";
 
 import type { Vehicle } from "../../types/vehicle";
 
 const Garage = () => {
 
+  const {
+    loading, fetched, status
+  } = useApp();
+
   const { 
-    loading, fetched, status, 
     vehicles, fetchVehicles, 
     addVehicle, removeVehicle
   } = useGarage();
@@ -22,12 +26,6 @@ const Garage = () => {
     // addVehicle(newVehicle);
   };
 
-  /* * */
-
-  if (loading) return <p>{status}</p>;
-
-  if (!fetched) return <p>{status}</p>;
-
   return (
     <>
       <div>
@@ -35,8 +33,6 @@ const Garage = () => {
 
         {vehicles.length > 0 ? (
           <>
-            {status}
-
             <ul>
               {vehicles.map((vehicle: Vehicle) => (
                 <li key={vehicle.id}>

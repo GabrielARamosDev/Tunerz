@@ -3,6 +3,7 @@ import api from "../../services/api";
 
 import { useEffect, useState } from "react";
 
+import { useApp } from "../../contexts/AppContext";
 import { useHome } from "../../contexts/HomeContext";
 
 import type { Vehicle } from "../../types/vehicle";
@@ -10,19 +11,14 @@ import type { Vehicle } from "../../types/vehicle";
 const Home = () => {
 
     const {
-        loading, fetched, status,
+        loading, status, fetched
+    } = useApp();
+
+    const {
         vehicles, fetchVehicles
     } = useHome();
 
     /* * */
-
-    // Here goes functions!
-
-    /* * */
-
-    if (loading) return <p>{status}</p>;
-
-    if (!fetched) return <p>{status}</p>;
 
     return (
         <>

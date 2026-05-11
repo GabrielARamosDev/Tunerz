@@ -57,6 +57,7 @@ const AppLayout = ({ currentPage }: LayoutType) => {
     /* ============================================================== */
 
     const {
+        loading, fetched, status, 
         theme, isTablet, windowWidth, windowHeight,
         drawerOpen,
         popAnchorEl, setPopAnchorEl, popOpen,
@@ -66,6 +67,12 @@ const AppLayout = ({ currentPage }: LayoutType) => {
         handleLogout,
         renderPageTitle
     } = useApp();
+
+    /* * */
+
+    if (loading) return <p>{status}</p>;
+
+    if (!fetched) return <p>{status}</p>;
 
     return (
         <>
