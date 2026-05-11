@@ -13,9 +13,8 @@ import Vehicle from "../../models/Vehicle.tsx";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-
-import PaginatedList from "../../components/layout/PaginatedList.tsx";
 
 const Garage = () => {
 
@@ -40,22 +39,24 @@ const Garage = () => {
 
         {vehicles.length > 0 ? (
           <>
-            <PaginatedList
-              Model={Vehicle}
-              title="Veículos na Garagem"
-              items={vehicles}
-            >
+            <List>
               {vehicles.map((vehicle: VehicleType) => (
                 <ListItem key={vehicle.id}>
                   <Stack style={{ padding: 10, borderBottom: "1px solid #ddd" }}>
-                    <strong>{vehicle.manufacturer} {vehicle.model}</strong>
-                    <Typography>{vehicle.trim}</Typography>
+                    <Typography variant="body1">
+                      {vehicle.manufacturer} {vehicle.model}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {vehicle.trim}
+                    </Typography>
                   </Stack>
                 </ListItem>
               ))}
-            </PaginatedList>
+            </List>
           </>
-        ) : ( <Typography>Nenhum veículo na garagem.</Typography> )}
+        ) : (
+          <Typography>Nenhum veículo na garagem.</Typography>
+        )}
 
         <Button onClick={handleAddVehicle}>Adicionar Veículo</Button>
         <Button onClick={fetchVehicles}>Atualizar Garagem</Button>

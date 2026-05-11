@@ -18,6 +18,7 @@ interface Options {
 }
 
 export default (options: Options, dependencies: any = []) => {
+    
     const {
         model: Model,
         page = 1,

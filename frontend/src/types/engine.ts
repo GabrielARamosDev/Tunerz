@@ -5,6 +5,6 @@ export interface Engine {
     cylinderCapacity: number;
     compressionRate: number;
     factoryPower: number;
-    stockTurboLimit: number;
+    factoryTorque: number;
     valves: number;
 }

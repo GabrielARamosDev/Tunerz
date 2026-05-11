@@ -12,7 +12,7 @@ class VehiclesSeeder extends Seeder
     {
         $vehicles = [
             [
-                'brand' => 'Chevrolet',
+                'manufacturer' => 'Chevrolet',
                 'model' => 'Astra',
                 'model_year'  => 2004,
                 'trim'  => 'CD 2.0 8V',
@@ -22,7 +22,7 @@ class VehiclesSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'brand' => 'Volkswagen',
+                'manufacturer' => 'Volkswagen',
                 'model' => 'Golf',
                 'model_year'  => 2001,
                 'trim'  => '1.6',
@@ -36,7 +36,7 @@ class VehiclesSeeder extends Seeder
         foreach ($vehicles as $v) {
             Vehicle::updateOrCreate(
                 [
-                    'brand' => $v['brand'], 
+                    'manufacturer' => $v['manufacturer'], 
                     'model' => $v['model'], 
                     'model_year' => $v['model_year'], 
                     'trim' => $v['trim']

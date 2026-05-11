@@ -9,7 +9,7 @@ use App\Models\Stage;
 class Vehicle extends Model
 {
     protected $fillable = [
-        'brand', 
+        'manufacturer', 
         'model', 
         'model_year', 
         'trim',

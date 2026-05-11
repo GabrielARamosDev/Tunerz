@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import notifications from '../controllers/notifications';
 
 export default (options, dependencies = []) => {
+    
     const {
         model: Model,
         id,

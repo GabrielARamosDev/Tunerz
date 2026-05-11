@@ -22,7 +22,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import ListSubheader from '@mui/material/ListSubheader';
 
-import FilterBar from '../filter/FilterBar';
+// import FilterBar from '../filter/FilterBar';
 
 // import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 // import InboxIcon from '@mui/icons-material/MoveToInbox';
