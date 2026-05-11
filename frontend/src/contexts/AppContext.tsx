@@ -55,7 +55,16 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         && state.app.user?.status !== 'unauthenticated'
     );
 
-    const currentPage = useSelector((state: StateType) => state.currentPage);
+    const currentPage = useSelector((state: StateType) => {
+
+        const c_p = state.currentPage;
+
+        if (c_p === null || c_p.name === 'root') {
+
+        }
+
+        return c_p;
+    });
 
     const filters = useSelector((state: StateType) => {
 
@@ -112,49 +121,29 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
                 filters: [],
             },
         });
-        
+
         navigateHook(_route);
+
+        setFetched(true);
+        setLoading(false);
     }, [navigateHook]);
 
     React.useEffect(() => {
-        if (authenticated) {
-                setStatus("Carregando dados...");
-                setLoading(true);
-                setFetched(false);
-            } else {
-                if (user === null || user?.id === null) {
-                    setStatus("Sessão expirada.");
+        setLoading(true);
 
-                    dialog.show({
-                        title: 'Sessão expirada',
-                        message: 'Sua sessão expirou. Deseja fazer login novamente ou se registrar?',
-                        type: 'confirm',
-                        confirmText: 'Sim',
-                        cancelText: 'Não',
-                    }).then((result) => {
-                        if (result && currentPage.name !== 'login') {
-                            navigate('login');
-                        }
-                    });
-                } else {
-                    setStatus("Bem-vindo ao Tunerz!");
-                }
-
-                setLoading(false);
-                setFetched(true);
-            }
+        if (!authenticated) {
+            setStatus("Sessão expirada.");
+            navigate('login');
+        } else {
+            setStatus("Bem-vindo de volta, " + user?.name + "!");
+            navigate('home');
+        }
     }, [user, authenticated]);
 
     /* * */
 
     const toggleDrawer = (open: boolean) => (event: any) => {
-        if (
-            event.type === 'keydown'
-            && (event.key === 'Tab'
-                || event.key === 'Shift')
-        ) {
-            return;
-        }
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return;
 
         setDrawerOpen(open);
     };
@@ -179,19 +168,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         let title = currentPage.title;
 
         switch (currentPage.name) {
-            case 'cts': {
-                if (filters.schools.length === 1) {
-                    title = `CT - ${filters.schools[0]?.name}`;
-                }
-                break;
-            }
-
             default:
                 break;
         }
 
-        const icon = typeof currentPage.icon === 'string'
-            ? <img src={`/img/icons/${currentPage.icon}.png`} />
+        const icon = (typeof currentPage.icon === 'string')
+            ? (<img src={`/img/icons/${currentPage.icon}.png`} />)
             : currentPage.icon;
 
         return (
@@ -201,7 +183,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
                     color: theme.palette.text.gray,
                 }}
             >
-                {icon}
+                {(currentPage?.icon !== null && currentPage?.icon !== '') && icon}
 
                 <Typography
                     variant="h3"

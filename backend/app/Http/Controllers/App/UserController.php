@@ -44,7 +44,7 @@ class UserController extends CrudController
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
-                'message' => 'Invalid credentials'
+                'message' => 'Credenciais inválidas'
             ], 401);
         }
 
@@ -56,7 +56,7 @@ class UserController extends CrudController
                 'access_token' => $token,
                 'token_type' => 'Bearer',
             ],
-            'message' => 'Login successful'
+            'message' => 'Login realizado com sucesso!'
         ], 200);
     }
 
@@ -72,7 +72,7 @@ class UserController extends CrudController
 
         return response()->json([
             'data' => $user,
-            'message' => 'User registered successfully'
+            'message' => 'Usuário registrado com sucesso!'
         ], 201);
     }
 

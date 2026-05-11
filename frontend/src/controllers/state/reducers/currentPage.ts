@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
-    name: 'home',
-    title: 'Home Page',
-    icon: 'list_dot',
+    name: 'root',
+    title: '',
+    icon: '',
     route: '/',
     filters: [],
 };
