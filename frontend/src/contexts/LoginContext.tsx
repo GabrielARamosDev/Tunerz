@@ -79,14 +79,17 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
 
         try {
             const { data: response } = await axios.post<LoginResponse>('/api/login', {
-                email,
-                password
+                email, 
+                password, 
+                remember_me: rememberMe,
             });
             console.log('Login response:', response.data);
 
-            if (response.data.access_token) {
+            const { user, access_token } = response.data;
+
+            if (access_token) {
                 // Store token in localStorage
-                localStorage.setItem('auth_token', response.data.access_token);
+                localStorage.setItem('auth_token', access_token);
 
                 // Handle remember me functionality
                 if (rememberMe) {
@@ -99,13 +102,13 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
                 }
 
                 // Set authorization header for future requests
-                api.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`;
+                api.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
 
                 setStatus(response.message);
 
                 main.state.dispatch({
                     type: 'APP_CREDENTIALS',
-                    payload: response.data.user,
+                    payload: user,
                 });
 
                 navigate('home');

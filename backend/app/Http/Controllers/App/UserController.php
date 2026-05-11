@@ -17,64 +17,58 @@ class UserController extends CrudController
 {
     protected $entity = User::class;
 
-    public function me() {
+    // public function login(Request $request)
+    // {
+    //     $request->validate([
+    //         'email' => 'required|email',
+    //         'password' => 'required',
+    //         'remember_me' => 'boolean',
+    //     ]);
 
-        $data = auth()->user();
+    //     $user = User::where('email', $request->email)->first();
 
-        if (!$data) {
-            return response()->json([
-                'id' => null,
-                'name' => 'Guest #' . time() . rand(1, 999),
-                'email' => null,
-                'roles' => [[ 'id' => Roles::GUEST, 'name' => 'Guest' ]],
-                'status' => 'unauthenticated'
-            ], 200);
-        }
-        return response()->json($data, 200); 
-    }
+    //     if (!$user || !Hash::check($request->password, $user->password)) {
+    //         return response()->json([
+    //             'message' => 'Usuário não encontrado ou credenciais inválidas'
+    //         ], 401);
+    //     }
 
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+    //     $token = $user->createToken('auth_token')->plainTextToken;
 
-        $user = User::where('email', $request->email)->first();
+    //     if ($user && $token) {
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'message' => 'Credenciais inválidas'
-            ], 401);
-        }
+    //         auth()->login($user, $request->remember_me ?? false);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+    //         return response()->json([
+    //             'data' => [
+    //                 'user' => $user,
+    //                 'access_token' => $token,
+    //                 'token_type' => 'Bearer',
+    //             ],
+    //             'message' => 'Login realizado com sucesso!'
+    //         ], 200);
+    //     }
 
-        return response()->json([
-            'data' => [
-                'user' => $user,
-                'access_token' => $token,
-                'token_type' => 'Bearer',
-            ],
-            'message' => 'Login realizado com sucesso!'
-        ], 200);
-    }
+    //     return response()->json([
+    //         'message' => 'Erro ao realizar login.'
+    //     ], 500);
+    // }
 
-    public function register(Request $request)
-    {
-        $this->validateForCreate($request);
+    // public function register(Request $request)
+    // {
+    //     $this->validateForCreate($request);
 
-        $user = new User();
-        $this->fill($request, $user);
-        $user->save();
+    //     $user = new User();
+    //     $this->fill($request, $user);
+    //     $user->save();
 
-        $this->afterModelSaved($request, $user);
+    //     $this->afterModelSaved($request, $user);
 
-        return response()->json([
-            'data' => $user,
-            'message' => 'Usuário registrado com sucesso!'
-        ], 201);
-    }
+    //     return response()->json([
+    //         'data' => $user,
+    //         'message' => 'Usuário registrado com sucesso!'
+    //     ], 201);
+    // }
 
     /* * */
 
@@ -83,9 +77,8 @@ class UserController extends CrudController
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'role_id' => 'required|exists:roles,id',
-            'state_id' => 'required_if:role_id,' . Roles::ADMIN . '|exclude_unless:role_id,' . Roles::ADMIN . '|exists:states,id',
             'password' => 'required|confirmed',
+            'roles' => 'array|exists:roles,id',
         ]);
     }
 
@@ -94,9 +87,8 @@ class UserController extends CrudController
         $request->validate([
             'name' => 'string',
             'email' => 'string|email',
-            'role_id' => 'exists:roles,id',
-            'state_id' => 'exclude_unless:role_id,' . Roles::ADMIN . '|exists:states,id',
             'password' => 'confirmed',
+            'roles' => 'array|exists:roles,id',
         ]);
     }
 

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\App\UserController;
 use App\Http\Controllers\App\VehicleController;
 use App\Http\Controllers\App\ModuleController;
@@ -28,7 +29,7 @@ Route::get('/ping', function () {
 /* * */
 
 Route::group([
-    'middleware' => [  ],
+    'middleware' => ['web'],
     'namespace' => 'App',
 ], function () {
 
@@ -36,10 +37,10 @@ Route::group([
     //     return $request->user();
     // });
 
-    Route::get('/me', [UserController::class, 'me']);
+    Route::get('/me', [AuthController::class, 'me']);
 
-    Route::post('/login', [UserController::class, 'login']);
-    Route::post('/register', [UserController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
 
 });
 

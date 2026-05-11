@@ -56,6 +56,7 @@ const LoginLayout = ({ currentPage }: LayoutType) => {
 
     React.useEffect(() => {
         const savedEmail = getSavedEmail();
+        
         if (savedEmail) {
             setEmail(savedEmail);
             setRememberMe(true);
