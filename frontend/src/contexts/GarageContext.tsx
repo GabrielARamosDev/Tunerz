@@ -1,9 +1,11 @@
 
 import api from "../services/api";
 
+import { useSelector } from 'react-redux';
 import React, { createContext, useContext } from "react";
 import type { ReactNode } from "react";
 
+import type { State as StateType } from '../types/state.ts';
 import type { GarageContextType } from "../types/garage";
 import type { Vehicle } from "../types/vehicle";
 
@@ -14,6 +16,12 @@ const GarageContext = createContext<GarageContextType | undefined>(undefined);
 
 // Provider
 export const GarageProvider = ({ children }: { children: ReactNode }) => {
+    
+    /* =========================== State ============================ */
+
+    const user = useSelector((state: StateType) => state.app.user);
+
+    /* ============================================================== */
 
     const {
         loading, setLoading,
@@ -23,10 +31,12 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
 
     const [vehicles, setVehicles] = React.useState<Vehicle[]>([]);
 
-    /* * */
+    /* ============================================================== */
 
     React.useEffect(() => {
-        api.get("/vehicles")
+        if (!user) return;
+        
+        api.get(`/users/${user?.id}/vehicles`)
             .then((response) => {
                 setStatus("Garagem carregada com sucesso.");
                 setVehicles(response.data);
@@ -40,7 +50,7 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
             });
     }, []);
 
-    /* * */
+    /* ============================================================== */
 
     const fetchVehicles = async () => {
 
@@ -49,7 +59,7 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
 
         setStatus("Atualizando garagem...");
 
-        api.get("/vehicles")
+        api.get(`/users/${user?.id}/vehicles`)
             .then((response) => {
                 setStatus("Garagem atualizada.");
                 setFetched(true);
@@ -66,18 +76,25 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const addVehicle = (vehicle: Vehicle) => {
-        api.post("/vehicles", vehicle)
-            .then(() => {
-                alert("Veículo criado");
-                setVehicles(prev => [...prev, vehicle]);
+        api.post(`/users/${user?.id}/vehicles`, vehicle)
+            .then((response) => {
+
+                const createdVehicle = response.data;
+
+                alert("Veículo criado com sucesso");
+
+                setVehicles(prev => [...prev, createdVehicle]);
+                setStatus("Veículo adicionado com sucesso.");
             })
-            .catch(() => {
+            .catch((error) => {
                 alert("Erro ao criar veículo");
+                setStatus("Erro ao criar veículo.");
+                console.error(error);
             });
     };
 
     const removeVehicle = (id: number) => {
-        api.delete(`/vehicles/${id}`)
+        api.delete(`/users/${user?.id}/vehicles/${id}`)
             .then(() => {
                 alert("Veículo removido");
                 setVehicles(prev => prev.filter(c => c.id !== id));
@@ -87,7 +104,7 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
             });
     };
 
-    /* * */
+    /* ============================================================== */
 
     return (
         <GarageContext.Provider

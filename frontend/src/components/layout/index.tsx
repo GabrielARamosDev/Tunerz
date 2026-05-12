@@ -68,7 +68,7 @@ const AppLayout = ({ currentPage }: LayoutType) => {
         renderPageTitle
     } = useApp();
 
-    /* * */
+    /* ============================================================== */
 
     if (loading) return <p>{status}</p>;
 

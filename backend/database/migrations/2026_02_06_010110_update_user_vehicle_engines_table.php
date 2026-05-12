@@ -61,7 +61,6 @@ return new class extends Migration
             $table->dropColumn('manufacturer');
             $table->dropColumn('code');
 
-
         });
     }
 };

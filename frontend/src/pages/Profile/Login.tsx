@@ -53,7 +53,7 @@ const LoginLayout = ({ currentPage }: LayoutType) => {
         }
     };
 
-    /* * */
+    /* ============================================================== */
 
     return (
         <Stack sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

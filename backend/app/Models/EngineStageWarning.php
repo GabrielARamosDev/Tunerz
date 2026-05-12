@@ -8,4 +8,8 @@ class EngineStageWarning extends Model
         'stage_id',
         'message'
     ];
+
+    public function stage() {
+        return $this->belongsTo(UserVehicleEngineStage::class, 'stage_id');
+    }
 }

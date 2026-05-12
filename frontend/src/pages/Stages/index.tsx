@@ -24,7 +24,7 @@ const Stages = ({ vehicleId }: { vehicleId: number }) => {
   const [pressao, setPressao] = React.useState(0.5);
   const [resultado, setResultado] = React.useState<{ status: string; aviso: string }>({ status: "loading", aviso: "" });
 
-  /* * */
+  /* ============================================================== */
 
   React.useEffect(() => {
 
@@ -52,7 +52,7 @@ const Stages = ({ vehicleId }: { vehicleId: number }) => {
       .catch(err => console.error(err));
   }, [vehicleId]);
 
-  /* * */
+  /* ============================================================== */
 
   if (loading) return <p>{status}</p>;
 

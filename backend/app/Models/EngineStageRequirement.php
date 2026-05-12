@@ -8,4 +8,8 @@ class EngineStageRequirement extends Model
         'stage_id',
         'description'
     ];
+
+    public function stage() {
+        return $this->belongsTo(UserVehicleEngineStage::class, 'stage_id');
+    }
 }

@@ -14,8 +14,9 @@ class VehiclesSeeder extends Seeder
             [
                 'manufacturer' => 'Chevrolet',
                 'model' => 'Astra',
-                'model_year'  => 2004,
+                'year'  => 2004,
                 'trim'  => 'CD 2.0 8V',
+                'engine_id' => 1,
                 'body_type'  => 'Sedan',
                 'image_url' => '',
                 'created_at' => now(),
@@ -24,8 +25,9 @@ class VehiclesSeeder extends Seeder
             [
                 'manufacturer' => 'Volkswagen',
                 'model' => 'Golf',
-                'model_year'  => 2001,
+                'year'  => 2001,
                 'trim'  => '1.6',
+                'engine_id' => 2,
                 'body_type'  => 'Hatchback',
                 'image_url' => '',
                 'created_at' => now(),
@@ -38,8 +40,9 @@ class VehiclesSeeder extends Seeder
                 [
                     'manufacturer' => $v['manufacturer'], 
                     'model' => $v['model'], 
-                    'model_year' => $v['model_year'], 
-                    'trim' => $v['trim']
+                    'year' => $v['year'], 
+                    'trim' => $v['trim'],
+                    'engine_id' => $v['engine_id']
                 ],  // chave única para evitar duplicatas
                 $v     // campos a atualizar
             );

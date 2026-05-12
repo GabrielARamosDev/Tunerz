@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserVehicleEngineStage extends Model
 {
+    protected $table = 'user_vehicle_engine_stages';
+
     protected $fillable = [
         'user_vehicle_engine_id', 
         'modification_type_id',
@@ -14,6 +16,10 @@ class UserVehicleEngineStage extends Model
         'expected_power',
         'status'
     ];
+
+    public function userVehicleEngine() {
+        return $this->belongsTo(UserVehicleEngine::class);
+    }
 
     public function requirements() {
         return $this->hasMany(EngineStageRequirement::class);

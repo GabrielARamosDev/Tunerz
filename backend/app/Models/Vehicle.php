@@ -3,30 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+
 use App\Models\Engine;
-use App\Models\Stage;
 
 class Vehicle extends Model
 {
     protected $fillable = [
         'manufacturer', 
         'model', 
-        'model_year', 
+        'year', 
         'trim',
+        'engine_id',
         'body_type', 
-        'drivetrain', 
-        'fuel_type',
-        'price', 
-        'price_currency',
-        'weight', 
-        'weight_unit',
-        'width', 
-        'length',
         'image_url'
     ];
-
-    public function engines()
+    
+    public function engine()
     {
-        return $this->belongsToMany(Engine::class, 'vehicle_engine');
+        return $this->belongsTo(Engine::class);
     }
 }

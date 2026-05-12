@@ -6,7 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserVehicleEngine extends Model
 {
-    protected $fillable = ['user_vehicle_id', 'stage_id', 'spec_id'];
+    protected $table = 'user_vehicle_engine';
+
+    protected $fillable = [
+        'user_vehicle_id', 
+        'code',
+        'manufacturer',
+        'displacement',
+        'valve_count',
+        'propulsion',
+        'fuel_type',
+    ];
 
     public function userVehicle() {
         return $this->belongsTo(UserVehicle::class);

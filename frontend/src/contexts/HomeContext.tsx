@@ -21,56 +21,12 @@ export const HomeProvider = ({ children }: { children: ReactNode }) => {
         status, setStatus
     } = useApp();
 
-    const [vehicles, setVehicles] = React.useState<Vehicle[]>([]);
-
-    /* * */
-
-    React.useEffect(() => {
-        api.get("vehicles")
-            .then((response) => {
-                setStatus("Veículos carregados com sucesso.");
-                setVehicles(response.data);
-                setFetched(true);
-            })
-            .catch(() => {
-                setStatus("Erro ao carregar os veículos.");
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, []);
-
-    /* * */
-
-    const fetchVehicles = async () => {
-
-        setFetched(false);
-        setLoading(true);
-
-        setStatus("Atualizando...");
-
-        api.get("/vehicles")
-            .then((response) => {
-                setStatus("Veículos atualizados.");
-                setFetched(true);
-                setLoading(false);
-
-                setVehicles(response.data);
-            })
-            .catch(() => {
-                setStatus("Erro ao atualizar os veículos.");
-                setLoading(false);
-            });
-
-        return;
-    };
-
-    /* * */
+    /* ============================================================== */
 
     return (
         <HomeContext.Provider
             value={{
-                vehicles, fetchVehicles
+                
             }}
         >
             {children}

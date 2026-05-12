@@ -2,6 +2,7 @@
 /* eslint-disable react/no-unescaped-entities */
 
 import api from "../services/api";
+import main from "../main.tsx";
 
 import { useNavigate } from "react-router-dom";
 import { createContext, useContext } from "react";
@@ -31,7 +32,6 @@ import auth from '../controllers/auth';
 
 import type { State as StateType } from '../types/state.ts';
 import type { Theme as ThemeType } from '../types/style.ts';
-import main from "../main.tsx";
 
 const NAV_BAR_WIDTH = 300;
 const NAV_BAR_WIDTH_MOBILE = 250;
@@ -86,7 +86,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
     const [status, setStatus] = React.useState("Carregando Garagem...");
 
-    /* * */
+    /* ============================================================== */
 
     const theme: ThemeType = useTheme();
 
@@ -105,7 +105,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     const navBarWidth = isTablet ? NAV_BAR_WIDTH : NAV_BAR_WIDTH_MOBILE;
     const appBarHeight = isTablet ? APP_BAR_HEIGHT : APP_BAR_HEIGHT_MOBILE;
 
-    /* * */
+    /* ============================================================== */
 
     const navigate = React.useCallback((path: string) => {
 
@@ -147,7 +147,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [user, authenticated]);
 
-    /* * */
+    /* ============================================================== */
 
     const toggleDrawer = (open: boolean) => (event: any) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return;
@@ -203,7 +203,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         );
     };
 
-    /* * */
+    /* ============================================================== */
 
     return (
         <AppContext.Provider

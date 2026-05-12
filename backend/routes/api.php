@@ -26,7 +26,7 @@ Route::get('/ping', function () {
     ], 200);
 });
 
-/* * */
+/* ============================================================== */
 
 Route::group([
     'middleware' => [ ],
@@ -55,12 +55,23 @@ Route::group([
 
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{id}', [UserController::class, 'show']);
+    Route::get('/users/{id}/vehicles', [UserController::class, 'vehicles']);
+    Route::post('/users/{id}/vehicles', [UserController::class, 'addVehicle']);
 
     Route::get('/vehicles', [VehicleController::class, 'index']);
     Route::get('/vehicles/{id}', [VehicleController::class, 'show']);
+    Route::get('/vehicles/info', [VehicleController::class, 'retrieve']);
+    Route::post('/vehicles', [VehicleController::class, 'store']);
+    Route::get('/vehicles/options/manufacturers', [VehicleController::class, 'getManufacturers']);
+    Route::get('/vehicles/options/models', [VehicleController::class, 'getModels']);
+    Route::get('/vehicles/options/trims', [VehicleController::class, 'getTrims']);
+    Route::get('/vehicles/options/years', [VehicleController::class, 'getYears']);
 
-    Route::get('/vehicles/{id}/stages', [StageController::class, 'byVehicle']);
+    Route::get('/engines', [ModuleController::class, 'index']);
+    Route::get('/engines/{id}', [ModuleController::class, 'show']);
+
     Route::get('/stages/{id}', [StageController::class, 'show']);
+    Route::get('/vehicles/{id}/stages', [StageController::class, 'byVehicle']);
 
     Route::get('/vehicles/{id}/modules', [ModuleController::class, 'byVehicle']);
 
@@ -77,7 +88,7 @@ Route::group([
     
 });
 
-/* * */
+/* ============================================================== */
 
 // Route::prefix('v2')->group(function () {
 //     Route::group([

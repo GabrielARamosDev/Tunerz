@@ -40,7 +40,7 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
         status, setStatus
     } = useApp();
 
-    /* * */
+    /* ============================================================== */
 
     React.useEffect(() => {
         main.state.dispatch({
@@ -55,7 +55,7 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
         });
     }, []);
 
-    /* * */
+    /* ============================================================== */
 
     const getSavedEmail = () => {
         const isRemembered = localStorage.getItem(REMEMBER_ME_FLAG) === 'true';
@@ -180,7 +180,7 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
-    /* * */
+    /* ============================================================== */
 
     return (
         <LoginContext.Provider

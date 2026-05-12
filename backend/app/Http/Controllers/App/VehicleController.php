@@ -12,19 +12,64 @@ class VehicleController extends CrudController
 {    
     public function index(Request $request)
     {
-        $vehicles = Vehicle::with(['engines.stages', 'engines.specs'])->get();
+        $vehicles = Vehicle::with(['engine.stages', 'engine.specs'])->get();
+        
+        // Map year to year for frontend compatibility
+        $vehicles = $vehicles->map(function($vehicle) {
+            $vehicle->year = $vehicle->year;
+            unset($vehicle->year);
+            return $vehicle;
+        });
+        
         return response()->json($vehicles);
     }
 
     public function show(Request $request, $id)
     {
-        $vehicle = Vehicle::with(['engines.stages', 'engines.specs'])->findOrFail($id);
+        $vehicle = Vehicle::with(['engine.stages', 'engine.specs'])->findOrFail($id);
+        
+        // Map year to year for frontend compatibility
+        $vehicle->year = $vehicle->year;
+        unset($vehicle->year);
+        
+        return response()->json($vehicle);
+    }
+
+    public function retrieve(Request $request)
+    {
+        $manufacturer = $request->query('manufacturer');
+        $model = $request->query('model');
+        $trim = $request->query('trim');
+        $year = $request->query('year');
+
+        $vehicle = Vehicle::where('manufacturer', $manufacturer)
+            ->where('model', $model)
+            ->where('trim', $trim)
+            ->where('year', $year)
+            ->with(['engine.stages', 'engine.specs'])
+            ->firstOrFail();
+
+        // // Map year to year for frontend compatibility
+        // $vehicle->year = $vehicle->year;
+        // unset($vehicle->year);
+
         return response()->json($vehicle);
     }
 
     public function store(Request $request)
     {
-        $vehicle = Vehicle::create($request->all());
+        $data = $request->all();
+        // Map 'year' to 'year' for database compatibility
+        if (isset($data['year'])) {
+            $data['year'] = $data['year'];
+            unset($data['year']);
+        }
+        $vehicle = Vehicle::create($data);
+        
+        // Map year to year for frontend compatibility
+        $vehicle->year = $vehicle->year;
+        unset($vehicle->year);
+        
         return response()->json($vehicle, 201);
     }
 
@@ -39,5 +84,61 @@ class VehicleController extends CrudController
     {
         Vehicle::destroy($id);
         return response()->json(null, 204);
+    }
+
+    public function getManufacturers()
+    {
+        $manufacturers = Vehicle::distinct()
+            ->pluck('manufacturer')
+            ->sort()
+            ->values();
+        
+        return response()->json($manufacturers);
+    }
+
+    public function getModels(Request $request)
+    {
+        $manufacturer = $request->query('manufacturer');
+        
+        $models = Vehicle::where('manufacturer', $manufacturer)
+            ->distinct()
+            ->pluck('model')
+            ->sort()
+            ->values();
+        
+        return response()->json($models);
+    }
+
+    public function getTrims(Request $request)
+    {
+        $manufacturer = $request->query('manufacturer');
+        $model = $request->query('model');
+        
+        $trims = Vehicle::where('manufacturer', $manufacturer)
+            ->where('model', $model)
+            ->distinct()
+            ->pluck('trim')
+            ->sort()
+            ->values();
+        
+        return response()->json($trims);
+    }
+
+    public function getYears(Request $request)
+    {
+        $manufacturer = $request->query('manufacturer');
+        $model = $request->query('model');
+        $trim = $request->query('trim');
+
+        $years = Vehicle::where('manufacturer', $manufacturer)
+            ->where('model', $model)
+            ->where('trim', $trim)
+            ->distinct()
+            ->pluck('year')
+            ->sort()
+            ->reverse()
+            ->values();
+        
+        return response()->json($years);
     }
 }
