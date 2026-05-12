@@ -54,10 +54,10 @@ const Garage = () => {
                 <ListItem key={item.id}>
                   <Stack style={{ padding: 10, borderBottom: "1px solid #ddd" }}>
                     <Typography variant="body1">
-                      {item.vehicle.manufacturer} {item.vehicle.model}
+                      {item.vehicle.manufacturer} {item.vehicle.model} ({item.vehicle.year})
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {item.vehicle.trim} - {item.vehicle.year}
+                      {item.vehicle.trim}
                     </Typography>
                   </Stack>
                 </ListItem>

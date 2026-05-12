@@ -8,6 +8,7 @@ import type { ReactNode } from "react";
 import type { State as StateType } from '../types/state.ts';
 import type { GarageContextType } from "../types/garage";
 import type { Vehicle } from "../types/vehicle";
+import type { UserVehicle } from "../types/userVehicle.ts";
 
 import { useApp } from "./AppContext";
 
@@ -29,13 +30,13 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
         status, setStatus
     } = useApp();
 
-    const [vehicles, setVehicles] = React.useState<Vehicle[]>([]);
+    const [vehicles, setVehicles] = React.useState<UserVehicle[]>([]);
 
     /* ============================================================== */
 
     React.useEffect(() => {
         if (!user) return;
-        
+
         api.get(`/users/${user?.id}/vehicles`)
             .then((response) => {
                 setStatus("Garagem carregada com sucesso.");
