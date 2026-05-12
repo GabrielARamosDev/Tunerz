@@ -7,6 +7,7 @@ import { AppProvider } from '../contexts/AppContext.tsx';
 import { LoginProvider } from '../contexts/LoginContext.tsx';
 import { HomeProvider } from '../contexts/HomeContext.tsx';
 import { GarageProvider } from "../contexts/GarageContext.tsx";
+import { WorkshopProvider } from '../contexts/WorkshopContext.tsx';
 
 import LoginPage from '../pages/Profile/Login.tsx';
 import RegisterPage from '../pages/Profile/Register.tsx';
@@ -15,6 +16,7 @@ import ResetPasswordPage from '../pages/Profile/ResetPassword.tsx';
 import HomePage from '../pages/Home/index.tsx';
 // import ProfilePage from '../pages/Profile/index.tsx';
 import Garage from "../pages/Garage/index.tsx";
+import Workshop from '../pages/Garage/Workshop/index.tsx';
 
 class Router {
 
@@ -71,10 +73,14 @@ class Router {
                         </GarageProvider>
                     ),
                     children: [
-                        // {
-                        //     path: '/garage/dashboard',
-                        //     element: <GarageDashboardPage />
-                        // },
+                        {
+                            path: '/garage/workshop',
+                            element: (
+                                <WorkshopProvider>
+                                    <Workshop />
+                                </WorkshopProvider>
+                            )
+                        },
                         // {
                         //     path: '/garage/settings',
                         //     element: <GarageSettingsPage />
