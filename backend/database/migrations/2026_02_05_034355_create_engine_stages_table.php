@@ -20,10 +20,11 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->foreignId('modification_type_id')
+            $table->unsignedBigInteger('modification_type_id')->nullable();
+
+            $table->foreign('modification_type_id')
                 ->references('id')
                 ->on('modification_types')
-                ->nullable()
                 ->constrained()
                 ->cascadeOnDelete();
 

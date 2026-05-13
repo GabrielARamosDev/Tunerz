@@ -12,7 +12,7 @@ return new class extends Migration {
 
             $table->string('brand');                 // Chevrolet
             $table->string('model');                 // Astra
-            $table->year('model_year')->nullable();  // 2004
+            $table->integer('year')->nullable();  // 2004
             $table->string('trim')->nullable();      // CD
 
             $table->enum('body_type', [

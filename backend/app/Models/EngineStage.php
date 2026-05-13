@@ -8,7 +8,6 @@ class EngineStage extends Model
 {
     protected $fillable = [
         'engine_id', 
-        'engine_code',
         'modification_type_id',
         'name',
         'boost_pressure',

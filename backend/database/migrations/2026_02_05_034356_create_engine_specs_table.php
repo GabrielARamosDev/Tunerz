@@ -40,11 +40,20 @@ return new class extends Migration
             $table->integer('cylinders_count');
 
             $table->integer('valves_per_cylinder');
-            $table->enum('valve_tappet', [
-                'hydraulic_lifter',
-                'solid_lifter',
-                'finger_follower',
-                'desmodromic',
+            $table->enum('valve_lash_type', [
+                'hydraulic',
+                'solid'
+            ]);
+            $table->enum('valve_follower_type', [
+                'roller', 
+                'flat_tappet', 
+                'bucket', 
+                'finger_follower', 
+                'mushroom'
+            ]);
+            $table->enum('valve_actuation_type', [
+                'spring', 
+                'desmodromic'
             ]);
 
             $table->double('compression_ratio', 4, 2);
@@ -85,7 +94,9 @@ return new class extends Migration
             $table->double('stroke_mm', 5, 2);
 
             $table->integer('stock_power_hp')->nullable();
+            $table->integer('stock_power_rpm')->nullable();
             $table->integer('stock_torque_nm')->nullable();
+            $table->integer('stock_torque_rpm')->nullable();
 
             $table->double('specific_power_hp_per_liter', 6, 2)->nullable();
             $table->double('specific_torque_nm_per_liter', 6, 2)->nullable();

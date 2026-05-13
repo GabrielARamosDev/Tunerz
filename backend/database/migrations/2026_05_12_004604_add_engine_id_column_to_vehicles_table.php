@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::dropIfExists('vehicle_engine');
+        Schema::dropIfExists('vehicle_engine');
 
         Schema::table('vehicles', function (Blueprint $table) {
 
@@ -34,7 +34,7 @@ return new class extends Migration
     {
         Schema::table('vehicles', function (Blueprint $table) {
             
-            $table->dropForeign(['vehicles_engine_id_foreign']);
+            $table->dropForeign(['engine_id']);
             $table->dropColumn('engine_id');
 
         });

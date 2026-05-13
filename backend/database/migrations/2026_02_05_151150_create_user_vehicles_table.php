@@ -26,12 +26,6 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->foreignId('engine_id')
-                ->references('id')
-                ->on('engines')
-                ->constrained()
-                ->cascadeOnDelete();
-
         });
     }
 

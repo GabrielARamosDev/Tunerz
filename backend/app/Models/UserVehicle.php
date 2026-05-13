@@ -11,7 +11,7 @@ class UserVehicle extends Model
     protected $fillable = [
         'user_id', 
         'vehicle_id', 
-        'engine_id'
+        'user_vehicle_engine_id'
     ];
 
     public function user() {

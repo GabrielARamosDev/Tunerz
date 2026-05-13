@@ -167,7 +167,7 @@ class UserController extends CrudController
             $user_vehicle = UserVehicle::create([
                 'user_id' => $request->user()->id,
                 'vehicle_id' => $vehicle->id,
-                'engine_id' => $engine->id,
+                'user_vehicle_engine_id' => $engine->id,
             ]);
 
             // Create user vehicle specs
@@ -198,6 +198,10 @@ class UserController extends CrudController
                 'propulsion' => $engine->propulsion,
                 'fuel_type' => $engine->fuel_type,
             ]);
+
+            // Update user_vehicle engine_id
+            $user_vehicle->user_vehicle_engine_id = $user_vehicle_engine->id;
+            $user_vehicle->save();
 
             // Get and create engine specs
             $engine_specs = EngineSpec::findOrFail($engine->id);

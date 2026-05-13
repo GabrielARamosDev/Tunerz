@@ -24,6 +24,16 @@ return new class extends Migration
             $table->unique(['user_vehicle_id']);
             
         });
+
+        Schema::table('user_vehicles', function (Blueprint $table) {
+
+            $table->foreignId('user_vehicle_engine_id')
+                ->references('id')
+                ->on('user_vehicle_engine')
+                ->constrained()
+                ->cascadeOnDelete();
+
+        });
     }
 
     /**
@@ -32,5 +42,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('user_vehicle_engine');
+
+        Schema::table('user_vehicles', function (Blueprint $table) {
+
+            $table->dropForeign(['user_vehicle_engine_id']);
+            $table->dropColumn('user_vehicle_engine_id');
+
+        });
     }
 };
