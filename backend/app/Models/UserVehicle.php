@@ -23,10 +23,31 @@ class UserVehicle extends Model
 
     public function vehicleSpecs()
     {
-        return $this->hasOne(UserVehicleSpecs::class);
+        return $this->hasMany(UserVehicleSpecs::class);
     }
 
     public function engines() {
         return $this->hasMany(UserVehicleEngine::class);
     }
+
+    /* */
+
+    public static function mountFrontendModel(UserVehicle $item) {
+
+        $item = $item->toArray();
+
+        $specs = $item['vehicle_specs'];
+        $engines = $item['engines'];
+        
+        $item['vehicle']['specs'] = $specs;
+        $item['vehicle']['engines'] = $engines;
+        
+        unset($item['vehicle_specs']);
+        unset($item['engines']);
+
+        $vehicle = $item;
+
+        return $vehicle;
+    }
+
 }

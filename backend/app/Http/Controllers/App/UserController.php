@@ -116,19 +116,11 @@ class UserController extends CrudController
                     'vehicle', 'vehicleSpecs',
                     'engines.specs', 'engines.stages'
                 ])
-                ->get()
-                ->toArray();
+                ->get();
 
             foreach ($user_vehicles as $i => $vehicle) {
-
-                $specs = $vehicle['vehicle_specs'];
-                $vehicle['vehicle']['specs'] = $specs;
-                
-                unset($vehicle['vehicle_specs']);
-
-                $user_vehicles[$i] = $vehicle;
+                $user_vehicles[$i] = UserVehicle::mountFrontendModel($vehicle);
             }
-            dd($user_vehicles);
 
             return response()->json($user_vehicles, 200);
         }
@@ -266,7 +258,9 @@ class UserController extends CrudController
                     'engines.specs', 'engines.stages'
                 ]);
 
-                return response()->json($user_vehicle, 201);
+                $new_vehicle = UserVehicle::mountFrontendModel($user_vehicle);
+
+                return response()->json($new_vehicle, 201);
             } catch (\Exception $e) {
                 DB::rollBack();
 
