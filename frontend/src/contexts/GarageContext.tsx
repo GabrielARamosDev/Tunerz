@@ -40,7 +40,7 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
     React.useEffect(() => {
         if (!user) return;
 
-        api.get(`/users/${user?.id}/vehicles`)
+        api.get(`/user/vehicles`)
             .then((response) => {
                 setStatus("Garagem carregada com sucesso.");
                 setUserVehicles(response.data);
@@ -63,7 +63,7 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
 
         setStatus("Atualizando garagem...");
 
-        api.get(`/users/${user?.id}/vehicles`)
+        api.get(`/user/vehicles`)
             .then((response) => {
                 setStatus("Garagem atualizada.");
                 setFetched(true);
@@ -80,7 +80,7 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const addVehicle = (vehicle: Vehicle) => {
-        api.post(`/users/${user?.id}/vehicles`, vehicle)
+        api.post(`/user/vehicle`, vehicle)
             .then((response) => {
 
                 const createdVehicle = response.data;
@@ -98,7 +98,7 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const removeVehicle = (id: number) => {
-        api.delete(`/users/${user?.id}/vehicles/${id}`)
+        api.delete(`/user/vehicle/${id}`)
             .then(() => {
                 alert("Veículo removido");
                 setUserVehicles(prev => prev.filter(c => c.id !== id));

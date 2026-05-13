@@ -15,7 +15,7 @@ return new class extends Migration
             $table->boolean('active')->default(0)->after('height');
         });
 
-        Schema::table('user_vehicle_engine', function (Blueprint $table) {
+        Schema::table('user_vehicle_engines', function (Blueprint $table) {
             $table->boolean('active')->default(0)->after('fuel_type');
         });
 
@@ -41,7 +41,7 @@ return new class extends Migration
             $table->dropColumn('active');
         });
 
-        Schema::table('user_vehicle_engine', function (Blueprint $table) {
+        Schema::table('user_vehicle_engines', function (Blueprint $table) {
             $table->dropColumn('active');
         });
 

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_vehicle_engine', function (Blueprint $table) {
+        Schema::create('user_vehicle_engines', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('user_vehicle_id')
@@ -27,9 +27,13 @@ return new class extends Migration
 
         Schema::table('user_vehicles', function (Blueprint $table) {
 
-            $table->foreignId('user_vehicle_engine_id')
+            $table->unsignedBigInteger('user_vehicle_engine_id')
+                ->nullable()
+                ->default(null);
+
+            $table->foreign('user_vehicle_engine_id')
                 ->references('id')
-                ->on('user_vehicle_engine')
+                ->on('user_vehicle_engines')
                 ->constrained()
                 ->cascadeOnDelete();
 
@@ -41,7 +45,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_vehicle_engine');
+        Schema::dropIfExists('user_vehicle_engines');
 
         Schema::table('user_vehicles', function (Blueprint $table) {
 

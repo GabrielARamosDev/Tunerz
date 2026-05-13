@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->foreignId('user_vehicle_engine_id')
                 ->references('id')
-                ->on('user_vehicle_engine')
+                ->on('user_vehicle_engines')
                 ->constrained()
                 ->cascadeOnDelete();
 

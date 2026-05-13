@@ -55,8 +55,10 @@ Route::group([
 
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{id}', [UserController::class, 'show']);
-    Route::get('/users/{id}/vehicles', [UserController::class, 'vehicles']);
-    Route::post('/users/{id}/vehicles', [UserController::class, 'addVehicle']);
+
+    Route::get('/user/vehicles', [UserController::class, 'vehicles']);
+    Route::post('/user/vehicle', [UserController::class, 'addVehicle']);
+    Route::delete('/user/vehicle/{id}', [UserController::class, 'removeVehicle']);
 
     Route::get('/vehicles', [VehicleController::class, 'index']);
     Route::get('/vehicles/{id}', [VehicleController::class, 'show']);

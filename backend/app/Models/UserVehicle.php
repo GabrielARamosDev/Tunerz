@@ -11,7 +11,6 @@ class UserVehicle extends Model
     protected $fillable = [
         'user_id', 
         'vehicle_id', 
-        'user_vehicle_engine_id'
     ];
 
     public function user() {
@@ -27,7 +26,7 @@ class UserVehicle extends Model
         return $this->hasMany(UserVehicleSpecs::class);
     }
 
-    public function engine() {
-        return $this->belongsTo(UserVehicleEngine::class);
+    public function engines() {
+        return $this->belongsToMany(UserVehicleEngine::class);
     }
 }

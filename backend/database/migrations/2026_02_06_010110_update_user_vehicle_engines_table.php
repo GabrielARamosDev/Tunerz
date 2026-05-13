@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('user_vehicle_engine', function (Blueprint $table) {
+        Schema::table('user_vehicle_engines', function (Blueprint $table) {
         
             $table->string('code');          // X20XEV
             $table->string('manufacturer');  // GM
@@ -47,7 +47,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('user_vehicle_engine', function (Blueprint $table) {
+        Schema::table('user_vehicle_engines', function (Blueprint $table) {
 
             $table->dropColumn('updated_at');
             $table->dropColumn('created_at');
