@@ -46,7 +46,7 @@ return new class extends Migration
             $table->double('length', 10, 2)->nullable(); // mm
             $table->double('height', 10, 2)->nullable(); // mm
 
-            $table->unique('user_vehicle_id');
+            $table->boolean('active')->default(0);
 
             $table->timestamps();
         });

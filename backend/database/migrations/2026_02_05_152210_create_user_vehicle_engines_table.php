@@ -36,6 +36,8 @@ return new class extends Migration
                 'diesel',
             ]);
 
+            $table->boolean('active')->default(0);
+
             $table->timestamps(); 
         });
     }

@@ -104,6 +104,8 @@ return new class extends Migration
             $table->double('power_to_weight_ratio', 8, 4)->nullable();
             $table->double('torque_to_weight_ratio', 8, 4)->nullable();
 
+            $table->boolean('active')->default(0);
+
             $table->timestamps();
         });
     }

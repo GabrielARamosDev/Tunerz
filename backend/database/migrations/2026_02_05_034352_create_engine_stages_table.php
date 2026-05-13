@@ -31,8 +31,9 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->string('name');
-            $table->decimal('boost_pressure', 10, 2)->nullable();
-            $table->decimal('expected_power', 10, 2)->nullable();
+            $table->decimal('boost_pressure', 10, 2)->default(0.0);
+            $table->decimal('expected_power', 10, 2)->default(0.0);
+            $table->decimal('expected_torque', 10, 2)->default(0.0);
 
             $table->timestamps();
         });
