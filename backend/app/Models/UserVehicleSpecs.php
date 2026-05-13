@@ -21,7 +21,7 @@ class UserVehicleSpecs extends Model
         'weight_unit',
         'width',
         'length',
-        'height'
+        'height',
     ];
 
     public function userVehicle() {

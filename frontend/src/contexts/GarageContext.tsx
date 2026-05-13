@@ -25,12 +25,15 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
     /* ============================================================== */
 
     const {
+        navigate, 
         loading, setLoading,
         fetched, setFetched,
         status, setStatus
     } = useApp();
 
-    const [vehicles, setVehicles] = React.useState<UserVehicle[]>([]);
+    const [userVehicles, setUserVehicles] = React.useState<UserVehicle[]>([]);
+
+    const [vehicleAtWorkshop, setVehicleAtWorkshop] = React.useState<UserVehicle | null>(null);
 
     /* ============================================================== */
 
@@ -40,7 +43,7 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
         api.get(`/users/${user?.id}/vehicles`)
             .then((response) => {
                 setStatus("Garagem carregada com sucesso.");
-                setVehicles(response.data);
+                setUserVehicles(response.data);
                 setFetched(true);
             })
             .catch(() => {
@@ -53,7 +56,7 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
 
     /* ============================================================== */
 
-    const fetchVehicles = async () => {
+    const fetchUserVehicles = async () => {
 
         setFetched(false);
         setLoading(true);
@@ -66,7 +69,7 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
                 setFetched(true);
                 setLoading(false);
 
-                setVehicles(response.data);
+                setUserVehicles(response.data);
             })
             .catch(() => {
                 setStatus("Erro ao atualizar a garagem.");
@@ -84,7 +87,7 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
 
                 alert("Veículo criado com sucesso");
 
-                setVehicles(prev => [...prev, createdVehicle]);
+                setUserVehicles(prev => [...prev, createdVehicle]);
                 setStatus("Veículo adicionado com sucesso.");
             })
             .catch((error) => {
@@ -98,20 +101,41 @@ export const GarageProvider = ({ children }: { children: ReactNode }) => {
         api.delete(`/users/${user?.id}/vehicles/${id}`)
             .then(() => {
                 alert("Veículo removido");
-                setVehicles(prev => prev.filter(c => c.id !== id));
+                setUserVehicles(prev => prev.filter(c => c.id !== id));
             })
             .catch(() => {
                 alert("Erro ao remover veículo");
             });
     };
 
+    const goToWorkshop = (vehicleId: number) => {
+        setLoading(true);
+
+        const vehicle = userVehicles.find((item) => item.id === vehicleId) || null;
+
+        if (!vehicle || vehicle === null) {
+            alert("Veículo não encontrado.");
+            setStatus("Veículo não encontrado.");
+            setLoading(false);
+            return;
+        }
+        console.log(`Vehicle at workshop set: `, vehicle);
+
+        setVehicleAtWorkshop(vehicle);
+        setStatus("Carregando oficina...");
+
+        navigate(`garage/workshop`);
+    }
+
     /* ============================================================== */
 
     return (
         <GarageContext.Provider
             value={{
-                vehicles, fetchVehicles,
-                addVehicle, removeVehicle
+                userVehicles, fetchUserVehicles,
+                addVehicle, removeVehicle, 
+                goToWorkshop,
+                vehicleAtWorkshop, setVehicleAtWorkshop
             }}
         >
             {children}

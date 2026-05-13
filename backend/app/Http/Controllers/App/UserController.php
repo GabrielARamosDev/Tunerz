@@ -108,7 +108,12 @@ class UserController extends CrudController
     {
         $user = User::findOrFail($id);
 
-        $user_vehicles = $user->vehicles()->with(['vehicle', 'engine'])->get();
+        $user_vehicles = $user->vehicles()
+            ->with([
+                'vehicle', 'vehicleSpecs', 
+                'engine', 'engine.specs', 'engine.stages'
+            ])
+            ->get();
 
         return response()->json($user_vehicles, 200);
     }
@@ -230,7 +235,6 @@ class UserController extends CrudController
                     'name' => $engine_stages->name,
                     'boost_pressure' => $engine_stages->boost_pressure,
                     'expected_power' => $engine_stages->expected_power,
-                    'status' => $engine_stages->status,
                 ]);
             }
 

@@ -11,6 +11,7 @@ import type { Vehicle } from "../types/vehicle.ts";
 import type { UserVehicle } from "../types/userVehicle.ts";
 
 import { useApp } from "./AppContext.tsx";
+import { useGarage } from "./GarageContext.tsx";
 
 // Contexto em si
 const WorkshopContext = createContext<WorkshopContextType | undefined>(undefined);
@@ -25,55 +26,29 @@ export const WorkshopProvider = ({ children }: { children: ReactNode }) => {
     /* ============================================================== */
 
     const {
+        navigate, 
         loading, setLoading,
         fetched, setFetched,
-        status, setStatus
+        status, setStatus, 
     } = useApp();
 
-    const [vehicles, setVehicles] = React.useState<UserVehicle[]>([]);
+    const { vehicleAtWorkshop, setVehicleAtWorkshop } = useGarage();
 
     /* ============================================================== */
 
     React.useEffect(() => {
-        if (!user) return;
 
-        api.get(`/users/${user?.id}/vehicles`)
-            .then((response) => {
-                setStatus("Garagem carregada com sucesso.");
-                setVehicles(response.data);
-                setFetched(true);
-            })
-            .catch(() => {
-                setStatus("Erro ao carregar a garagem.");
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, []);
+        console.log("Vehicle at workshop changed: ", vehicleAtWorkshop);
+
+    }, [vehicleAtWorkshop]);
 
     /* ============================================================== */
 
-    const fetchVehicles = async () => {
-
-        setFetched(false);
+    const exitWorkshop = () => {
         setLoading(true);
-
-        setStatus("Atualizando garagem...");
-
-        api.get(`/users/${user?.id}/vehicles`)
-            .then((response) => {
-                setStatus("Garagem atualizada.");
-                setFetched(true);
-                setLoading(false);
-
-                setVehicles(response.data);
-            })
-            .catch(() => {
-                setStatus("Erro ao atualizar a garagem.");
-                setLoading(false);
-            });
-
-        return;
+        setStatus("Saindo da oficina...");
+        setVehicleAtWorkshop(null);
+        navigate(`garage`);
     };
 
     /* ============================================================== */
@@ -81,7 +56,7 @@ export const WorkshopProvider = ({ children }: { children: ReactNode }) => {
     return (
         <WorkshopContext.Provider
             value={{
-                vehicles, fetchVehicles,
+                exitWorkshop, 
             }}
         >
             {children}

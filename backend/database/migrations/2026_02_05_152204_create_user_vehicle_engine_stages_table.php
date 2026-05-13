@@ -23,13 +23,13 @@ return new class extends Migration
             $table->foreignId('modification_type_id')
                 ->references('id')
                 ->on('modification_types')
+                ->nullable()
                 ->constrained()
                 ->cascadeOnDelete();
 
             $table->string('name');
             $table->decimal('boost_pressure', 10, 2)->nullable();
             $table->decimal('expected_power', 10, 2)->nullable();
-            $table->string('status')->default('active');
 
             $table->timestamps();
         });

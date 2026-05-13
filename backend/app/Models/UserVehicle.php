@@ -22,7 +22,12 @@ class UserVehicle extends Model
         return $this->belongsTo(Vehicle::class);
     }
 
+    public function vehicleSpecs()
+    {
+        return $this->hasMany(UserVehicleSpecs::class);
+    }
+
     public function engine() {
-        return $this->belongsTo(Engine::class);
+        return $this->belongsTo(UserVehicleEngine::class);
     }
 }

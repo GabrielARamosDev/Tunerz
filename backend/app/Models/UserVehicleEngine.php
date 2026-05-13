@@ -22,11 +22,11 @@ class UserVehicleEngine extends Model
         return $this->belongsTo(UserVehicle::class);
     }
 
-    public function stage() {
-        return $this->hasOne(UserVehicleEngineStage::class);
-    }
-
     public function specs() {
         return $this->hasMany(UserVehicleEngineSpec::class);
+    }
+
+    public function stages() {
+        return $this->hasOne(UserVehicleEngineStage::class);
     }
 }

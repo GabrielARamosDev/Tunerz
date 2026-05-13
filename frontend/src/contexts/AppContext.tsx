@@ -107,7 +107,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
     /* ============================================================== */
 
-    const navigate = React.useCallback((path: string) => {
+    const navigate = React.useCallback((path: string, args?: object) => {
 
         const _route = `/${path}`;
 
@@ -146,6 +146,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
             navigate('home');
         }
     }, [user, authenticated]);
+
+    React.useEffect(() => {
+        console.log("Status: ", status);
+    }, [status]);
 
     /* ============================================================== */
 

@@ -21,11 +21,15 @@ import AddVehicleDialog from "../../components/dialog/AddVehicleDialog";
 
 const Garage = () => {
 
-  const { loading, fetched, status } = useApp();
+  // const { 
+  //   navigate, 
+  //   loading, fetched, status 
+  // } = useApp();
 
   const {
-    vehicles, fetchVehicles,
-    addVehicle, removeVehicle
+    userVehicles, fetchUserVehicles,
+    addVehicle, 
+    goToWorkshop
   } = useGarage();
 
   const [openAddDialog, setOpenAddDialog] = useState(false);
@@ -40,6 +44,10 @@ const Garage = () => {
     addVehicle(vehicleData as VehicleType);
   };
 
+  const handleEditVehicle = (vehicleId: number) => {
+    goToWorkshop(vehicleId);
+  }
+
   /* ============================================================== */
 
   return (
@@ -47,19 +55,24 @@ const Garage = () => {
       <Stack>
         <Typography variant="h2">Minha Garagem</Typography>
 
-        {vehicles.length > 0 ? (
+        {userVehicles.length > 0 ? (
           <>
             <List>
-              {vehicles.map((item: UserVehicle) => (
+              {userVehicles.map((item: UserVehicle) => (
                 <ListItem key={item.id}>
-                  <Stack style={{ padding: 10, borderBottom: "1px solid #ddd" }}>
-                    <Typography variant="body1">
-                      {item.vehicle.manufacturer} {item.vehicle.model} ({item.vehicle.year})
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {item.vehicle.trim}
-                    </Typography>
-                  </Stack>
+                  <Button 
+                    style={{ padding: 0, borderBottom: "1px solid #ddd" }} 
+                    onClick={() => handleEditVehicle(item.id)}
+                  >
+                    <Stack style={{ padding: 10 }} >
+                      <Typography variant="body1">
+                        {item.vehicle.manufacturer} {item.vehicle.model} ({item.vehicle.year})
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {item.vehicle.trim}
+                      </Typography>
+                    </Stack>
+                  </Button>
                 </ListItem>
               ))}
             </List>
@@ -69,7 +82,7 @@ const Garage = () => {
         )}
 
         <Button onClick={handleAddVehicle}>Adicionar Veículo</Button>
-        <Button onClick={fetchVehicles}>Atualizar Garagem</Button>
+        <Button onClick={fetchUserVehicles}>Atualizar Garagem</Button>
       </Stack>
 
       <AddVehicleDialog
