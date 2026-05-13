@@ -32,14 +32,35 @@ return new class extends Migration {
                 'electric',
             ]);
 
+            /**
+             * Garante que exista apenas 1 modelo de cada motor por marca.
+             */
             $table->unique(['code', 'manufacturer']);
 
             $table->timestamps();
+        });
+
+        Schema::table('vehicles', function (Blueprint $table) {
+
+            $table->unsignedBigInteger('engine_id')
+                ->nullable()
+                ->after('id');
+
+            $table->foreign('engine_id')
+                ->references('id')
+                ->on('engines')
+                ->constrained();
+
         });
     }
 
     public function down(): void
     {
         Schema::dropIfExists('engines');
+
+        Schema::table('vehicles', function (Blueprint $table) {
+            $table->dropForeign(['engine_id']);
+            $table->dropColumn('engine_id');
+        });
     }
 };

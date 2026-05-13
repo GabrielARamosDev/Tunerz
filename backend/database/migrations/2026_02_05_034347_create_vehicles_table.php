@@ -10,13 +10,14 @@ return new class extends Migration {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
 
-            $table->string('brand');                 // Chevrolet
+            $table->string('manufacturer');          // Chevrolet
             $table->string('model');                 // Astra
-            $table->integer('year')->nullable();  // 2004
             $table->string('trim')->nullable();      // CD
+            $table->integer('year')->nullable();     // 2004
 
             $table->enum('body_type', [
                 'sedan',
+                'hothatch',
                 'hatchback',
                 'suv',
                 'pickup',
@@ -24,6 +25,7 @@ return new class extends Migration {
                 'convertible',
                 'wagon',
                 'van',
+                'targa',
             ]);
 
             $table->enum('drivetrain', [
@@ -43,6 +45,12 @@ return new class extends Migration {
             $table->double('length', 10, 2)->nullable(); // mm
 
             $table->string('image_url')->nullable();
+
+            /**
+             * Garante que exista apenas 1 modelo de cada carro por marca, 
+             * considerando as versões, carroceria e ano.
+             */
+            $table->unique(['manufacturer', 'model', 'trim', 'year', 'body_type']);
 
             $table->timestamps();
         });

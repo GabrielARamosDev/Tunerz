@@ -20,9 +20,36 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            // garante que não haja dois motores "atuais"
-            $table->unique(['user_vehicle_id']);
-            
+            $table->string('code');          // X20XEV
+            $table->string('manufacturer');  // GM
+            $table->integer('displacement'); // 1998 (2.0)
+            $table->integer('valve_count');  // 8v
+
+            $table->enum('propulsion', [
+                'combustion',
+                'hybrid',
+                'electric',
+            ]);
+
+            $table->enum('fuel_type', [
+                'gasoline',
+                'ethanol',
+                'flex',
+                'vng',      // vehicular natural gas
+                'diesel',
+                /**/
+                'hybrid',
+                'electric',
+            ]);
+
+            /**
+             * Garante que exista apenas 1 modelo de motor para cada 'carro de usuário', onde
+             * cada um poderá ter mais de um motor associado, e cada motor com múltiplos 
+             * 'specs' e 'stages', presumindo diferentes 'presets' configuráveis.
+             */
+            // $table->unique(['user_vehicle_id', 'code', 'manufacturer']);
+
+            $table->timestamps(); 
         });
 
         Schema::table('user_vehicles', function (Blueprint $table) {
