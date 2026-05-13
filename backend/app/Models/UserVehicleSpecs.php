@@ -15,8 +15,6 @@ class UserVehicleSpecs extends Model
         'series',
         'drivetrain',
         'transmission',
-        'price',
-        'price_currency',
         'weight',
         'weight_unit',
         'width',

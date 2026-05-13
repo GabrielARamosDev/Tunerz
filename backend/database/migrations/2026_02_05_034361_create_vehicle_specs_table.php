@@ -11,18 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('vehicles', function (Blueprint $table) {
-            $table->dropColumn([
-                'drivetrain',
-                'price',
-                'price_currency',
-                'weight',
-                'weight_unit',
-                'width',
-                'length',
-            ]);
-        });
-
         Schema::create('vehicle_specs', function (Blueprint $table) {
             $table->id();
 
@@ -51,9 +39,6 @@ return new class extends Migration
                 'dual_clutch',
             ]);
 
-            $table->double('price', 10, 2)->nullable();
-            $table->enum('price_currency', ['USD', 'EUR', 'BRL'])->nullable();
-
             $table->double('weight', 10, 2)->nullable(); // kg
             $table->enum('weight_unit', ['kg', 'lb'])->nullable();
 
@@ -73,25 +58,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('vehicle_specs');
-
-        Schema::table('vehicles', function (Blueprint $table) {
-
-            $table->double('length', 10, 2)->nullable(); // mm
-            $table->double('width', 10, 2)->nullable();  // mm
-
-            $table->enum('weight_unit', ['kg', 'lb'])->nullable();
-            $table->double('weight', 10, 2)->nullable(); // kg
-
-            $table->enum('price_currency', ['USD', 'EUR', 'BRL'])->nullable();
-            $table->double('price', 10, 2)->nullable();
-
-            $table->enum('drivetrain', [
-                'fwd', // front-wheel drive
-                'rwd', // rear-wheel drive
-                'awd', // all-wheel drive
-                '4wd', // four-wheel drive
-            ]);
-
-        });
     }
 };

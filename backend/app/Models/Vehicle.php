@@ -9,6 +9,7 @@ use App\Models\Engine;
 class Vehicle extends Model
 {
     protected $fillable = [
+        'engine_id',
         'manufacturer', 
         'model', 
         'year', 

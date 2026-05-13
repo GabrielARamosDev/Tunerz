@@ -162,14 +162,16 @@ class UserController extends CrudController
             // Find the vehicle by its specifications
             $vehicle = Vehicle::where('manufacturer', $request->manufacturer)
                 ->where('model', $request->model)
-                ->where('year', $request->year)
                 ->where('trim', $request->trim)
-                ->with('engine')
+                ->where('year', $request->year)
+                ->with(['specs', 'engine'])
                 ->firstOrFail();
 
             if (!$vehicle) {
                 return response()->json(['message' => 'Veículo não encontrado!'], 404);
             }
+
+            $specs = $vehicle->specs;
 
             // Get the engine associated with this vehicle
             $engine = Engine::with(['stages', 'specs'])
@@ -178,11 +180,6 @@ class UserController extends CrudController
             if (!$engine) {
                 return response()->json(['message' => 'Nenhum motor encontrado para este veículo!'], 404);
             }
-
-            // dd([
-            //     'vehicle' => $vehicle,
-            //     'engine' => $engine,
-            // ]);
 
             DB::beginTransaction();
 
@@ -194,21 +191,18 @@ class UserController extends CrudController
                 ]);
 
                 // Create user vehicle specs
-                $vehicle_specs = VehicleSpec::where('vehicle_id', $vehicle->id)->firstOrFail();
                 UserVehicleSpecs::create([
                     'user_vehicle_id' => $user_vehicle->id,
-                    'generation' => $request->generation,
-                    'platform' => $vehicle_specs->platform,
-                    'series' => $vehicle_specs->series,
-                    'drivetrain' => $vehicle_specs->drivetrain,
-                    'transmission' => $vehicle_specs->transmission,
-                    'price' => $vehicle_specs->price,
-                    'price_currency' => $vehicle_specs->price_currency,
-                    'weight' => $vehicle_specs->weight,
-                    'weight_unit' => $vehicle_specs->weight_unit,
-                    'width' => $vehicle_specs->width,
-                    'length' => $vehicle_specs->length,
-                    'height' => $vehicle_specs->height,
+                    'generation' => null,
+                    'platform' => null,
+                    'series' => null,
+                    'drivetrain' => $specs->drivetrain,
+                    'transmission' => $specs->transmission,
+                    'weight' => $specs->weight,
+                    'weight_unit' => $specs->weight_unit,
+                    'width' => $specs->width,
+                    'length' => $specs->length,
+                    'height' => $specs->height,
                 ]);
 
                 // Create user vehicle engine record with engine data

@@ -37,22 +37,6 @@ return new class extends Migration {
                 'targa',
             ]);
 
-            $table->enum('drivetrain', [
-                'fwd', // front-wheel drive
-                'rwd', // rear-wheel drive
-                'awd', // all-wheel drive
-                '4wd', // four-wheel drive
-            ]);
-
-            $table->double('price', 10, 2)->nullable();
-            $table->enum('price_currency', ['USD', 'EUR', 'BRL'])->nullable();
-
-            $table->double('weight', 10, 2)->nullable(); // kg
-            $table->enum('weight_unit', ['kg', 'lb'])->nullable();
-
-            $table->double('width', 10, 2)->nullable();  // mm
-            $table->double('length', 10, 2)->nullable(); // mm
-
             $table->string('image_url')->nullable();
 
             /**

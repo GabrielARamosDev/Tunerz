@@ -39,9 +39,6 @@ return new class extends Migration
                 'dual_clutch',
             ]);
 
-            $table->double('price', 10, 2)->nullable();
-            $table->enum('price_currency', ['USD', 'EUR', 'BRL'])->nullable();
-
             $table->double('weight', 10, 2)->nullable(); // kg
             $table->enum('weight_unit', ['kg', 'lb'])->nullable();
 
