@@ -17,14 +17,14 @@ class Vehicle extends Model
         'body_type', 
         'image_url'
     ];
-    
-    public function engine()
-    {
-        return $this->belongsTo(Engine::class);
-    }
 
     public function specs()
     {
         return $this->hasMany(VehicleSpec::class);
+    }
+    
+    public function engine()
+    {
+        return $this->belongsTo(Engine::class);
     }
 }

@@ -27,6 +27,6 @@ class UserVehicle extends Model
     }
 
     public function engines() {
-        return $this->belongsTo(UserVehicleEngine::class, 'user_vehicles_user_vehicle_engine_id_foreign');
+        return $this->belongsTo(UserVehicleEngine::class);
     }
 }

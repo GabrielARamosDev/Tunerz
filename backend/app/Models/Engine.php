@@ -17,7 +17,7 @@ class Engine extends Model
 
     public function vehicles()
     {
-        return $this->belongsToMany(Vehicle::class, 'vehicle_engine');
+        return $this->belongsToMany(Vehicle::class);
     }
 
     public function stages()

@@ -6,19 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('user_vehicle_engines', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('user_vehicle_id')
-                ->references('id')
-                ->on('user_vehicles')
-                ->constrained()
-                ->cascadeOnDelete();
 
             $table->string('code');          // X20XEV
             $table->string('manufacturer');  // GM
@@ -37,17 +28,7 @@ return new class extends Migration
                 'flex',
                 'vng',      // vehicular natural gas
                 'diesel',
-                /**/
-                'hybrid',
-                'electric',
             ]);
-
-            /**
-             * Garante que exista apenas 1 modelo de motor para cada 'carro de usuário', onde
-             * cada um poderá ter mais de um motor associado, e cada motor com múltiplos 
-             * 'specs' e 'stages', presumindo diferentes 'presets' configuráveis.
-             */
-            // $table->unique(['user_vehicle_id', 'code', 'manufacturer']);
 
             $table->timestamps(); 
         });
@@ -56,7 +37,8 @@ return new class extends Migration
 
             $table->unsignedBigInteger('user_vehicle_engine_id')
                 ->nullable()
-                ->default(null);
+                ->default(null)
+                ->after('vehicle_id');
 
             $table->foreign('user_vehicle_engine_id')
                 ->references('id')
