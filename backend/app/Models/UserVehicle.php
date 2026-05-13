@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserVehicle extends Model
 {
-    protected $table = 'user_vehicles';
-
     protected $fillable = [
         'user_id', 
         'vehicle_id', 
@@ -23,10 +21,10 @@ class UserVehicle extends Model
 
     public function vehicleSpecs()
     {
-        return $this->hasMany(UserVehicleSpecs::class);
+        return $this->hasOne(UserVehicleSpecs::class);
     }
 
     public function engines() {
-        return $this->belongsTo(UserVehicleEngine::class);
+        return $this->hasMany(UserVehicleEngine::class);
     }
 }

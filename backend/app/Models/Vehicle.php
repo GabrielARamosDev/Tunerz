@@ -20,11 +20,16 @@ class Vehicle extends Model
 
     public function specs()
     {
-        return $this->hasMany(VehicleSpec::class);
+        return $this->hasOne(VehicleSpec::class);
     }
     
     public function engine()
     {
         return $this->belongsTo(Engine::class);
+    }
+
+    public function userVehicles()
+    {
+        return $this->hasMany(UserVehicle::class);
     }
 }

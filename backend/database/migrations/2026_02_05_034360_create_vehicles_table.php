@@ -10,6 +10,15 @@ return new class extends Migration {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
 
+            $table->unsignedBigInteger('engine_id')
+                ->nullable()
+                ->default(null);
+
+            $table->foreign('engine_id')
+                ->references('id')
+                ->on('engines')
+                ->constrained();
+
             $table->string('manufacturer');          // Chevrolet
             $table->string('model');                 // Astra
             $table->string('trim')->nullable();      // CD

@@ -16,14 +16,10 @@ class EngineStage extends Model
     ];
 
     public function engine() {
-        return $this->belongsTo(Engine::class, 'engine_id');
+        return $this->belongsTo(Engine::class);
     }
 
-    public function requirements() {
-        return $this->hasMany(EngineStageRequirement::class);
-    }
-
-    public function warnings() {
-        return $this->hasMany(EngineStageWarning::class);
+    public function modifications() {
+        return $this->hasMany(ModificationType::class);
     }
 }

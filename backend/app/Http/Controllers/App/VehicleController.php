@@ -12,7 +12,10 @@ class VehicleController extends CrudController
 {    
     public function index(Request $request)
     {
-        $vehicles = Vehicle::with(['engine.stages', 'engine.specs'])->get();
+        $vehicles = Vehicle::with([
+            'specs', 
+            'engine.stages', 'engine.specs'
+        ])->get();
         
         // Map year to year for frontend compatibility
         $vehicles = $vehicles->map(function($vehicle) {

@@ -21,4 +21,9 @@ class VehicleSpec extends Model
         'length',
         'height',
     ];
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
 }

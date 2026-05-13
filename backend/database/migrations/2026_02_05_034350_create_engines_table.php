@@ -37,29 +37,10 @@ return new class extends Migration
 
             $table->timestamps();
         });
-
-        Schema::table('vehicles', function (Blueprint $table) {
-
-            $table->unsignedBigInteger('engine_id')
-                ->nullable()
-                ->default(null)
-                ->after('id');
-
-            $table->foreign('engine_id')
-                ->references('id')
-                ->on('engines')
-                ->constrained();
-
-        });
     }
 
     public function down(): void
     {
         Schema::dropIfExists('engines');
-
-        Schema::table('vehicles', function (Blueprint $table) {
-            $table->dropForeign(['engine_id']);
-            $table->dropColumn('engine_id');
-        });
     }
 };

@@ -17,16 +17,16 @@ class Engine extends Model
 
     public function vehicles()
     {
-        return $this->belongsToMany(Vehicle::class);
-    }
-
-    public function stages()
-    {
-        return $this->hasMany(EngineStage::class);
+        return $this->hasMany(Vehicle::class);
     }
 
     public function specs()
     {
-        return $this->hasMany(EngineSpec::class);
+        return $this->hasOne(EngineSpec::class);
+    }
+
+    public function stages()
+    {
+        return $this->hasOne(EngineStage::class);
     }
 }

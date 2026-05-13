@@ -11,26 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('engine_stages', function (Blueprint $table) {
+        Schema::create('user_vehicles', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('engine_id')
+            $table->foreignId('user_id')
                 ->references('id')
-                ->on('engines')
+                ->on('users')
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->unsignedBigInteger('modification_type_id')->nullable();
-
-            $table->foreign('modification_type_id')
+            $table->foreignId('vehicle_id')
                 ->references('id')
-                ->on('modification_types')
+                ->on('vehicles')
                 ->constrained()
                 ->cascadeOnDelete();
-
-            $table->string('name');
-            $table->decimal('boost_pressure', 10, 2)->nullable();
-            $table->decimal('expected_power', 10, 2)->nullable();
 
             $table->timestamps();
         });
@@ -41,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('engine_stages');
+        Schema::dropIfExists('user_vehicles');
     }
 };

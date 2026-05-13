@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserVehicleEngine extends Model
 {
-    protected $table = 'user_vehicle_engines';
-
     protected $fillable = [
         'code',
         'manufacturer',
@@ -17,7 +15,7 @@ class UserVehicleEngine extends Model
         'fuel_type',
     ];
 
-    public function userVehicle() {
+    public function userVehicles() {
         return $this->belongsTo(UserVehicle::class);
     }
 
@@ -26,6 +24,6 @@ class UserVehicleEngine extends Model
     }
 
     public function stages() {
-        return $this->hasOne(UserVehicleEngineStage::class);
+        return $this->hasMany(UserVehicleEngineStage::class);
     }
 }

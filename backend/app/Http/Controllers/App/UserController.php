@@ -111,15 +111,24 @@ class UserController extends CrudController
 
             $user = $request->user();
 
-            $user_vehicles = $user->vehicles()
+            $user_vehicles = UserVehicle::where('user_id', $user->id)
                 ->with([
-                    'vehicle',
-                    'vehicleSpecs',
-                    'engines',
-                    'engines.specs',
-                    'engines.stages'
+                    'vehicle', 'vehicleSpecs',
+                    'engines.specs', 'engines.stages'
                 ])
-                ->get();
+                ->get()
+                ->toArray();
+
+            foreach ($user_vehicles as $i => $vehicle) {
+
+                $specs = $vehicle['vehicle_specs'];
+                $vehicle['vehicle']['specs'] = $specs;
+                
+                unset($vehicle['vehicle_specs']);
+
+                $user_vehicles[$i] = $vehicle;
+            }
+            dd($user_vehicles);
 
             return response()->json($user_vehicles, 200);
         }
@@ -211,11 +220,8 @@ class UserController extends CrudController
                     'valve_count' => $engine->valve_count,
                     'propulsion' => $engine->propulsion,
                     'fuel_type' => $engine->fuel_type,
+                    'active' => 1,
                 ]);
-
-                // Update user_vehicle engine_id
-                $user_vehicle->user_vehicle_engine_id = $user_vehicle_engines->id;
-                $user_vehicle->save();
 
                 // Get and create engine specs
                 $engine_specs = EngineSpec::findOrFail($engine->id);
@@ -241,6 +247,7 @@ class UserController extends CrudController
                     'specific_power_hp_per_liter' => $engine_specs->specific_power_hp_per_liter,
                     'power_to_weight_ratio' => $engine_specs->power_to_weight_ratio,
                     'torque_to_weight_ratio' => $engine_specs->torque_to_weight_ratio,
+                    'active' => 1,
                 ]);
 
                 // Get and create engine stages
@@ -253,6 +260,7 @@ class UserController extends CrudController
                         'name' => $engine_stages->name,
                         'boost_pressure' => $engine_stages->boost_pressure,
                         'expected_power' => $engine_stages->expected_power,
+                        'active' => 1,
                     ]);
                 }
 
@@ -261,7 +269,7 @@ class UserController extends CrudController
                 // Load and return the created user vehicle with relationships
                 $user_vehicle->load([
                     'vehicle', 'vehicleSpecs', 
-                    'engines', 'engines.specs', 'engines.stages'
+                    'engines.specs', 'engines.stages'
                 ]);
 
                 return response()->json($user_vehicle, 201);

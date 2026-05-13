@@ -11,6 +11,12 @@ return new class extends Migration
         Schema::create('user_vehicle_engines', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignId('user_vehicle_id')
+                ->references('id')
+                ->on('user_vehicles')
+                ->constrained()
+                ->cascadeOnDelete();
+
             $table->string('code');          // X20XEV
             $table->string('manufacturer');  // GM
             $table->integer('displacement'); // 1998 (2.0)
@@ -32,21 +38,6 @@ return new class extends Migration
 
             $table->timestamps(); 
         });
-
-        Schema::table('user_vehicles', function (Blueprint $table) {
-
-            $table->unsignedBigInteger('user_vehicle_engine_id')
-                ->nullable()
-                ->default(null)
-                ->after('vehicle_id');
-
-            $table->foreign('user_vehicle_engine_id')
-                ->references('id')
-                ->on('user_vehicle_engines')
-                ->constrained()
-                ->cascadeOnDelete();
-
-        });
     }
 
     /**
@@ -55,12 +46,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('user_vehicle_engines');
-
-        Schema::table('user_vehicles', function (Blueprint $table) {
-
-            $table->dropForeign(['user_vehicle_engine_id']);
-            $table->dropColumn('user_vehicle_engine_id');
-
-        });
     }
 };

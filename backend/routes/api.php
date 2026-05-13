@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\App\UserController;
 use App\Http\Controllers\App\VehicleController;
-use App\Http\Controllers\App\ModuleController;
+use App\Http\Controllers\App\EngineController;
 use App\Http\Controllers\App\StageController;
 
 /*
@@ -53,29 +53,46 @@ Route::group([
 
     Route::get('/me', [AuthController::class, 'me']);
 
-    Route::get('/users', [UserController::class, 'index']);
-    Route::get('/users/{id}', [UserController::class, 'show']);
+    Route::group([
+        'namespace' => 'Users',
+        'prefix' => 'users',
+    ], function () {
+        Route::get('/', [UserController::class, 'index']);
+        Route::get('/{id}', [UserController::class, 'show']);
+    });
 
-    Route::get('/user/vehicles', [UserController::class, 'vehicles']);
-    Route::post('/user/vehicle', [UserController::class, 'addVehicle']);
-    Route::delete('/user/vehicle/{id}', [UserController::class, 'removeVehicle']);
+    Route::group([
+        'namespace' => 'User',
+        'prefix' => 'user',
+    ], function () {
+        Route::get('/vehicles', [UserController::class, 'vehicles']);
+        Route::post('/vehicle', [UserController::class, 'addVehicle']);
+        Route::delete('/vehicle/{id}', [UserController::class, 'removeVehicle']);
+    });
 
-    Route::get('/vehicles', [VehicleController::class, 'index']);
-    Route::get('/vehicles/{id}', [VehicleController::class, 'show']);
-    Route::get('/vehicles/info', [VehicleController::class, 'retrieve']);
-    Route::post('/vehicles', [VehicleController::class, 'store']);
-    Route::get('/vehicles/options/manufacturers', [VehicleController::class, 'getManufacturers']);
-    Route::get('/vehicles/options/models', [VehicleController::class, 'getModels']);
-    Route::get('/vehicles/options/trims', [VehicleController::class, 'getTrims']);
-    Route::get('/vehicles/options/years', [VehicleController::class, 'getYears']);
+    Route::group([
+        'namespace' => 'Vehicles',
+        'prefix' => 'vehicles',
+    ], function () {
+        Route::get('/', [VehicleController::class, 'index']);
+        Route::post('/', [VehicleController::class, 'store']);
+        
+        Route::get('/{id}', [VehicleController::class, 'show']);
+        Route::get('/info', [VehicleController::class, 'retrieve']);
+        
+        Route::get('/options/manufacturers', [VehicleController::class, 'getManufacturers']);
+        Route::get('/options/models', [VehicleController::class, 'getModels']);
+        Route::get('/options/trims', [VehicleController::class, 'getTrims']);
+        Route::get('/options/years', [VehicleController::class, 'getYears']);
+    });
 
-    Route::get('/engines', [ModuleController::class, 'index']);
-    Route::get('/engines/{id}', [ModuleController::class, 'show']);
-
-    Route::get('/stages/{id}', [StageController::class, 'show']);
-    Route::get('/vehicles/{id}/stages', [StageController::class, 'byVehicle']);
-
-    Route::get('/vehicles/{id}/modules', [ModuleController::class, 'byVehicle']);
+    Route::group([
+        'namespace' => 'Engines',
+        'prefix' => 'engines',
+    ], function () {
+        Route::get('/', [EngineController::class, 'index']);
+        Route::get('/{id}', [EngineController::class, 'show']);
+    });
 
 });
 
