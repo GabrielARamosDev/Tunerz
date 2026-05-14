@@ -20,7 +20,6 @@ class Vehicle extends Model
         'rear_suspension_id',
         'front_brake_id',
         'rear_brake_id', 
-        'image_url'
     ];
 
     public function specs()

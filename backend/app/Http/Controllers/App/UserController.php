@@ -198,7 +198,17 @@ class UserController extends CrudController
                 // Create user vehicle record
                 $user_vehicle = UserVehicle::create([
                     'user_id' => $user->id,
-                    'vehicle_id' => $vehicle->id,
+                    'manufacturer' => $vehicle->manufacturer,
+                    'model' => $vehicle->model,
+                    'trim' => $vehicle->trim,
+                    'year' => $vehicle->year,
+                    'generation' => $vehicle->generation,
+                    'engine_id' => $vehicle->engine_id,
+                    'transmission_id' => $vehicle->transmission_id,
+                    'front_suspension_id' => $vehicle->front_suspension_id,
+                    'rear_suspension_id' => $vehicle->rear_suspension_id,
+                    'front_brake_id' => $vehicle->front_brake_id,
+                    'rear_brake_id' => $vehicle->rear_brake_id,
                 ]);
 
                 // Create user vehicle specs
