@@ -41,32 +41,121 @@ return new class extends Migration
             ]);
 
             $table->enum('platform', [
-                
+                'A-segment',
+                'B-segment',
+                'C-segment',
+                'D-segment',
+                'E-segment',
+                'F-segment',
+                'J-segment',
+                'M-segment',
+                'S-segment',
+                'custom',
             ]);
             
             $table->double('wheel_base_mm', 10, 2)->nullable();
 
-            $table->enum('front_wheel_width', [
-                
+            $table->enum('front_wheel_width_mm', [
+                '125',
+                '135',
+                '145',
+                '155',
+                '165',
+                '175',
+                '185',
+                '195',
+                '205',
+                '215',
+                '225',
+                '235',
+                '245',
+                '255',
+                '265',
+                '275',
+                '285',
+                '295',
+                'custom',
             ])->nullable();
-            $table->enum('front_wheel_profile', [
-                
+            $table->enum('front_wheel_profile_%', [
+                '35',
+                '40',
+                '45',
+                '50',
+                '55',
+                '60',
+                '65',
+                '70',
+                '75',
+                'custom',
             ])->nullable();
-            $table->enum('front_wheel_radius', [
-                
+            $table->enum('front_wheel_radius_in', [
+                '13',
+                '14',
+                '15',
+                '16',
+                '17',
+                '18',
+                '19',
+                '20',
+                '21',
+                '22',
+                'custom',
             ])->nullable();
-            $table->enum('rear_wheel_width', [
-                
+            $table->enum('rear_wheel_width_mm', [
+                '125',
+                '135',
+                '145',
+                '155',
+                '165',
+                '175',
+                '185',
+                '195',
+                '205',
+                '215',
+                '225',
+                '235',
+                '245',
+                '255',
+                '265',
+                '275',
+                '285',
+                '295',
+                'custom',
             ])->nullable();
-            $table->enum('rear_wheel_profile', [
-                
+            $table->enum('rear_wheel_profile_%', [
+                '35',
+                '40',
+                '45',
+                '50',
+                '55',
+                '60',
+                '65',
+                '70',
+                '75',
+                'custom',
             ])->nullable();
-            $table->enum('rear_wheel_radius', [
-                
+            $table->enum('rear_wheel_radius_in', [
+                '13',
+                '14',
+                '15',
+                '16',
+                '17',
+                '18',
+                '19',
+                '20',
+                '21',
+                '22',
+                'custom',
             ])->nullable();
 
             $table->enum('wheel_material', [
-
+                'steel',
+                'aluminum alloy',
+                'forged aluminum',
+                'titanium',
+                'carbon fiber',
+                'magnesium',
+                'custom',
             ])->nullable();
 
             $table->double('length_mm', 10, 2)->nullable();

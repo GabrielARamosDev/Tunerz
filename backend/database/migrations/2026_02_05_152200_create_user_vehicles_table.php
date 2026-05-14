@@ -44,14 +44,14 @@ return new class extends Migration
                 ->default(null);
             $table->foreign('front_suspension_id')
                 ->references('id')
-                ->on('front_suspensions')
+                ->on('suspensions')
                 ->constrained();
             $table->unsignedBigInteger('rear_suspension_id')
                 ->nullable()
                 ->default(null);
             $table->foreign('rear_suspension_id')
                 ->references('id')
-                ->on('rear_suspensions')
+                ->on('suspensions')
                 ->constrained();
 
             $table->unsignedBigInteger('front_brake_id')
@@ -59,14 +59,14 @@ return new class extends Migration
                 ->default(null);
             $table->foreign('front_brake_id')
                 ->references('id')
-                ->on('front_brakes')
+                ->on('brakes')
                 ->constrained();
             $table->unsignedBigInteger('rear_brake_id')
                 ->nullable()
                 ->default(null);
             $table->foreign('rear_brake_id')
                 ->references('id')
-                ->on('rear_brakes')
+                ->on('brakes')
                 ->constrained();
 
             $table->string('image_url')->nullable();
