@@ -29,9 +29,13 @@ class EngineSpecSeeder extends Seeder
                     'thermal_efficiency' => 0.35,
                     'oil_capacity_l' => 4.2,
                     'coolant_capacity_l' => 7.5,
+                    'power_to_weight_ratio' => 0.09,
+                    'torque_to_weight_ratio' => 0.14,
+                    'created_at' => now(),
+                    'updated_at' => now(),
             ],
         ];
-        
+
         foreach ($specs as $es) {
             EngineSpec::updateOrCreate(
                 ['engine_id' => $es['engine_id']],  // chave única para evitar duplicatas

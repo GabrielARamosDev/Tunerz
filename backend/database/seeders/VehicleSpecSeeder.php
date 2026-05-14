@@ -13,7 +13,7 @@ class VehicleSpecSeeder extends Seeder
         $specs = [
             [
                 'vehicle_id' => 1,
-                'drivetrain'  => 'FWD',
+                'drivetrain'  => 'fwd',
                 'transmission'  => 'Manual',
                 'weight' => 1130,
                 'weight_unit' => 'kg',
@@ -25,7 +25,7 @@ class VehicleSpecSeeder extends Seeder
             ],
             [
                 'vehicle_id' => 2,
-                'drivetrain'  => 'FWD',
+                'drivetrain'  => 'fwd',
                 'transmission'  => 'Manual',
                 'weight' => 1250,
                 'weight_unit' => 'kg',
