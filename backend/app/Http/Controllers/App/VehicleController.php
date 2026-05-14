@@ -12,10 +12,7 @@ class VehicleController extends CrudController
 {    
     public function index(Request $request)
     {
-        $vehicles = Vehicle::with([
-            'specs', 
-            'engine.stages', 'engine.specs'
-        ])->get();
+        $vehicles = Vehicle::with([ 'specs', 'engine.specs' ])->get();
         
         // Map year to year for frontend compatibility
         $vehicles = $vehicles->map(function($vehicle) {
@@ -29,7 +26,7 @@ class VehicleController extends CrudController
 
     public function show(Request $request, $id)
     {
-        $vehicle = Vehicle::with(['engine.stages', 'engine.specs'])->findOrFail($id);
+        $vehicle = Vehicle::with(['engine.specs'])->findOrFail($id);
         
         // Map year to year for frontend compatibility
         $vehicle->year = $vehicle->year;
@@ -49,7 +46,7 @@ class VehicleController extends CrudController
             ->where('model', $model)
             ->where('trim', $trim)
             ->where('year', $year)
-            ->with(['engine.stages', 'engine.specs'])
+            ->with(['engine.specs'])
             ->firstOrFail();
 
         // // Map year to year for frontend compatibility

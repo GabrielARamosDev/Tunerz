@@ -24,9 +24,4 @@ class Engine extends Model
     {
         return $this->hasOne(EngineSpec::class);
     }
-
-    public function stages()
-    {
-        return $this->hasOne(EngineStage::class);
-    }
 }

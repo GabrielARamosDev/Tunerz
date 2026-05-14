@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_vehicle_specs', function (Blueprint $table) {
+        Schema::create('vehicle_specs', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_vehicle_id')
+            $table->foreignId('vehicle_id')
                 ->references('id')
-                ->on('user_vehicles')
+                ->on('vehicles')
                 ->constrained()
                 ->cascadeOnDelete();
 
@@ -39,7 +39,7 @@ return new class extends Migration
             $table->double('length', 10, 2)->nullable(); // mm
             $table->double('height', 10, 2)->nullable(); // mm
 
-            $table->boolean('active')->default(0);
+            $table->unique('vehicle_id');
 
             $table->timestamps();
         });
@@ -50,6 +50,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_vehicle_specs');
+        Schema::dropIfExists('vehicle_specs');
     }
 };

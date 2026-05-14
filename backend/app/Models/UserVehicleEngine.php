@@ -25,8 +25,4 @@ class UserVehicleEngine extends Model
     public function specs() {
         return $this->hasMany(UserVehicleEngineSpec::class);
     }
-
-    public function stages() {
-        return $this->hasMany(UserVehicleEngineStage::class);
-    }
 }

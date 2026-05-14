@@ -21,13 +21,16 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RolesSeeder::class,
-            UsersSeeder::class,
+            UserSeeder::class,
             UserRole::class,
-            EnginesSeeder::class,
-            EngineSpecsSeeder::class,
-            EngineStagesSeeder::class,
-            VehiclesSeeder::class,
-            VehiclesSpecsSeeder::class,
+            EngineSeeder::class,
+            EngineSpecSeeder::class,
+            EnginePartSeeder::class,
+            TransmissionSeeder::class,
+            TransmissionSpecSeeder::class,
+            TransmissionPartSeeder::class,
+            VehicleSeeder::class,
+            VehicleSpecSeeder::class,
         ]);
     }
 }

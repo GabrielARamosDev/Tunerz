@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 use App\Constants\Roles;
 use App\Constants\User as UserConstants;
@@ -14,16 +15,13 @@ use App\Constants\UserStatus;
 use App\Http\Controllers\CrudController;
 use App\Models\Engine;
 use App\Models\EngineSpec;
-use App\Models\EngineStage;
 use App\Models\User;
 use App\Models\UserVehicle;
 use App\Models\UserVehicleEngine;
 use App\Models\UserVehicleEngineSpec;
-use App\Models\UserVehicleEngineStage;
 use App\Models\UserVehicleSpecs;
 use App\Models\Vehicle;
 use App\Models\VehicleSpec;
-use Illuminate\Support\Facades\DB;
 
 class UserController extends CrudController
 {
@@ -114,7 +112,7 @@ class UserController extends CrudController
             $user_vehicles = UserVehicle::where('user_id', $user->id)
                 ->with([
                     'vehicle', 'vehicleSpecs',
-                    'engines.specs', 'engines.stages'
+                    'engines.specs'
                 ])
                 ->get();
 
@@ -166,7 +164,7 @@ class UserController extends CrudController
             $specs = $vehicle->specs;
 
             // Get the engine associated with this vehicle
-            $engine = Engine::with(['stages', 'specs'])
+            $engine = Engine::with(['specs'])
                 ->findOrFail($vehicle->engine_id);
 
             if (!$engine) {
@@ -236,26 +234,12 @@ class UserController extends CrudController
                     'active' => 1,
                 ]);
 
-                // Get and create engine stages
-                $engine_stages = EngineStage::find($engine->id);
-
-                if ($engine_stages) {
-                    UserVehicleEngineStage::create([
-                        'user_vehicle_engine_id' => $user_vehicle_engines->id,
-                        'modification_type_id' => $engine_stages->modification_type_id,
-                        'name' => $engine_stages->name,
-                        'boost_pressure' => $engine_stages->boost_pressure,
-                        'expected_power' => $engine_stages->expected_power,
-                        'active' => 1,
-                    ]);
-                }
-
                 DB::commit();
 
                 // Load and return the created user vehicle with relationships
                 $user_vehicle->load([
                     'vehicle', 'vehicleSpecs', 
-                    'engines.specs', 'engines.stages'
+                    'engines.specs'
                 ]);
 
                 $new_vehicle = UserVehicle::mountFrontendModel($user_vehicle);

@@ -12,13 +12,13 @@ class EngineController extends CrudController
 {
     public function index(Request $request)
     {
-        $engines = Engine::with(['stages', 'specs'])->get();
+        $engines = Engine::with(['specs'])->get();
         return response()->json($engines);
     }
 
     public function show(Request $request, $id)
     {
-        $engine = Engine::with(['stages', 'specs'])->findOrFail($id);
+        $engine = Engine::with(['specs'])->findOrFail($id);
         return response()->json($engine);
     }
 }
