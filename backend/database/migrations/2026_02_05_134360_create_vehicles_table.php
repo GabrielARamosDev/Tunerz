@@ -12,8 +12,8 @@ return new class extends Migration {
 
             $table->string('manufacturer');            // Chevrolet
             $table->string('model');                   // Astra
-            $table->string('trim')->nullable();        // trim/version: CD
-            $table->integer('year')->nullable();       // 2004
+            $table->string('trim');                    // trim/version: CD
+            $table->integer('year');                   // 2004
             $table->integer('generation')->nullable(); // 3ª
 
             $table->unsignedBigInteger('engine_id')
@@ -62,36 +62,13 @@ return new class extends Migration {
                 ->on('rear_brakes')
                 ->constrained();
 
-            $table->unsignedBigInteger('tire_id')
-                ->nullable()
-                ->default(null);
-            $table->foreign('tire_id')
-                ->references('id')
-                ->on('tires')
-                ->constrained();
-
-            $table->unsignedBigInteger('front_wheel_id')
-                ->nullable()
-                ->default(null);
-            $table->foreign('front_wheel_id')
-                ->references('id')
-                ->on('front_wheels')
-                ->constrained();
-            $table->unsignedBigInteger('rear_wheel_id')
-                ->nullable()
-                ->default(null);
-            $table->foreign('rear_wheel_id')
-                ->references('id')
-                ->on('rear_wheels')
-                ->constrained();
-
             $table->string('image_url')->nullable();
 
             /**
              * Garante que exista apenas 1 modelo de cada carro por marca, 
              * considerando as versões, carroceria e ano.
              */
-            $table->unique(['manufacturer', 'model', 'trim', 'year', 'body_type']);
+            $table->unique(['manufacturer', 'model', 'trim', 'year', 'generation']);
 
             $table->timestamps();
         });

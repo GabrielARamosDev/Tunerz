@@ -46,6 +46,29 @@ return new class extends Migration
 
             $table->double('wheel_base_mm', 10, 2)->nullable();
 
+            $table->enum('front_wheel_width', [
+                
+            ])->nullable();
+            $table->enum('front_wheel_profile', [
+                
+            ])->nullable();
+            $table->enum('front_wheel_radius', [
+                
+            ])->nullable();
+            $table->enum('rear_wheel_width', [
+                
+            ])->nullable();
+            $table->enum('rear_wheel_profile', [
+                
+            ])->nullable();
+            $table->enum('rear_wheel_radius', [
+                
+            ])->nullable();
+
+            $table->enum('wheel_material', [
+
+            ])->nullable();
+
             $table->double('length_mm', 10, 2)->nullable();
             $table->double('width_mm', 10, 2)->nullable();
             $table->double('height_mm', 10, 2)->nullable();

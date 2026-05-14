@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('engine_parts', function (Blueprint $table) {
             $table->id();
 
-            
+            $table->boolean('has_VVT');
+            $table->boolean('has_VVL');
             
             $table->timestamps();
         });

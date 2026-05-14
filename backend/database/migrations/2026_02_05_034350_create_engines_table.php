@@ -25,29 +25,14 @@ return new class extends Migration
                 'flat (boxer)',
                 'rotary',
             ]);
+
             $table->enum('rotation_direction', [
                 'longitudinal',
                 'transverse',
             ]);
 
             $table->integer('cylinders_count');
-            $table->integer('valve_count');  // 8v
-
-            $table->enum('valve_lash_type', [
-                'hydraulic',
-                'solid'
-            ]);
-            $table->enum('valve_follower_type', [
-                'roller', 
-                'flat_tappet', 
-                'bucket', 
-                'finger_follower', 
-                'mushroom'
-            ]);
-            $table->enum('valve_actuation_type', [
-                'spring', 
-                'desmodromic'
-            ]);
+            $table->integer('valve_count');
 
             $table->enum('camshaft_type', [
                 'ohc',      // overhead camshaft
