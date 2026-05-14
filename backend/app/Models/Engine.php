@@ -24,4 +24,9 @@ class Engine extends Model
     {
         return $this->hasOne(EngineSpec::class);
     }
+
+    public function parts()
+    {
+        return $this->hasOne(EnginePart::class);
+    }
 }

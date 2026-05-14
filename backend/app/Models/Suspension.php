@@ -8,4 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class Suspension extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'type',
+        'configuration',
+        'manufacturer',
+    ];
+
+    public function specs()
+    {
+        return $this->hasOne(SuspensionSpec::class);
+    }
+
+    public function parts()
+    {
+        return $this->hasOne(SuspensionPart::class);
+    }
+
+    public function userVehicles()
+    {
+        return $this->hasMany(UserVehicleSuspension::class);
+    }
 }

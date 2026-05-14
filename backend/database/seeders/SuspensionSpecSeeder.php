@@ -12,6 +12,27 @@ class SuspensionSpecSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+            $specs = [
+                [
+                    'suspension_id' => 1,
+                    'spring_constant_nm' => 18000,
+                    'damping_ratio' => 0.45,
+                    'ride_height_mm' => 185,
+                    'ground_clearance_mm' => 120,
+                    'camber_angle_deg' => -0.5,
+                    'caster_angle_deg' => 3.5,
+                    'toe_in_mm' => 2.0,
+                    'weight_kg' => 65.0,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ];
+
+            foreach ($specs as $spec) {
+                \App\Models\SuspensionSpec::updateOrCreate(
+                    ['suspension_id' => $spec['suspension_id']],
+                    $spec
+                );
+            }
     }
 }

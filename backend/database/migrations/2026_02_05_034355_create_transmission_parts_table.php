@@ -11,10 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transmission_specs', function (Blueprint $table) {
+        Schema::create('transmission_parts', function (Blueprint $table) {
             $table->id();
 
-            
+            $table->foreignId('transmission_id')
+                ->references('id')
+                ->on('transmissions')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->string('clutch_type');       // dry single, dry dual, wet, etc
+            $table->integer('clutch_diameter_mm');
+            $table->string('synchro_type');      // cone, brass, carbon, etc
+            $table->string('material_case');     // aluminum, cast iron, steel
+            $table->string('oil_type');
+            $table->double('oil_capacity_l', 3, 1);
 
             $table->timestamps();
         });

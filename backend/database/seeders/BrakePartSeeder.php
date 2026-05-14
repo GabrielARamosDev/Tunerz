@@ -12,6 +12,26 @@ class BrakePartSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+            $parts = [
+                [
+                    'brake_id' => 1,
+                    'rotor_type' => 'ventilated',
+                    'rotor_material' => 'cast iron',
+                    'caliper_type' => 'dual piston',
+                    'caliper_material' => 'aluminum',
+                    'pad_type' => 'semi-metallic',
+                    'pad_compound' => 'ceramic blend',
+                    'dust_shield' => true,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ];
+
+            foreach ($parts as $part) {
+                \App\Models\BrakePart::updateOrCreate(
+                    ['brake_id' => $part['brake_id']],
+                    $part
+                );
+            }
     }
 }

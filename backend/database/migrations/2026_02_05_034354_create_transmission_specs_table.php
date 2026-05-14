@@ -14,7 +14,24 @@ return new class extends Migration
         Schema::create('transmission_specs', function (Blueprint $table) {
             $table->id();
 
-            
+            $table->foreignId('transmission_id')
+                ->references('id')
+                ->on('transmissions')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->double('gear_ratio_1', 5, 2);
+            $table->double('gear_ratio_2', 5, 2);
+            $table->double('gear_ratio_3', 5, 2);
+            $table->double('gear_ratio_4', 5, 2);
+            $table->double('gear_ratio_5', 5, 2)->nullable();
+            $table->double('gear_ratio_6', 5, 2)->nullable();
+            $table->double('gear_ratio_7', 5, 2)->nullable();
+
+            $table->double('final_drive_ratio', 5, 2);
+
+            $table->integer('max_torque_nm');
+            $table->double('weight_kg', 5, 1);
 
             $table->timestamps();
         });

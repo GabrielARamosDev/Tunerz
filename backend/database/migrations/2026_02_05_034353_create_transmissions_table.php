@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('transmissions', function (Blueprint $table) {
             $table->id();
 
-            
+            $table->string('name');
+            $table->string('type');              // manual, automatic, cvt, dct
+            $table->integer('gears_count');
+            $table->string('manufacturer');
 
             $table->timestamps();
         });

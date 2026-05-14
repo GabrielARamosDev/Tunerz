@@ -12,6 +12,26 @@ class SuspensionPartSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+            $parts = [
+                [
+                    'suspension_id' => 1,
+                    'spring_type' => 'coil',
+                    'spring_material' => 'steel alloy',
+                    'damper_type' => 'telescopic',
+                    'damper_material' => 'aluminum',
+                    'wishbone_type' => 'aluminium',
+                    'stabilizer_diameter_mm' => 24,
+                    'has_abs' => true,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ];
+
+            foreach ($parts as $part) {
+                \App\Models\SuspensionPart::updateOrCreate(
+                    ['suspension_id' => $part['suspension_id']],
+                    $part
+                );
+            }
     }
 }

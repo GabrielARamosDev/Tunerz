@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('user_vehicle_suspensionss', function (Blueprint $table) {
+        Schema::create('user_vehicle_suspensions', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('user_vehicle_id')
@@ -16,8 +16,12 @@ return new class extends Migration
                 ->on('user_vehicles')
                 ->constrained()
                 ->cascadeOnDelete();
-                
             
+            $table->foreignId('suspension_id')
+                ->references('id')
+                ->on('suspensions')
+                ->constrained()
+                ->cascadeOnDelete();
 
             $table->timestamps(); 
         });
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_vehicle_suspensionss');
+        Schema::dropIfExists('user_vehicle_suspensions');
     }
 };

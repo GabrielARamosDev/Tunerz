@@ -16,8 +16,12 @@ return new class extends Migration
                 ->on('user_vehicles')
                 ->constrained()
                 ->cascadeOnDelete();
-                
             
+            $table->foreignId('brake_id')
+                ->references('id')
+                ->on('brakes')
+                ->constrained()
+                ->cascadeOnDelete();
 
             $table->timestamps(); 
         });

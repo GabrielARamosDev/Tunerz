@@ -17,9 +17,15 @@ use App\Models\Engine;
 use App\Models\EngineSpec;
 use App\Models\User;
 use App\Models\UserVehicle;
+use App\Models\UserVehicleTransmission;
+use App\Models\UserVehicleBrake;
+use App\Models\UserVehicleSuspension;
 use App\Models\UserVehicleEngine;
 use App\Models\UserVehicleEngineSpec;
 use App\Models\UserVehicleSpecs;
+use App\Models\Transmission;
+use App\Models\Brake;
+use App\Models\Suspension;
 use App\Models\Vehicle;
 use App\Models\VehicleSpec;
 
@@ -112,7 +118,13 @@ class UserController extends CrudController
             $user_vehicles = UserVehicle::where('user_id', $user->id)
                 ->with([
                     'vehicle', 'vehicleSpecs',
-                    'engines.specs'
+                    'engines.specs',
+                    'transmissions.transmission.specs',
+                    'transmissions.transmission.parts',
+                    'brakes.brake.specs',
+                    'brakes.brake.parts',
+                    'suspensions.suspension.specs',
+                    'suspensions.suspension.parts',
                 ])
                 ->get();
 
@@ -147,6 +159,9 @@ class UserController extends CrudController
                 'model' => 'required|string',
                 'trim' => 'required|string',
                 'year' => 'required|integer',
+                'transmission_id' => 'nullable|exists:transmissions,id',
+                'brake_id' => 'nullable|exists:brakes,id',
+                'suspension_id' => 'nullable|exists:suspensions,id',
             ]);
 
             // Find the vehicle by its specifications
@@ -234,12 +249,42 @@ class UserController extends CrudController
                     'active' => 1,
                 ]);
 
+                // Create transmission association if provided
+                if ($request->has('transmission_id') && $request->transmission_id) {
+                    UserVehicleTransmission::create([
+                        'user_vehicle_id' => $user_vehicle->id,
+                        'transmission_id' => $request->transmission_id,
+                    ]);
+                }
+
+                // Create brake association if provided
+                if ($request->has('brake_id') && $request->brake_id) {
+                    UserVehicleBrake::create([
+                        'user_vehicle_id' => $user_vehicle->id,
+                        'brake_id' => $request->brake_id,
+                    ]);
+                }
+
+                // Create suspension association if provided
+                if ($request->has('suspension_id') && $request->suspension_id) {
+                    UserVehicleSuspension::create([
+                        'user_vehicle_id' => $user_vehicle->id,
+                        'suspension_id' => $request->suspension_id,
+                    ]);
+                }
+
                 DB::commit();
 
                 // Load and return the created user vehicle with relationships
                 $user_vehicle->load([
                     'vehicle', 'vehicleSpecs', 
-                    'engines.specs'
+                    'engines.specs',
+                    'transmissions.transmission.specs',
+                    'transmissions.transmission.parts',
+                    'brakes.brake.specs',
+                    'brakes.brake.parts',
+                    'suspensions.suspension.specs',
+                    'suspensions.suspension.parts',
                 ]);
 
                 $new_vehicle = UserVehicle::mountFrontendModel($user_vehicle);

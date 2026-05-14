@@ -12,6 +12,22 @@ class SuspensionSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+            $suspensions = [
+                [
+                    'name' => 'MacPherson Strut',
+                    'type' => 'independent',
+                    'configuration' => 'double wishbone',
+                    'manufacturer' => 'KW',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ];
+
+            foreach ($suspensions as $suspension) {
+                \App\Models\Suspension::updateOrCreate(
+                    ['name' => $suspension['name']],
+                    $suspension
+                );
+            }
     }
 }

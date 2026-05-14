@@ -13,6 +13,22 @@ return new class extends Migration
     {
         Schema::create('suspension_specs', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('suspension_id')
+                ->references('id')
+                ->on('suspensions')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->integer('spring_constant_nm');
+            $table->double('damping_ratio', 3, 2);
+            $table->double('ride_height_mm', 5, 1);
+            $table->double('ground_clearance_mm', 5, 1);
+            $table->double('camber_angle_deg', 4, 1);
+            $table->double('caster_angle_deg', 4, 1);
+            $table->double('toe_in_mm', 4, 1);
+            $table->double('weight_kg', 5, 1);
+
             $table->timestamps();
         });
     }

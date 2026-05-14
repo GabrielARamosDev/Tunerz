@@ -13,6 +13,21 @@ return new class extends Migration
     {
         Schema::create('brake_parts', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('brake_id')
+                ->references('id')
+                ->on('brakes')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->string('rotor_type');        // ventilated, solid, drilled
+            $table->string('rotor_material');    // cast iron, ceramic, carbon
+            $table->string('caliper_type');      // single piston, dual piston, floating
+            $table->string('caliper_material');  // aluminum, steel
+            $table->string('pad_type');          // semi-metallic, ceramic, organic
+            $table->string('pad_compound');
+            $table->boolean('dust_shield')->default(true);
+
             $table->timestamps();
         });
     }
