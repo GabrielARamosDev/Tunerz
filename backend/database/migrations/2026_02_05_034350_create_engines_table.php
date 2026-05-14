@@ -56,11 +56,6 @@ return new class extends Migration
                 'ohv',      // overhead valve
                 'desmodromic',
             ]);
-            $table->enum('command_drive', [
-                'belt',
-                'chain',
-                'gears',
-            ]);
 
             $table->enum('aspiration', [
                 'NA',                              // naturally aspirated

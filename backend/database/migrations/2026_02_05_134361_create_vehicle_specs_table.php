@@ -20,6 +20,19 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->enum('body_type', [
+                'sedan',
+                'hatchback',
+                'hothatch',
+                'coupe',
+                'convertible',
+                'targa',
+                'suv',
+                'pickup',
+                'wagon',
+                'van',
+            ]);
+
             $table->enum('drivetrain', [
                 'fwd', // front-wheel drive
                 'rwd', // rear-wheel drive
@@ -27,17 +40,24 @@ return new class extends Migration
                 '4wd', // four-wheel drive
             ]);
 
-            $table->enum('transmission', [
-                'manual',
-                'semi_automatic',
-                'automatic',
+            $table->enum('platform', [
+                
             ]);
 
-            $table->double('weight', 10, 2)->nullable(); // kg
+            $table->double('wheel_base_mm', 10, 2)->nullable();
 
-            $table->double('width', 10, 2)->nullable();  // mm
-            $table->double('length', 10, 2)->nullable(); // mm
-            $table->double('height', 10, 2)->nullable(); // mm
+            $table->double('length_mm', 10, 2)->nullable();
+            $table->double('width_mm', 10, 2)->nullable();
+            $table->double('height_mm', 10, 2)->nullable();
+
+            $table->double('front_track_mm', 10, 2)->nullable();
+            $table->double('hear_track_mm', 10, 2)->nullable();
+
+            $table->double('weight_kg', 10, 2)->nullable();
+
+            $table->double('fuel_tank_l', 10, 2)->nullable();
+
+            $table->double('drag_coefficient', 10, 2)->nullable();
 
             $table->unique('vehicle_id');
 
