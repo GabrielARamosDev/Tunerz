@@ -17,26 +17,49 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->string('code');          // X20XEV
-            $table->string('manufacturer');  // GM
-            $table->integer('displacement'); // 1998 (2.0)
-            $table->integer('valve_count');  // 8v
+            $table->enum('piston_head_type', [
 
-            $table->enum('propulsion', [
-                'combustion',
-                'hybrid',
-                'electric',
+            ]);
+            $table->enum('piston_head_material', [
+
+            ]);
+            $table->enum('piston_conrod_type', [
+
+            ]);
+            $table->enum('piston_conrod_material', [
+
+            ]);
+            $table->double('piston_bore_mm', 2, 2);
+            $table->double('piston_stroke_mm', 2, 2);
+
+            $table->enum('camshaft_type', [
+
+            ]);
+            $table->enum('camshaft_material', [
+
             ]);
 
-            $table->enum('fuel_type', [
-                'gasoline',
-                'ethanol',
-                'flex',
-                'vng',      // vehicular natural gas
-                'diesel',
+            $table->enum('valve_type', [
+
+            ]);
+            $table->enum('valve_material', [
+
+            ]);
+            
+            $table->double('intake_valve_diameter_mm', 2, 2);
+            $table->integer('intake_valve_seat_angle');
+            $table->double('exhaust_valve_diameter_mm', 2, 2);
+            $table->integer('exhaust_valve_seat_angle');
+
+            $table->enum('valve_control_type', [
+
+            ]);
+            $table->enum('valve_control_material', [
+
             ]);
 
-            $table->boolean('active')->default(0);
+            $table->boolean('has_VVT')->default(false);
+            $table->boolean('has_VVL')->default(false);
 
             $table->timestamps(); 
         });

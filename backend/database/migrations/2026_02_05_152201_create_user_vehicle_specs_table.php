@@ -43,6 +43,7 @@ return new class extends Migration
             $table->enum('platform', [
                 
             ]);
+            
             $table->double('wheel_base_mm', 10, 2)->nullable();
 
             $table->enum('front_wheel_width', [
