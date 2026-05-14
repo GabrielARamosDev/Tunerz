@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transmission_specs');
+        Schema::dropIfExists('transmission_parts');
     }
 };

@@ -69,24 +69,24 @@ return new class extends Migration
             ]);
 
             $table->enum('block_material', [
-                'cast iron', 
-                'aluminum billet', 
-                'forged aluminum', 
-                'forged aluminum billet', 
-                'magnesium', 
-                'steel' ,
-                'forged steel' ,
-                'forged steel billet' ,
+                'cast iron',
+                'aluminum alloy',
+                'forged aluminum',
+                'magnesium',
+                'steel',
+                'forged steel',
+                'titanium',
+                'custom',
             ]);
             $table->enum('head_material', [
-                'cast iron', 
-                'aluminum billet', 
-                'forged aluminum', 
-                'forged aluminum billet', 
-                'magnesium', 
-                'steel' ,
-                'forged steel' ,
-                'forged steel billet' ,
+                'cast iron',
+                'aluminum alloy',
+                'forged aluminum',
+                'magnesium',
+                'steel',
+                'forged steel',
+                'titanium',
+                'custom',
             ]);
 
             $table->double('length_mm');
