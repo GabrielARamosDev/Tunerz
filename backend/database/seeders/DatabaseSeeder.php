@@ -23,12 +23,20 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             UserSeeder::class,
             UserRole::class,
+            ###
             EngineSeeder::class,
             EngineSpecSeeder::class,
             EnginePartSeeder::class,
             TransmissionSeeder::class,
             TransmissionSpecSeeder::class,
             TransmissionPartSeeder::class,
+            BrakeSeeder::class,
+            BrakeSpecSeeder::class,
+            BrakePartSeeder::class,
+            SuspensionSeeder::class,
+            SuspensionSpecSeeder::class,
+            SuspensionPartSeeder::class,
+            ###
             VehicleSeeder::class,
             VehicleSpecSeeder::class,
         ]);

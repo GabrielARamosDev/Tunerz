@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('steering_system_specs', function (Blueprint $table) {
             $table->id();
 
-            $table->double('front_suspension_height');
-            $table->double('rear_suspension_height');
+            $table->double('front_suspension_height_mm');
+            $table->double('rear_suspension_height_mm');
 
             $table->double('front_tire_pressure_bar');
             $table->double('rear_tire_pressure_bar');

@@ -169,7 +169,13 @@ class UserController extends CrudController
                 ->where('model', $request->model)
                 ->where('trim', $request->trim)
                 ->where('year', $request->year)
-                ->with(['specs', 'engine'])
+                ->where('generation', $request->generation)
+                ->with([
+                    'specs', 
+                    'engine', 'transmission', 
+                    'frontSuspension', 'rearSuspension', 
+                    'frontBrake', 'rearBrake', 
+                ])
                 ->firstOrFail();
 
             if (!$vehicle) {

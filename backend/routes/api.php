@@ -84,6 +84,7 @@ Route::group([
         Route::get('/options/models', [VehicleController::class, 'getModels']);
         Route::get('/options/trims', [VehicleController::class, 'getTrims']);
         Route::get('/options/years', [VehicleController::class, 'getYears']);
+        Route::get('/options/generations', [VehicleController::class, 'getGenerations']);
     });
 
     Route::group([

@@ -69,7 +69,9 @@ return new class extends Migration
                 ->on('brakes')
                 ->constrained();
 
-            $table->string('image_url')->nullable();
+            $table->string('image_url')
+                ->nullable()
+                ->default(null);
 
             $table->timestamps();
         });

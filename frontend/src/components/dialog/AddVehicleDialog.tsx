@@ -31,6 +31,7 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
         model: '',
         trim: '',
         year: new Date().getFullYear(),
+        generation: 0,
     });
 
     const [options, setOptions] = useState({
@@ -38,6 +39,7 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
         models: [] as string[],
         trims: [] as string[],
         years: [] as number[],
+        generations: [] as number[],
     });
 
     const [loading, setLoading] = useState({
@@ -45,6 +47,7 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
         models: false,
         trims: false,
         years: false,
+        generations: false,
     });
 
     /* ============================================================== */
@@ -84,6 +87,15 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
             setFormData(prev => ({ ...prev, year: new Date().getFullYear() }));
         }
     }, [formData.trim, formData.model, formData.manufacturer]);
+
+    useEffect(() => {
+        if (formData.trim && formData.model && formData.manufacturer) {
+            fetchGenerations();
+        } else {
+            setOptions(prev => ({ ...prev, generations: [] }));
+            setFormData(prev => ({ ...prev, generation: 0 }));
+        }
+    }, [formData.year, formData.trim, formData.model, formData.manufacturer]);
 
     /* ============================================================== */
 
@@ -148,6 +160,27 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
         }
     };
 
+    const fetchGenerations = async () => {
+        try {
+            setLoading(prev => ({ ...prev, generations: true }));
+            const response = await api.get('/vehicles/options/generations', {
+                params: {
+                    manufacturer: formData.manufacturer,
+                    model: formData.model,
+                    trim: formData.trim,
+                    year: formData.year,
+                },
+            });
+            setOptions(prev => ({ ...prev, generations: response.data }));
+        } catch (error) {
+            console.error('Erro ao carregar anos:', error);
+        } finally {
+            setLoading(prev => ({ ...prev, generations: false }));
+        }
+    };
+
+    /* * */
+
     const handleInputChange = (e: React.ChangeEvent<{ name?: string; value: unknown }>) => {
         const { name, value } = e.target as { name: string; value: unknown };
         setFormData(prev => ({
@@ -167,6 +200,7 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
             model: formData.model,
             trim: formData.trim,
             year: formData.year,
+            generation: formData.generation, 
         } as Vehicle);
 
         setFormData({
@@ -174,6 +208,7 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
             model: '',
             trim: '',
             year: new Date().getFullYear(),
+            generation: 0,
         });
         onClose();
     };
@@ -257,6 +292,25 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
                             {options.years.map((year) => (
                                 <MenuItem key={year} value={year}>
                                     {year}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+
+                    <FormControl fullWidth disabled={!formData.trim || loading.generations}>
+                        <InputLabel>Geração</InputLabel>
+                        <Select
+                            name="generation"
+                            label="Geração"
+                            value={formData.generation}
+                            onChange={handleInputChange}
+                        >
+                            <MenuItem value="">
+                                {loading.generations ? <CircularProgress size={20} /> : 'Selecione'}
+                            </MenuItem>
+                            {options.generations.map((generation) => (
+                                <MenuItem key={generation} value={generation}>
+                                    {generation}
                                 </MenuItem>
                             ))}
                         </Select>

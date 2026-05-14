@@ -7,5 +7,6 @@ export interface Vehicle {
     model: string;
     trim: string;
     year: number;
+    generation: number;
     engine: Engine;
 }

@@ -39,19 +39,6 @@ return new class extends Migration
                 'awd', // all-wheel drive
                 '4wd', // four-wheel drive
             ]);
-
-            $table->enum('platform', [
-                'A-segment',
-                'B-segment',
-                'C-segment',
-                'D-segment',
-                'E-segment',
-                'F-segment',
-                'J-segment',
-                'M-segment',
-                'S-segment',
-                'custom',
-            ]);
             
             $table->double('wheel_base_mm', 10, 2)->nullable();
 
@@ -76,7 +63,7 @@ return new class extends Migration
                 '295',
                 'custom',
             ])->nullable();
-            $table->enum('front_wheel_profile_%', [
+            $table->enum('front_wheel_profile', [
                 '35',
                 '40',
                 '45',
@@ -122,7 +109,7 @@ return new class extends Migration
                 '295',
                 'custom',
             ])->nullable();
-            $table->enum('rear_wheel_profile_%', [
+            $table->enum('rear_wheel_profile', [
                 '35',
                 '40',
                 '45',
@@ -163,7 +150,7 @@ return new class extends Migration
             $table->double('height_mm', 10, 2)->nullable();
 
             $table->double('front_track_mm', 10, 2)->nullable();
-            $table->double('hear_track_mm', 10, 2)->nullable();
+            $table->double('rear_track_mm', 10, 2)->nullable();
 
             $table->double('weight_kg', 10, 2)->nullable();
 

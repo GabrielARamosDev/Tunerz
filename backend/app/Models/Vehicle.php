@@ -9,13 +9,17 @@ use App\Models\Engine;
 class Vehicle extends Model
 {
     protected $fillable = [
-        'engine_id',
         'manufacturer', 
         'model', 
-        'year', 
         'trim',
+        'year',
+        'generation', 
         'engine_id',
-        'body_type', 
+        'transmission_id',
+        'front_suspension_id',
+        'rear_suspension_id',
+        'front_brake_id',
+        'rear_brake_id', 
         'image_url'
     ];
 
@@ -27,6 +31,29 @@ class Vehicle extends Model
     public function engine()
     {
         return $this->belongsTo(Engine::class);
+    }
+    
+    public function transmission()
+    {
+        return $this->belongsTo(Transmission::class);
+    }
+    
+    public function frontSuspension()
+    {
+        return $this->belongsTo(Suspension::class);
+    }
+    public function rearSuspension()
+    {
+        return $this->belongsTo(Suspension::class);
+    }
+    
+    public function frontBrake()
+    {
+        return $this->belongsTo(Brake::class);
+    }
+    public function rearBrake()
+    {
+        return $this->belongsTo(Brake::class);
     }
 
     public function userVehicles()

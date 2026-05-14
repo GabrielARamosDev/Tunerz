@@ -141,4 +141,24 @@ class VehicleController extends CrudController
         
         return response()->json($years);
     }
+
+    public function getGenerations(Request $request)
+    {
+        $manufacturer = $request->query('manufacturer');
+        $model = $request->query('model');
+        $trim = $request->query('trim');
+        $year = $request->query('year');
+
+        $generations = Vehicle::where('manufacturer', $manufacturer)
+            ->where('model', $model)
+            ->where('trim', $trim)
+            ->where('year', $year)
+            ->distinct()
+            ->pluck('generation')
+            ->sort()
+            ->reverse()
+            ->values();
+        
+        return response()->json($generations);
+    }
 }

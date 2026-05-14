@@ -63,7 +63,9 @@ return new class extends Migration
                 ->on('brakes')
                 ->constrained();
 
-            $table->string('image_url')->nullable();
+            $table->string('image_url')
+                ->nullable()
+                ->default(null);
 
             /**
              * Garante que exista apenas 1 modelo de cada carro por marca, 
