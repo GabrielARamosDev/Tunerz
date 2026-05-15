@@ -40,6 +40,11 @@ class Vehicle extends Model
         return $this->belongsTo(Transmission::class);
     }
     
+    public function forcedInduction()
+    {
+        return $this->belongsTo(ForcedInduction::class);
+    }
+    
     public function frontSuspension()
     {
         return $this->belongsTo(Suspension::class);

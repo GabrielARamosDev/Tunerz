@@ -25,8 +25,6 @@ class EnginePart extends Model
         'carburator_system',
         'intake_material',
         'intake_type',
-        'aspiration',
-        'twin_turbocharged_config', 
     ];
 
     public function engine()

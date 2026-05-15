@@ -137,29 +137,6 @@ return new class extends Migration
                 'ram-air',   // Positioned at the front of the vehicle to utilize forward momentum for forcing higher-density air into the engine
                 'cold-air',  // Air filter outside the engine compartment to ingest cooler, denser air,
             ]);
-
-            $table->enum('aspiration', [
-                'NA',                              // naturally aspirated
-                'turbocharged',                    // single turbo
-                'twin_turbocharged',  // sequential, parallel, etc
-                'supercharger',                    // roots, twin-screw, or centrifugal
-                'twin_charged',                    // turbo + supercharger
-                'electric_turbo',                  // e-turbo
-                'electric_supercharger',           // e-supercharger
-            ]);
-
-            /* ================================================ */
-            /**
-             * Only aplicable if: aspiration = 'twin_turbocharged'
-             */
-            $table->enum('twin_turbocharged_config', [
-                'sequential',  // sequential, parallel, etc
-                'parallel',    // sequential, parallel, etc
-                'compound',    // sequential, parallel, etc
-            ])
-                ->nullable()
-                ->default(null);
-            /* ================================================ */
             
             $table->timestamps();
         });

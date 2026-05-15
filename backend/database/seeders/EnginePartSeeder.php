@@ -32,8 +32,6 @@ class EnginePartSeeder extends Seeder
                     'carburator_system' => null, 
                     'intake_material' => 'thermoplastics',
                     'intake_type' => 'stock',
-                    'aspiration' => 'NA',
-                    'twin_turbocharged_config' => null,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
