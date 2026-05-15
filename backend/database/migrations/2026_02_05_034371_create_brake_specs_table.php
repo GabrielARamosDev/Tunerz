@@ -23,7 +23,6 @@ return new class extends Migration
             $table->integer('rotor_diameter_mm');
             $table->double('rotor_thickness_mm', 4, 1);
             $table->double('pad_thickness_mm', 4, 1);
-            $table->string('pad_material');
             $table->double('max_force_kn', 4, 1);
             $table->double('friction_coefficient', 3, 2);
             $table->double('weight_kg', 5, 1);

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('caliper_type');      // single piston, dual piston, floating
             $table->string('caliper_material');  // aluminum, steel
             $table->string('pad_type');          // semi-metallic, ceramic, organic
-            $table->string('pad_compound');
+            $table->string('pad_material');
             $table->boolean('dust_shield')->default(true);
 
             $table->timestamps();

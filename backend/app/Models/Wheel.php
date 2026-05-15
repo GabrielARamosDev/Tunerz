@@ -20,6 +20,11 @@ class Wheel extends Model
         return $this->hasOne(WheelSpec::class);
     }
 
+    public function parts()
+    {
+        return $this->hasOne(WheelPart::class);
+    }
+
     public function vehicles()
     {
         return $this->hasMany(Vehicle::class);

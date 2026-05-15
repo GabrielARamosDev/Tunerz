@@ -14,7 +14,6 @@ class BrakeSpec extends Model
         'rotor_diameter_mm',
         'rotor_thickness_mm',
         'pad_thickness_mm',
-        'pad_material',
         'max_force_kn',
         'friction_coefficient',
         'weight_kg',

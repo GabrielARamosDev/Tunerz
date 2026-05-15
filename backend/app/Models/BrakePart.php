@@ -16,7 +16,7 @@ class BrakePart extends Model
         'caliper_type',
         'caliper_material',
         'pad_type',
-        'pad_compound',
+        'pad_material',
         'dust_shield',
     ];
 

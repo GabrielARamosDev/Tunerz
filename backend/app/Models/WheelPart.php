@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WheelSpec extends Model
+class WheelPart extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'wheel_id',
-        'tire_width_mm',
-        'tire_profile',
-        'wheel_radius_in',
-        'expected_pressure_bar',
-        'tire_treadwear',
+        'tire_material',
+        'wheel_material',
     ];
 
     public function wheel()
