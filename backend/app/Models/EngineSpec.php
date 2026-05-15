@@ -8,31 +8,40 @@ class EngineSpec extends Model
 {
     protected $fillable = [
         'engine_id',
+        ###
         'stock_power_hp',
         'stock_power_rpm',
         'stock_torque_nm',
         'stock_torque_rpm',
         'stock_power_to_weight_ratio',
         'stock_torque_to_weight_ratio',
-        'stock_redline_rpm',
         'stock_idle_rpm',
+        'stock_redline_rpm',
+        ###
         'cylinders_count',
         'piston_bore_mm',
         'piston_stroke_mm',
-        'compression_ratio',
         'displacement_cc',
+        'compression_ratio',
         'valve_count',
+        ###
         'intake_valve_diameter_mm',
         'intake_valve_seat_angle',
         'exhaust_valve_diameter_mm',
         'exhaust_valve_seat_angle',
+        ###
         'carburator_barrel_count',
         'air_flow_cfm',
         'max_safe_boost_bar',
+        ###
+        'fuel_injection_time_ms', 
+        'fuel_flowrate_cc_min', 
         'fuel_pressure_bar',
+        'air_fuel_ratio', 
+        ###
         'thermal_efficiency',
-        'oil_capacity_l',
         'coolant_capacity_l',
+        'oil_capacity_l',
         'length_mm',
         'width_mm',
         'height_mm',

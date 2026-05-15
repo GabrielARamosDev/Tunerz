@@ -20,6 +20,10 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            /* ================================================ */
+            /**
+             * Stock values for comparison purpose
+             */
             $table->integer('stock_power_hp')->nullable();
             $table->integer('stock_power_rpm')->nullable();
             $table->integer('stock_torque_nm')->nullable();
@@ -28,14 +32,15 @@ return new class extends Migration
             $table->double('stock_power_to_weight_ratio', 8, 4)->nullable();
             $table->double('stock_torque_to_weight_ratio', 8, 4)->nullable();
 
-            $table->integer('stock_redline_rpm');
             $table->integer('stock_idle_rpm');
+            $table->integer('stock_redline_rpm');
+            /* ================================================ */
 
             $table->integer('cylinders_count');
             $table->double('piston_bore_mm', 5, 2);
             $table->double('piston_stroke_mm', 5, 2);
-            $table->double('compression_ratio', 4, 2);
             $table->integer('displacement_cc');
+            $table->double('compression_ratio', 4, 2);
             
             $table->integer('valve_count');
             $table->double('intake_valve_diameter_mm', 5, 2);
@@ -52,20 +57,23 @@ return new class extends Migration
                 ->default(0);
             /* ================================================ */
 
-            $table->double('air_flow_cfm');
-            $table->double('max_safe_boost_bar')->default(0);
+            $table->double('air_flow_cfm', 4, 2);
+            $table->double('max_safe_boost_bar', 4, 2)->default(0);
             
-            $table->double('fuel_pressure_bar');
-            $table->double('thermal_efficiency');
+            $table->double('fuel_injection_time_ms', 4, 2);
+            $table->integer('fuel_flowrate_cc_min');
+            $table->double('fuel_pressure_bar', 4, 2);
+            $table->double('air_fuel_ratio', 4, 2);
 
-            $table->double('oil_capacity_l');
-            $table->double('coolant_capacity_l');
+            $table->double('thermal_efficiency', 4, 2);
+            $table->double('coolant_capacity_l', 4, 2);
+            $table->double('oil_capacity_l', 4, 2);
 
-            $table->double('length_mm')->default(0);
-            $table->double('width_mm')->default(0);
-            $table->double('height_mm')->default(0);
+            $table->double('length_mm', 4, 2)->default(0);
+            $table->double('width_mm', 4, 2)->default(0);
+            $table->double('height_mm', 4, 2)->default(0);
 
-            $table->double('weight_kg')->default(0);
+            $table->double('weight_kg', 4, 2)->default(0);
 
             $table->timestamps();
         });
