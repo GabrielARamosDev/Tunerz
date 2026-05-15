@@ -47,6 +47,11 @@ return new class extends Migration
             $table->double('compression_ratio', 4, 2);
             $table->integer('displacement_cc');
 
+            $table->enum('camshaft_actuation', [
+                'mechanical',
+                'hydraulic',
+                'electronic',
+            ]);
             $table->enum('camshaft_type', [
                 'roller',
                 'flat tappet',
@@ -58,6 +63,8 @@ return new class extends Migration
                 'steel',
                 'forged steel',
                 'billet steel',
+                'aluminum',
+                'titanium',
             ]);
 
             $table->enum('valve_type', [
@@ -75,17 +82,6 @@ return new class extends Migration
             $table->integer('intake_valve_seat_angle');
             $table->double('exhaust_valve_diameter_mm', 5, 2);
             $table->integer('exhaust_valve_seat_angle');
-
-            $table->enum('camshaft_type', [
-                'mechanical',
-                'hydraulic',
-                'electronic',
-            ]);
-            $table->enum('camshaft_material', [
-                'steel',
-                'titanium',
-                'aluminum',
-            ]);
 
             $table->boolean('has_VVT')->default(false);
             $table->boolean('has_VVL')->default(false);

@@ -16,6 +16,7 @@ class EnginePart extends Model
         'piston_stroke_mm',
         'compression_ratio',
         'displacement_cc',
+        'camshaft_actuation',
         'camshaft_type',
         'camshaft_material',
         'valve_type',

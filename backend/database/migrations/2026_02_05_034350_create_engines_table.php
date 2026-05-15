@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('name');          // Família II
             $table->string('code');          // X20XEV
             $table->string('manufacturer');  // GM
-            $table->string('generation');    // 2ª
+            $table->integer('generation')->nullable();
 
             $table->enum('architecture', [
                 'inline',

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('model');                   // Astra
             $table->string('trim')->nullable();        // trim/version: CD
             $table->integer('year')->nullable();       // 2004
-            $table->integer('generation')->nullable(); // 3ª
+            $table->integer('generation')->nullable(); // 2ª
 
             $table->unsignedBigInteger('engine_id')
                 ->nullable()
