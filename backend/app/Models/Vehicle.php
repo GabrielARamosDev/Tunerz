@@ -9,17 +9,20 @@ use App\Models\Engine;
 class Vehicle extends Model
 {
     protected $fillable = [
-        'manufacturer', 
-        'model', 
+        'manufacturer',
+        'model',
         'trim',
         'year',
-        'generation', 
+        'generation',
         'engine_id',
         'transmission_id',
         'front_suspension_id',
         'rear_suspension_id',
         'front_brake_id',
-        'rear_brake_id', 
+        'rear_brake_id',
+        'front_wheel_id',
+        'rear_wheel_id',
+        'image_url',
     ];
 
     public function specs()

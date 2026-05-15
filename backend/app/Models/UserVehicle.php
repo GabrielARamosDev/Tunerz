@@ -9,20 +9,21 @@ class UserVehicle extends Model
     protected $table = 'user_vehicles';
 
     protected $fillable = [
-        'user_id', 
-        'manufacturer', 
-        'model', 
+        'user_id',
+        'manufacturer',
+        'model',
         'trim',
         'year',
-        'generation', 
+        'generation',
         'engine_id',
         'transmission_id',
         'front_suspension_id',
         'rear_suspension_id',
         'front_brake_id',
-        'rear_brake_id', 
+        'rear_brake_id',
         'front_wheel_id',
-        'rear_wheel_id', 
+        'rear_wheel_id',
+        'image_url',
     ];
 
     public function user() {

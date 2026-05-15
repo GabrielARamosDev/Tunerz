@@ -10,7 +10,13 @@ class UserVehicleBrake extends Model
 
     protected $fillable = [
         'user_vehicle_id',
-        'brake_id',
+        'rotor_type',
+        'rotor_material',
+        'caliper_type',
+        'caliper_material',
+        'pad_type',
+        'pad_compound',
+        'dust_shield',
     ];
 
     public function userVehicle()

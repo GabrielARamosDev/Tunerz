@@ -14,6 +14,8 @@ class EnginePart extends Model
         'piston_conrod_material',
         'piston_bore_mm',
         'piston_stroke_mm',
+        'compression_ratio',
+        'displacement_cc',
         'camshaft_type',
         'camshaft_material',
         'valve_type',
@@ -22,10 +24,10 @@ class EnginePart extends Model
         'intake_valve_seat_angle',
         'exhaust_valve_diameter_mm',
         'exhaust_valve_seat_angle',
-        'valve_control_type',
-        'valve_control_material',
         'has_VVT',
         'has_VVL',
+        'aspiration',
+        'max_safe_boost_bar',
     ];
 
     public function engine()

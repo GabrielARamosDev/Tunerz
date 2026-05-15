@@ -13,7 +13,7 @@ class Engine extends Model
         'generation',
         'architecture', 
         'rotation_direction', 
-        'cylinder_count',
+        'cylinders_count',
         'valve_count',
         'camshaft_config',
         'fuel_type',

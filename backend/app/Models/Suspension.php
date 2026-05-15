@@ -10,10 +10,11 @@ class Suspension extends Model
     use HasFactory;
 
     protected $fillable = [
+        'code',
         'name',
+        'manufacturer',
         'type',
         'configuration',
-        'manufacturer',
     ];
 
     public function specs()

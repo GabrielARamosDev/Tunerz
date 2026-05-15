@@ -10,10 +10,11 @@ class Transmission extends Model
     use HasFactory;
 
     protected $fillable = [
+        'code',
         'name',
+        'manufacturer',
         'type',
         'gears_count',
-        'manufacturer',
     ];
 
     public function specs()

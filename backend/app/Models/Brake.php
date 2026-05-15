@@ -10,9 +10,10 @@ class Brake extends Model
     use HasFactory;
 
     protected $fillable = [
+        'code',
         'name',
-        'type',
         'manufacturer',
+        'type',
     ];
 
     public function specs()
