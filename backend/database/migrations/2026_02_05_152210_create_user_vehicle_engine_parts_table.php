@@ -97,9 +97,7 @@ return new class extends Migration
             ]);
 
             /* ================================================ */
-            /**
-             * Only aplicable if: aspiration = 'twin_turbocharged'
-             */
+            //Only aplicable if: aspiration = 'twin_turbocharged'
             $table->enum('twin_turbocharged_config', [
                 'sequential',  // sequential, parallel, etc
                 'parallel',    // sequential, parallel, etc

@@ -49,9 +49,7 @@ return new class extends Migration
             $table->integer('exhaust_valve_seat_angle');
 
             /* ================================================ */
-            /**
-             * Only aplicable if: fuel_system = 'carburator'
-             */
+            //Only aplicable if: fuel_system = 'carburator'
             $table->integer('carburator_barrel_count') 
                 ->nullable()
                 ->default(0);

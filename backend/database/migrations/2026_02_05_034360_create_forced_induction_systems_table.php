@@ -24,14 +24,10 @@ return new class extends Migration
                 'twin_turbocharged',               // sequential, parallel, etc
                 'supercharged',                    // roots, twin-screw, or centrifugal
                 'twin_charged',                    // turbo + supercharger
-                'electric_turbo',                  
-                'electric_supercharger',           
             ])->default('NA');
 
             /* ================================================ */
-            /**
-             * Only aplicable if: aspiration = 'twin_turbocharged'
-             */
+            //Only aplicable if: aspiration = 'twin_turbocharged'
             $table->enum('twin_turbo_config', [
                 'sequential', 
                 'parallel', 
@@ -44,9 +40,7 @@ return new class extends Migration
             /* ================================================ */
 
             /* ================================================ */
-            /**
-             * Only aplicable if: aspiration = 'supercharged'
-             */
+            //Only aplicable if: aspiration = 'supercharged'
             $table->enum('supercharger_config', [
                 'roots', 
                 'twin-screw', 

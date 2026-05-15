@@ -115,9 +115,7 @@ return new class extends Migration
             ]);
 
             /* ================================================ */
-            /**
-             * Only aplicable if: fuel_system = 'carburator'
-             */
+            //Only aplicable if: fuel_system = 'carburator'
             $table->enum('carburator_system', [ 
                 'fixed-venturi', 
                 'variable-venturi', 
