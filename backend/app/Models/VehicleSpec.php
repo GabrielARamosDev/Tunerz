@@ -8,17 +8,17 @@ class VehicleSpec extends Model
 {
     protected $fillable = [
         'vehicle_id',
-        'generation', 
-        'platform', 
-        'series',
+        'body_type',
         'drivetrain', 
-        'transmission',
-        'fuel_type',
-        'weight', 
-        'weight_unit',
-        'width', 
-        'length',
-        'height',
+        'length_mm',
+        'width_mm', 
+        'height_mm',
+        'wheel_base_mm',
+        'front_track_mm',
+        'rear_track_mm',
+        'weight_kg', 
+        'fuel_tank_l',
+        'drag_coefficient',
     ];
 
     public function vehicle()

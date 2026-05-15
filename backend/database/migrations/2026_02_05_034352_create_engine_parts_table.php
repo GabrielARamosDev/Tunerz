@@ -76,12 +76,12 @@ return new class extends Migration
             $table->double('exhaust_valve_diameter_mm', 5, 2);
             $table->integer('exhaust_valve_seat_angle');
 
-            $table->enum('valve_control_type', [
+            $table->enum('camshaft_type', [
                 'mechanical',
                 'hydraulic',
                 'electronic',
             ]);
-            $table->enum('valve_control_material', [
+            $table->enum('camshaft_material', [
                 'steel',
                 'titanium',
                 'aluminum',

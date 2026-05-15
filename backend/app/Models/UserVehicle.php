@@ -21,38 +21,54 @@ class UserVehicle extends Model
         'rear_suspension_id',
         'front_brake_id',
         'rear_brake_id', 
+        'front_wheel_id',
+        'rear_wheel_id', 
     ];
 
     public function user() {
         return $this->belongsTo(User::class);
     }
 
-    public function vehicle() {
-        return $this->belongsTo(Vehicle::class);
-    }
-
-    public function vehicleSpecs()
+    public function specs()
     {
         return $this->hasMany(UserVehicleSpecs::class);
     }
 
-    public function engines() {
-        return $this->hasMany(UserVehicleEngine::class);
-    }
-
-    public function transmissions()
+    public function engine()
     {
-        return $this->hasMany(UserVehicleTransmission::class);
+        return $this->belongsTo(Engine::class);
     }
-
-    public function brakes()
+    
+    public function transmission()
     {
-        return $this->hasMany(UserVehicleBrake::class);
+        return $this->belongsTo(Transmission::class);
     }
-
-    public function suspensions()
+    
+    public function frontSuspension()
     {
-        return $this->hasMany(UserVehicleSuspension::class);
+        return $this->belongsTo(Suspension::class);
+    }
+    public function rearSuspension()
+    {
+        return $this->belongsTo(Suspension::class);
+    }
+    
+    public function frontBrake()
+    {
+        return $this->belongsTo(Brake::class);
+    }
+    public function rearBrake()
+    {
+        return $this->belongsTo(Brake::class);
+    }
+    
+    public function frontWheel()
+    {
+        return $this->belongsTo(Wheel::class);
+    }
+    public function rearWheel()
+    {
+        return $this->belongsTo(Wheel::class);
     }
 
     /* */

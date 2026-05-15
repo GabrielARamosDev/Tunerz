@@ -23,6 +23,8 @@ class VehicleSeeder extends Seeder
                 'rear_suspension_id' => 1,
                 'front_brake_id' => 1,
                 'rear_brake_id' => 1,
+                'front_wheel_id' => 1,
+                'rear_wheel_id' => 1,
                 'image_url' => '',
                 'created_at' => now(),
                 'updated_at' => now(),

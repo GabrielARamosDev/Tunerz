@@ -34,7 +34,7 @@ return new class extends Migration
             $table->integer('cylinders_count');
             $table->integer('valve_count');
 
-            $table->enum('camshaft_type', [
+            $table->enum('camshaft_config', [
                 'ohc',      // overhead camshaft
                 'sohc',     // single overhead camshaft
                 'dohc',     // double overhead camshaft
@@ -42,12 +42,6 @@ return new class extends Migration
                 'desmodromic',
             ]);
 
-            $table->enum('fuel_system', [
-                'spi',            // single-point fuel injection (tbi injection)
-                'mpfi',           // multi-point fuel injection
-                'mpfi (direct)', 
-                'carbureted',
-            ]);
             $table->enum('fuel_type', [
                 'gasoline',
                 'ethanol',
@@ -55,6 +49,28 @@ return new class extends Migration
                 'vng',      // vehicular natural gas
                 'diesel',
             ]);
+            $table->enum('fuel_system', [
+                'spfi', // single-point fuel injection (tbi injection)
+                'mpfi', // multi-point fuel injection
+                'dfi',  // direct fuel injection
+                'carburator (vertical)',
+                'carburator (horizontal)',
+            ]);
+
+            /* ================================================ */
+            /**
+             * Only aplicable if: fuel_system = 'some type of carburator'
+             */
+            $table->enum('carburator_system', [ 
+                'fixed-venturi', 
+                'variable-venturi', 
+            ])
+                ->nullable()
+                ->default(null);
+            $table->integer('carburator_barrel_count') 
+                ->nullable()
+                ->default(0);
+            /* ================================================ */
 
             $table->enum('block_material', [
                 'cast iron',

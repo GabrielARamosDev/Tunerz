@@ -7,12 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 class Engine extends Model
 {
     protected $fillable = [
+        'name',
         'code',
         'manufacturer',
-        'displacement',
+        'generation',
+        'architecture', 
+        'rotation_direction', 
+        'cylinder_count',
         'valve_count',
-        'propulsion',
+        'camshaft_config',
         'fuel_type',
+        'fuel_system',
+        'carburator_system',
+        'carburator_barrel_count',
+        'block_material',
+        'head_material',
+        'length_mm',
+        'width_mm',
+        'height_mm',
+        'weight_kg',
     ];
 
     public function specs()

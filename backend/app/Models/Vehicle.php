@@ -54,4 +54,13 @@ class Vehicle extends Model
     {
         return $this->belongsTo(Brake::class);
     }
+    
+    public function frontWheel()
+    {
+        return $this->belongsTo(Wheel::class);
+    }
+    public function rearWheel()
+    {
+        return $this->belongsTo(Wheel::class);
+    }
 }

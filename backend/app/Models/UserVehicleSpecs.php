@@ -10,16 +10,17 @@ class UserVehicleSpecs extends Model
 
     protected $fillable = [
         'user_vehicle_id',
-        'generation',
-        'platform',
-        'series',
-        'drivetrain',
-        'transmission',
-        'weight',
-        'weight_unit',
-        'width',
-        'length',
-        'height',
+        'body_type',
+        'drivetrain', 
+        'length_mm',
+        'width_mm', 
+        'height_mm',
+        'wheel_base_mm',
+        'front_track_mm',
+        'rear_track_mm',
+        'weight_kg', 
+        'fuel_tank_l',
+        'drag_coefficient'
     ];
 
     public function userVehicle() {

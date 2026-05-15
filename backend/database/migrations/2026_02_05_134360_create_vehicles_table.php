@@ -63,6 +63,21 @@ return new class extends Migration
                 ->on('brakes')
                 ->constrained();
 
+            $table->unsignedBigInteger('front_wheel_id')
+                ->nullable()
+                ->default(null);
+            $table->foreign('front_wheel_id')
+                ->references('id')
+                ->on('wheels')
+                ->constrained();
+            $table->unsignedBigInteger('rear_wheel_id')
+                ->nullable()
+                ->default(null);
+            $table->foreign('rear_wheel_id')
+                ->references('id')
+                ->on('wheels')
+                ->constrained();
+
             $table->string('image_url')
                 ->nullable()
                 ->default(null);
