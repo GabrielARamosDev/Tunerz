@@ -22,6 +22,7 @@ class SuspensionSpecSeeder extends Seeder
                     'camber_angle_deg' => -0.5,
                     'caster_angle_deg' => 3.5,
                     'toe_in_mm' => 2.0,
+                    'stabilizer_diameter_mm' => 24,
                     'weight_kg' => 65.0,
                     'created_at' => now(),
                     'updated_at' => now(),

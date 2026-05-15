@@ -11,6 +11,7 @@ class TransmissionSpec extends Model
 
     protected $fillable = [
         'transmission_id',
+        'gears_count',
         'gear_ratio_1',
         'gear_ratio_2',
         'gear_ratio_3',
@@ -19,8 +20,10 @@ class TransmissionSpec extends Model
         'gear_ratio_6',
         'gear_ratio_7',
         'final_drive_ratio',
+        'clutch_diameter_mm',
         'max_torque_nm',
         'weight_kg',
+        'oil_capacity_l',
     ];
 
     public function transmission()

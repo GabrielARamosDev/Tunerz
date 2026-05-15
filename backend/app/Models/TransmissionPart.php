@@ -9,11 +9,8 @@ class TransmissionPart extends Model
     protected $fillable = [
         'transmission_id',
         'clutch_type',
-        'clutch_diameter_mm',
         'synchro_type',
         'material_case',
-        'oil_type',
-        'oil_capacity_l',
     ];
 
     public function transmission()

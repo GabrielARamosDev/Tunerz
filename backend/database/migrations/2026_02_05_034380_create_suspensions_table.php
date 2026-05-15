@@ -18,7 +18,14 @@ return new class extends Migration
             $table->string('name');
             $table->string('manufacturer');
             $table->string('type');              // independent, dependent, semi-independent
-            $table->string('configuration');    // double wishbone, macpherson, multi-link, etc
+
+            $table->enum('configuration', [
+                'macpherson', 
+                'single wishbone',
+                'double wishbone',
+                'multi-link',
+                'transverse',
+            ]);
 
             $table->timestamps();
         });

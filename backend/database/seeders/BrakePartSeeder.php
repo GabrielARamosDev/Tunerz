@@ -20,7 +20,7 @@ class BrakePartSeeder extends Seeder
                     'caliper_type' => 'dual piston',
                     'caliper_material' => 'aluminum alloy',
                     'pad_type' => 'semi-metallic',
-                    'pad_compound' => 'ceramic blend',
+                    'pad_material' => 'ceramic',
                     'dust_shield' => true,
                     'created_at' => now(),
                     'updated_at' => now(),

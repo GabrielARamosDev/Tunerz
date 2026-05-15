@@ -20,7 +20,8 @@ class VehicleController extends CrudController
             'rearSuspension.specs', 'rearSuspension.parts', 
             'frontBrake.specs', 'frontBrake.parts', 
             'rearBrake.specs', 'rearBrake.parts', 
-            'frontWheel.specs', 'rearWheel.specs', 
+            'frontWheel.specs', 'frontWheel.parts', 
+            'rearWheel.specs', 'rearWheel.parts'
         ])->get();
         
         // Map year to year for frontend compatibility

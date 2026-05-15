@@ -18,6 +18,7 @@ class SuspensionSpec extends Model
         'camber_angle_deg',
         'caster_angle_deg',
         'toe_in_mm',
+        'stabilizer_diameter_mm',
         'weight_kg',
     ];
 

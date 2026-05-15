@@ -16,11 +16,8 @@ class TransmissionPartSeeder extends Seeder
                 [
                     'transmission_id' => 1,
                     'clutch_type' => 'dry single',
-                    'clutch_diameter_mm' => 215,
                     'synchro_type' => 'cone',
                     'material_case' => 'aluminum alloy',
-                    'oil_type' => '75W-90',
-                    'oil_capacity_l' => 1.8,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],

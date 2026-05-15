@@ -18,7 +18,6 @@ class TransmissionSeeder extends Seeder
                     'name' => '5-Speed Manual',
                     'manufacturer' => 'ZF',
                     'type' => 'manual',
-                    'gears_count' => 5,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],

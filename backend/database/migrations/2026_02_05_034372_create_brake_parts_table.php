@@ -20,12 +20,36 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->string('rotor_type');        // ventilated, solid, drilled
-            $table->string('rotor_material');    // cast iron, ceramic, carbon
-            $table->string('caliper_type');      // single piston, dual piston, floating
-            $table->string('caliper_material');  // aluminum, steel
-            $table->string('pad_type');          // semi-metallic, ceramic, organic
-            $table->string('pad_material');
+            $table->enum('rotor_type', [
+                'ventilated',
+                'solid',
+                'drilled',
+            ]);
+            $table->enum('rotor_material', [
+                'cast iron',
+                'ceramic',
+                'carbon',
+            ]);
+            $table->enum('caliper_type', [
+                'single piston',
+                'dual piston',
+                'floating',
+                'fixed',
+            ]);
+            $table->enum('caliper_material', [
+                'aluminum',
+                'steel',
+            ]);
+            $table->enum('pad_type', [
+                'semi-metallic',
+                'ceramic',
+                'organic',
+            ]);
+            $table->enum('pad_material', [
+                'semi-metallic',
+                'ceramic',
+                'organic',
+            ]);
             $table->boolean('dust_shield')->default(true);
 
             $table->timestamps();

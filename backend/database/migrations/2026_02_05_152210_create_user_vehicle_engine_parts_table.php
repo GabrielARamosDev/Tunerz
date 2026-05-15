@@ -89,14 +89,25 @@ return new class extends Migration
             $table->enum('aspiration', [
                 'NA',                              // naturally aspirated
                 'turbocharged',                    // single turbo
-                'twin_turbocharged (sequential)',  // sequential, parallel, etc
-                'twin_turbocharged (parallel)',    // sequential, parallel, etc
-                'twin_turbocharged (compound)',    // sequential, parallel, etc
+                'twin_turbocharged',  // sequential, parallel, etc
                 'supercharger',                    // roots, twin-screw, or centrifugal
                 'twin_charged',                    // turbo + supercharger
                 'electric_turbo',                  // e-turbo
                 'electric_supercharger',           // e-supercharger
             ]);
+
+            /* ================================================ */
+            /**
+             * Only aplicable if: aspiration = 'twin_turbocharged'
+             */
+            $table->enum('twin_turbocharged_config', [
+                'sequential',  // sequential, parallel, etc
+                'parallel',    // sequential, parallel, etc
+                'compound',    // sequential, parallel, etc
+            ])
+                ->nullable()
+                ->default(null);
+            /* ================================================ */
 
             $table->double('max_safe_boost_bar');
 

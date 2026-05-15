@@ -27,6 +27,7 @@ return new class extends Migration
             $table->double('camber_angle_deg', 4, 1);
             $table->double('caster_angle_deg', 4, 1);
             $table->double('toe_in_mm', 4, 1);
+            $table->double('stabilizer_diameter_mm', 4, 1);
             $table->double('weight_kg', 5, 1);
 
             $table->timestamps();

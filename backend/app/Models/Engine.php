@@ -13,19 +13,6 @@ class Engine extends Model
         'generation',
         'architecture', 
         'rotation_direction', 
-        'cylinders_count',
-        'valve_count',
-        'camshaft_config',
-        'fuel_type',
-        'fuel_system',
-        'carburator_system',
-        'carburator_barrel_count',
-        'block_material',
-        'head_material',
-        'length_mm',
-        'width_mm',
-        'height_mm',
-        'weight_kg',
     ];
 
     public function specs()

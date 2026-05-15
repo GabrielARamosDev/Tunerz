@@ -20,6 +20,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->integer('gears_count');
             $table->double('gear_ratio_1', 5, 2);
             $table->double('gear_ratio_2', 5, 2);
             $table->double('gear_ratio_3', 5, 2);
@@ -30,8 +31,12 @@ return new class extends Migration
 
             $table->double('final_drive_ratio', 5, 2);
 
+            $table->integer('clutch_diameter_mm');
             $table->integer('max_torque_nm');
+            
             $table->double('weight_kg', 5, 1);
+
+            $table->double('oil_capacity_l', 3, 1);
 
             $table->timestamps();
         });

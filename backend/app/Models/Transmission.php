@@ -14,7 +14,6 @@ class Transmission extends Model
         'name',
         'manufacturer',
         'type',
-        'gears_count',
     ];
 
     public function specs()

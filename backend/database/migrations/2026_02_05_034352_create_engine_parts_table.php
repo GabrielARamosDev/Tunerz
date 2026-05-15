@@ -17,6 +17,25 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->enum('block_material', [
+                'cast iron',
+                'aluminum alloy',
+                'forged aluminum',
+                'magnesium',
+                'steel',
+                'forged steel',
+                'titanium',
+            ]);
+            $table->enum('head_material', [
+                'cast iron',
+                'aluminum alloy',
+                'forged aluminum',
+                'magnesium',
+                'steel',
+                'forged steel',
+                'titanium',
+            ]);
+
             $table->enum('piston_head_type', [
                 'flat',
                 'domed',
@@ -41,12 +60,14 @@ return new class extends Migration
                 'titanium',
                 'aluminum alloy',
             ]);
-            $table->double('piston_bore_mm', 5, 2);
-            $table->double('piston_stroke_mm', 5, 2);
 
-            $table->double('compression_ratio', 4, 2);
-            $table->integer('displacement_cc');
-
+            $table->enum('camshaft_config', [
+                'ohc',      // overhead camshaft
+                'sohc',     // single overhead camshaft
+                'dohc',     // double overhead camshaft
+                'ohv',      // overhead valve
+                'desmodromic',
+            ]);
             $table->enum('camshaft_actuation', [
                 'mechanical',
                 'hydraulic',
@@ -77,28 +98,56 @@ return new class extends Migration
                 'titanium',
                 'alloy steel',
             ]);
-            
-            $table->double('intake_valve_diameter_mm', 5, 2);
-            $table->integer('intake_valve_seat_angle');
-            $table->double('exhaust_valve_diameter_mm', 5, 2);
-            $table->integer('exhaust_valve_seat_angle');
 
-            $table->boolean('has_VVT')->default(false);
-            $table->boolean('has_VVL')->default(false);
+            $table->enum('fuel_type', [
+                'gasoline',
+                'ethanol',
+                'flex',     // gasoline + ethanol
+                'vng',      // vehicular natural gas
+                'diesel',
+            ]);
+            $table->enum('fuel_system', [
+                'spfi', // single-point fuel injection (tbi injection)
+                'mpfi', // multi-point fuel injection
+                'dfi',  // direct fuel injection
+                'carburator (vertical)',
+                'carburator (horizontal)',
+            ]);
+
+            /* ================================================ */
+            /**
+             * Only aplicable if: fuel_system = 'carburator'
+             */
+            $table->enum('carburator_system', [ 
+                'fixed-venturi', 
+                'variable-venturi', 
+            ])
+                ->nullable()
+                ->default(null);
+            /* ================================================ */
 
             $table->enum('aspiration', [
                 'NA',                              // naturally aspirated
                 'turbocharged',                    // single turbo
-                'twin_turbocharged (sequential)',  // sequential, parallel, etc
-                'twin_turbocharged (parallel)',    // sequential, parallel, etc
-                'twin_turbocharged (compound)',    // sequential, parallel, etc
+                'twin_turbocharged',  // sequential, parallel, etc
                 'supercharger',                    // roots, twin-screw, or centrifugal
                 'twin_charged',                    // turbo + supercharger
                 'electric_turbo',                  // e-turbo
                 'electric_supercharger',           // e-supercharger
             ]);
 
-            $table->double('max_safe_boost_bar');
+            /* ================================================ */
+            /**
+             * Only aplicable if: aspiration = 'twin_turbocharged'
+             */
+            $table->enum('twin_turbocharged_config', [
+                'sequential',  // sequential, parallel, etc
+                'parallel',    // sequential, parallel, etc
+                'compound',    // sequential, parallel, etc
+            ])
+                ->nullable()
+                ->default(null);
+            /* ================================================ */
             
             $table->timestamps();
         });

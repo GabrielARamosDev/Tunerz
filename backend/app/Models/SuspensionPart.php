@@ -15,8 +15,6 @@ class SuspensionPart extends Model
         'spring_material',
         'damper_type',
         'damper_material',
-        'wishbone_type',
-        'stabilizer_diameter_mm',
         'has_abs',
     ];
 

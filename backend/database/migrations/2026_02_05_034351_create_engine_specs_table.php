@@ -31,12 +31,41 @@ return new class extends Migration
             $table->integer('stock_redline_rpm');
             $table->integer('stock_idle_rpm');
 
+            $table->integer('cylinders_count');
+            $table->double('piston_bore_mm', 5, 2);
+            $table->double('piston_stroke_mm', 5, 2);
+            $table->double('compression_ratio', 4, 2);
+            $table->integer('displacement_cc');
+            
+            $table->integer('valve_count');
+            $table->double('intake_valve_diameter_mm', 5, 2);
+            $table->integer('intake_valve_seat_angle');
+            $table->double('exhaust_valve_diameter_mm', 5, 2);
+            $table->integer('exhaust_valve_seat_angle');
+
+            /* ================================================ */
+            /**
+             * Only aplicable if: fuel_system = 'carburator'
+             */
+            $table->integer('carburator_barrel_count') 
+                ->nullable()
+                ->default(0);
+            /* ================================================ */
+
             $table->double('air_flow_cfm');
+            $table->double('max_safe_boost_bar')->default(0);
+            
             $table->double('fuel_pressure_bar');
             $table->double('thermal_efficiency');
 
             $table->double('oil_capacity_l');
             $table->double('coolant_capacity_l');
+
+            $table->double('length_mm')->default(0);
+            $table->double('width_mm')->default(0);
+            $table->double('height_mm')->default(0);
+
+            $table->double('weight_kg')->default(0);
 
             $table->timestamps();
         });

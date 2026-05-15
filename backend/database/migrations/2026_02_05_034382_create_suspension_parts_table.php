@@ -20,12 +20,28 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->string('spring_type');       // coil, leaf, air, torsion bar
-            $table->string('spring_material');
-            $table->string('damper_type');       // telescopic, twin-tube, monotube
-            $table->string('damper_material');   // aluminum, steel
-            $table->string('wishbone_type');
-            $table->double('stabilizer_diameter_mm', 4, 1);
+            $table->enum('spring_type', [
+                'coil',
+                'leaf',
+                'air',
+                'torsion bar',
+            ]);
+            $table->enum('spring_material', [
+                'steel',
+                'titanium',
+                'composite',
+            ]);
+
+            $table->enum('damper_type', [
+                'telescopic',
+                'twin-tube',
+                'monotube',
+            ]);
+            $table->enum('damper_material', [
+                'aluminum',
+                'steel',
+            ]);
+
             $table->boolean('has_abs')->default(true);
 
             $table->timestamps();

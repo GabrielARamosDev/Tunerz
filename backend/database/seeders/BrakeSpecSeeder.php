@@ -18,7 +18,6 @@ class BrakeSpecSeeder extends Seeder
                     'rotor_diameter_mm' => 278,
                     'rotor_thickness_mm' => 25,
                     'pad_thickness_mm' => 12,
-                    'pad_material' => 'ceramic',
                     'max_force_kn' => 7.8,
                     'friction_coefficient' => 0.35,
                     'weight_kg' => 3.2,

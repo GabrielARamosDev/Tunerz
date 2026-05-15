@@ -18,7 +18,7 @@ class SuspensionSeeder extends Seeder
                     'name' => 'MacPherson Strut',
                     'manufacturer' => 'KW',
                     'type' => 'independent',
-                    'configuration' => 'double wishbone',
+                    'configuration' => 'macpherson',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],

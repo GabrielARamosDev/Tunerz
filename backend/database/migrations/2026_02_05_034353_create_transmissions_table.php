@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('manufacturer');
             $table->string('type');              // manual, automatic, cvt, dct
-            $table->integer('gears_count');
 
             $table->timestamps();
         });

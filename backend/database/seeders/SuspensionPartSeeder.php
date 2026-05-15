@@ -19,8 +19,6 @@ class SuspensionPartSeeder extends Seeder
                     'spring_material' => 'steel alloy',
                     'damper_type' => 'telescopic',
                     'damper_material' => 'aluminum alloy',
-                    'wishbone_type' => 'aluminum',
-                    'stabilizer_diameter_mm' => 24,
                     'has_abs' => true,
                     'created_at' => now(),
                     'updated_at' => now(),
