@@ -18,7 +18,6 @@ class WheelSpecSeeder extends Seeder
                     'tire_width_mm' => 0,
                     'tire_profile' => 0,
                     'wheel_radius_in' => 0,
-                    'wheel_material' => 'steel',
                     'expected_pressure_bar' => 32,
                 ],
             ];

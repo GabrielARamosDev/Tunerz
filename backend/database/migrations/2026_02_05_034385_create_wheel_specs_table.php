@@ -24,15 +24,6 @@ return new class extends Migration
             $table->integer('tire_profile')->default(60);
             $table->integer('wheel_radius_in')->default(15);
 
-            $table->enum('wheel_material', [
-                'steel',
-                'aluminum alloy',
-                'forged aluminum',
-                'titanium',
-                'carbon fiber',
-                'magnesium',
-            ])->nullable();
-
             $table->double('expected_pressure_bar', 4, 2)->default(0);
 
             $table->timestamps();
