@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('code');
+            $table->string('name');
             $table->string('manufacturer');
             $table->string('type');              // manual, automatic, cvt, dct
             $table->integer('gears_count');

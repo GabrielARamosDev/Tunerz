@@ -14,10 +14,11 @@ class SuspensionSeeder extends Seeder
     {
             $suspensions = [
                 [
+                    'code' => '',
                     'name' => 'MacPherson Strut',
+                    'manufacturer' => 'KW',
                     'type' => 'independent',
                     'configuration' => 'double wishbone',
-                    'manufacturer' => 'KW',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],

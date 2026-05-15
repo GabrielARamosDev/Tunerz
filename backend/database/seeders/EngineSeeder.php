@@ -21,7 +21,6 @@ class EngineSeeder extends Seeder
                 'cylinders_count' => 4,
                 'valve_count' => 16,
                 'camshaft_type' => 'dohc',
-                'aspiration' => 'NA',
                 'fuel_system' => 'mpfi',
                 'fuel_type' => 'flex',
                 'block_material' => 'cast iron',

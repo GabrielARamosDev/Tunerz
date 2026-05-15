@@ -14,9 +14,10 @@ class BrakeSeeder extends Seeder
     {
             $brakes = [
                 [
+                    'code' => '',
                     'name' => 'Ventilated Disc Brake System',
-                    'type' => 'disc',
                     'manufacturer' => 'Brembo',
+                    'type' => 'disc',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],

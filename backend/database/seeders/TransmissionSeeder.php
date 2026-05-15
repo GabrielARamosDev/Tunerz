@@ -14,10 +14,11 @@ class TransmissionSeeder extends Seeder
     {
             $transmissions = [
                 [
+                    'code' => '',
                     'name' => '5-Speed Manual',
+                    'manufacturer' => 'ZF',
                     'type' => 'manual',
                     'gears_count' => 5,
-                    'manufacturer' => 'ZF',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],

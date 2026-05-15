@@ -16,12 +16,6 @@ return new class extends Migration
                 ->on('user_vehicles')
                 ->constrained()
                 ->cascadeOnDelete();
-            
-            $table->foreignId('engine_id')
-                ->references('id')
-                ->on('engines')
-                ->constrained()
-                ->cascadeOnDelete();
 
             $table->enum('piston_head_type', [
                 'flat',
