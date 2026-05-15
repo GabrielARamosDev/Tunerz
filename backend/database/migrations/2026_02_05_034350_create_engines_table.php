@@ -42,18 +42,6 @@ return new class extends Migration
                 'desmodromic',
             ]);
 
-            $table->enum('aspiration', [
-                'NA',                              // naturally aspirated
-                'turbocharged',                    // single turbo
-                'twin_turbocharged (sequential)',  // sequential, parallel, etc
-                'twin_turbocharged (parallel)',    // sequential, parallel, etc
-                'twin_turbocharged (compound)',    // sequential, parallel, etc
-                'supercharger',                    // roots, twin-screw, or centrifugal
-                'twin_charged',                    // turbo + supercharger
-                'electric_turbo',                  // e-turbo
-                'electric_supercharger',           // e-supercharger
-            ]);
-
             $table->enum('fuel_system', [
                 'spi',            // single-point fuel injection (tbi injection)
                 'mpfi',           // multi-point fuel injection
@@ -76,7 +64,6 @@ return new class extends Migration
                 'steel',
                 'forged steel',
                 'titanium',
-                'custom',
             ]);
             $table->enum('head_material', [
                 'cast iron',
@@ -86,14 +73,13 @@ return new class extends Migration
                 'steel',
                 'forged steel',
                 'titanium',
-                'custom',
             ]);
 
-            $table->double('length_mm');
-            $table->double('width_mm');
-            $table->double('height_mm');
+            $table->double('length_mm')->default(0);
+            $table->double('width_mm')->default(0);
+            $table->double('height_mm')->default(0);
 
-            $table->double('weight_kg');
+            $table->double('weight_kg')->default(0);
 
             /**
              * Garante que exista apenas 1 modelo de cada motor por marca.

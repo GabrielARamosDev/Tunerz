@@ -25,58 +25,53 @@ return new class extends Migration
                 'domed',
                 'dish',
                 'spherical',
-                'custom',
             ]);
             $table->enum('piston_head_material', [
                 'aluminum alloy',
                 'forged aluminum',
                 'steel',
                 'titanium',
-                'custom',
             ]);
             $table->enum('piston_conrod_type', [
                 'I-beam',
                 'H-beam',
                 'forged',
                 'billet',
-                'custom',
             ]);
             $table->enum('piston_conrod_material', [
                 'steel',
                 'forged steel',
                 'titanium',
                 'aluminum alloy',
-                'custom',
             ]);
             $table->double('piston_bore_mm', 5, 2);
             $table->double('piston_stroke_mm', 5, 2);
+
+            $table->double('compression_ratio', 4, 2);
+            $table->integer('displacement_cc');
 
             $table->enum('camshaft_type', [
                 'roller',
                 'flat tappet',
                 'lobe',
                 'billet',
-                'custom',
             ]);
             $table->enum('camshaft_material', [
                 'cast iron',
                 'steel',
                 'forged steel',
                 'billet steel',
-                'custom',
             ]);
 
             $table->enum('valve_type', [
                 'poppet',
                 'rotary',
                 'mushroom',
-                'custom',
             ]);
             $table->enum('valve_material', [
                 'stainless steel',
                 'titanium',
                 'alloy steel',
-                'custom',
             ]);
             
             $table->double('intake_valve_diameter_mm', 5, 2);
@@ -88,17 +83,29 @@ return new class extends Migration
                 'mechanical',
                 'hydraulic',
                 'electronic',
-                'custom',
             ]);
             $table->enum('valve_control_material', [
                 'steel',
                 'titanium',
                 'aluminum',
-                'custom',
             ]);
 
             $table->boolean('has_VVT')->default(false);
             $table->boolean('has_VVL')->default(false);
+
+            $table->enum('aspiration', [
+                'NA',                              // naturally aspirated
+                'turbocharged',                    // single turbo
+                'twin_turbocharged (sequential)',  // sequential, parallel, etc
+                'twin_turbocharged (parallel)',    // sequential, parallel, etc
+                'twin_turbocharged (compound)',    // sequential, parallel, etc
+                'supercharger',                    // roots, twin-screw, or centrifugal
+                'twin_charged',                    // turbo + supercharger
+                'electric_turbo',                  // e-turbo
+                'electric_supercharger',           // e-supercharger
+            ]);
+
+            $table->double('max_safe_boost_bar');
             
             $table->timestamps();
         });

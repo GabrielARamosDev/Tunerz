@@ -40,100 +40,15 @@ return new class extends Migration
                 '4wd', // four-wheel drive
             ]);
 
-            $table->double('wheel_base_mm', 10, 2)->nullable();
+            $table->double('wheel_base_mm', 10, 2)->default(0);
 
-            $table->enum('front_wheel_width_mm', [
-                '125',
-                '135',
-                '145',
-                '155',
-                '165',
-                '175',
-                '185',
-                '195',
-                '205',
-                '215',
-                '225',
-                '235',
-                '245',
-                '255',
-                '265',
-                '275',
-                '285',
-                '295',
-                'custom',
-            ])->nullable();
-            $table->enum('front_wheel_profile', [
-                '35',
-                '40',
-                '45',
-                '50',
-                '55',
-                '60',
-                '65',
-                '70',
-                '75',
-                'custom',
-            ])->nullable();
-            $table->enum('front_wheel_radius_in', [
-                '13',
-                '14',
-                '15',
-                '16',
-                '17',
-                '18',
-                '19',
-                '20',
-                '21',
-                '22',
-                'custom',
-            ])->nullable();
-            $table->enum('rear_wheel_width_mm', [
-                '125',
-                '135',
-                '145',
-                '155',
-                '165',
-                '175',
-                '185',
-                '195',
-                '205',
-                '215',
-                '225',
-                '235',
-                '245',
-                '255',
-                '265',
-                '275',
-                '285',
-                '295',
-                'custom',
-            ])->nullable();
-            $table->enum('rear_wheel_profile', [
-                '35',
-                '40',
-                '45',
-                '50',
-                '55',
-                '60',
-                '65',
-                '70',
-                '75',
-                'custom',
-            ])->nullable();
-            $table->enum('rear_wheel_radius_in', [
-                '13',
-                '14',
-                '15',
-                '16',
-                '17',
-                '18',
-                '19',
-                '20',
-                '21',
-                '22',
-                'custom',
-            ])->nullable();
+            $table->integer('front_tire_width_mm')->default(165);
+            $table->integer('front_tire_profile')->default(60);
+            $table->integer('front_wheel_radius_in')->default(15);
+            
+            $table->integer('rear_tire_width_mm')->default(165);
+            $table->integer('rear_tire_profile')->default(60);
+            $table->integer('rear_wheel_radius_in')->default(15);
 
             $table->enum('wheel_material', [
                 'steel',
@@ -142,21 +57,20 @@ return new class extends Migration
                 'titanium',
                 'carbon fiber',
                 'magnesium',
-                'custom',
             ])->nullable();
 
-            $table->double('length_mm', 10, 2)->nullable();
-            $table->double('width_mm', 10, 2)->nullable();
-            $table->double('height_mm', 10, 2)->nullable();
+            $table->double('length_mm', 10, 2)->default(0);
+            $table->double('width_mm', 10, 2)->default(0);
+            $table->double('height_mm', 10, 2)->default(0);
 
-            $table->double('front_track_mm', 10, 2)->nullable();
-            $table->double('rear_track_mm', 10, 2)->nullable();
+            $table->double('front_track_mm', 10, 2)->default(0);
+            $table->double('rear_track_mm', 10, 2)->default(0);
 
-            $table->double('weight_kg', 10, 2)->nullable();
+            $table->double('weight_kg', 10, 2)->default(0);
 
-            $table->double('fuel_tank_l', 5, 2)->nullable();
+            $table->double('fuel_tank_l', 5, 2)->default(0);
 
-            $table->double('drag_coefficient', 10, 2)->nullable();
+            $table->double('drag_coefficient', 10, 2)->default(0);
 
             $table->unique('vehicle_id');
 

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('suspensions', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
+            $table->string('code');
+            $table->string('manufacturer');
             $table->string('type');              // independent, dependent, semi-independent
             $table->string('configuration');    // double wishbone, macpherson, multi-link, etc
-            $table->string('manufacturer');
 
             $table->timestamps();
         });

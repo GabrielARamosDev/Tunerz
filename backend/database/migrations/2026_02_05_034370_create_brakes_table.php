@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('brakes', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->string('type');              // disc, drum, combined
+            $table->string('code');
             $table->string('manufacturer');
+            $table->string('type');              // disc, drum, combined
 
             $table->timestamps();
         });
