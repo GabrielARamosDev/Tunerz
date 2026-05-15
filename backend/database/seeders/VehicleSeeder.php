@@ -38,7 +38,7 @@ class VehicleSeeder extends Seeder
                     'model' => $v['model'], 
                     'year' => $v['year'], 
                     'trim' => $v['trim'],
-                    'engine_id' => $v['engine_id']
+                    'generation' => $v['generation']
                 ],  // chave única para evitar duplicatas
                 $v     // campos a atualizar
             );

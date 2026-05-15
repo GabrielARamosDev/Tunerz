@@ -15,9 +15,9 @@ class WheelSpecSeeder extends Seeder
             $specs = [
                 [
                     'wheel_id' => 1,
-                    'tire_width_mm' => 0,
-                    'tire_profile' => 0,
-                    'wheel_radius_in' => 0,
+                    'tire_width_mm' => 165,
+                    'tire_profile' => 60,
+                    'wheel_radius_in' => 15,
                     'expected_pressure_bar' => 32,
                 ],
             ];
