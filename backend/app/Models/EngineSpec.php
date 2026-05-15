@@ -31,7 +31,6 @@ class EngineSpec extends Model
         'exhaust_valve_seat_angle',
         ###
         'carburator_barrel_count',
-        'air_flow_cfm',
         'max_safe_boost_bar',
         ###
         'fuel_injection_time_ms', 
@@ -39,9 +38,14 @@ class EngineSpec extends Model
         'fuel_pressure_bar',
         'air_fuel_ratio', 
         ###
+        'intake_lenght_cm',
+        'intake_diameter_in',
+        'air_flow_cfm',
+        ###
         'thermal_efficiency',
         'coolant_capacity_l',
         'oil_capacity_l',
+        ###
         'length_mm',
         'width_mm',
         'height_mm',

@@ -117,14 +117,15 @@ class UserController extends CrudController
 
             $user_vehicles = UserVehicle::where('user_id', $user->id)
                 ->with([
-                    'vehicle', 'vehicleSpecs',
-                    'engines.specs',
-                    'transmissions.transmission.specs',
-                    'transmissions.transmission.parts',
-                    'brakes.brake.specs',
-                    'brakes.brake.parts',
-                    'suspensions.suspension.specs',
-                    'suspensions.suspension.parts',
+                    'specs', 
+                    'engine.specs', 'engine.parts', 
+                    'transmission.specs', 'transmission.parts', 
+                    'frontSuspension.specs', 'frontSuspension.parts', 
+                    'rearSuspension.specs', 'rearSuspension.parts', 
+                    'frontBrake.specs', 'frontBrake.parts', 
+                    'rearBrake.specs', 'rearBrake.parts', 
+                    'frontWheel.specs', 'frontWheel.parts', 
+                    'rearWheel.specs', 'rearWheel.parts'
                 ])
                 ->get();
 
@@ -198,17 +199,21 @@ class UserController extends CrudController
                 // Create user vehicle record
                 $user_vehicle = UserVehicle::create([
                     'user_id' => $user->id,
+                    ###
                     'manufacturer' => $vehicle->manufacturer,
                     'model' => $vehicle->model,
                     'trim' => $vehicle->trim,
                     'year' => $vehicle->year,
                     'generation' => $vehicle->generation,
+                    ###
                     'engine_id' => $vehicle->engine_id,
                     'transmission_id' => $vehicle->transmission_id,
                     'front_suspension_id' => $vehicle->front_suspension_id,
                     'rear_suspension_id' => $vehicle->rear_suspension_id,
                     'front_brake_id' => $vehicle->front_brake_id,
                     'rear_brake_id' => $vehicle->rear_brake_id,
+                    'front_wheel_id' => $vehicle->front_wheel_id,
+                    'rear_wheel_id' => $vehicle->rear_wheel_id,
                 ]);
 
                 // Create user vehicle specs
@@ -293,14 +298,15 @@ class UserController extends CrudController
 
                 // Load and return the created user vehicle with relationships
                 $user_vehicle->load([
-                    'vehicle', 'vehicleSpecs', 
-                    'engines.specs',
-                    'transmissions.transmission.specs',
-                    'transmissions.transmission.parts',
-                    'brakes.brake.specs',
-                    'brakes.brake.parts',
-                    'suspensions.suspension.specs',
-                    'suspensions.suspension.parts',
+                    'specs', 
+                    'engine.specs', 'engine.parts', 
+                    'transmission.specs', 'transmission.parts', 
+                    'frontSuspension.specs', 'frontSuspension.parts', 
+                    'rearSuspension.specs', 'rearSuspension.parts', 
+                    'frontBrake.specs', 'frontBrake.parts', 
+                    'rearBrake.specs', 'rearBrake.parts', 
+                    'frontWheel.specs', 'frontWheel.parts', 
+                    'rearWheel.specs', 'rearWheel.parts'
                 ]);
 
                 $new_vehicle = UserVehicle::mountFrontendModel($user_vehicle);

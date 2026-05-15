@@ -15,6 +15,7 @@ class VehicleSpecSeeder extends Seeder
                 'vehicle_id' => 1,
                 'body_type' => 'sedan',
                 'drivetrain'  => 'fwd',
+                'steering_type' => 'hydraulic',
                 'length_mm' => 4199,
                 'width_mm' => 1709,
                 'height_mm' => 1431,

@@ -40,6 +40,12 @@ return new class extends Migration
                 '4wd', // four-wheel drive
             ]);
 
+            $table->enum('steering_type', [
+                'mechanical', 
+                'hydraulic', 
+                'eletric', 
+            ]);
+
             $table->double('length_mm', 10, 2)->default(0);
             $table->double('width_mm', 10, 2)->default(0);
             $table->double('height_mm', 10, 2)->default(0);

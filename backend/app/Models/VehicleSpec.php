@@ -10,6 +10,7 @@ class VehicleSpec extends Model
         'vehicle_id',
         'body_type',
         'drivetrain', 
+        'steering_type', 
         'length_mm',
         'width_mm', 
         'height_mm',

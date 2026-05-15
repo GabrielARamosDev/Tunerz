@@ -61,6 +61,14 @@ return new class extends Migration
                 'aluminum alloy',
             ]);
 
+            $table->enum('camshaft_material', [
+                'cast iron',
+                'steel',
+                'forged steel',
+                'billet steel',
+                'aluminum',
+                'titanium',
+            ]);
             $table->enum('camshaft_config', [
                 'ohc',      // overhead camshaft
                 'sohc',     // single overhead camshaft
@@ -79,24 +87,16 @@ return new class extends Migration
                 'lobe',
                 'billet',
             ]);
-            $table->enum('camshaft_material', [
-                'cast iron',
-                'steel',
-                'forged steel',
-                'billet steel',
-                'aluminum',
-                'titanium',
-            ]);
 
-            $table->enum('valve_type', [
-                'poppet',
-                'rotary',
-                'mushroom',
-            ]);
             $table->enum('valve_material', [
                 'stainless steel',
                 'titanium',
                 'alloy steel',
+            ]);
+            $table->enum('valve_type', [
+                'poppet',
+                'rotary',
+                'mushroom',
             ]);
 
             $table->enum('fuel_type', [
@@ -125,6 +125,18 @@ return new class extends Migration
                 ->nullable()
                 ->default(null);
             /* ================================================ */
+
+            $table->enum('intake_material', [
+                'aluminum',
+                'thermoplastics',
+                'carbon fiber'
+            ]);
+            $table->enum('intake_type', [
+                'stock',     // Factory-installed systems designed for air filtration and noise reduction
+                'short ram', // A shorter, direct intake path often placed closer to the engine for better throttle response
+                'ram-air',   // Positioned at the front of the vehicle to utilize forward momentum for forcing higher-density air into the engine
+                'cold-air',  // Air filter outside the engine compartment to ingest cooler, denser air,
+            ]);
 
             $table->enum('aspiration', [
                 'NA',                              // naturally aspirated
