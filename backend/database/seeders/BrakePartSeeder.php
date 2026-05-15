@@ -18,7 +18,7 @@ class BrakePartSeeder extends Seeder
                     'rotor_type' => 'ventilated',
                     'rotor_material' => 'cast iron',
                     'caliper_type' => 'dual piston',
-                    'caliper_material' => 'aluminum alloy',
+                    'caliper_material' => 'aluminum',
                     'pad_type' => 'semi-metallic',
                     'pad_material' => 'ceramic',
                     'dust_shield' => true,

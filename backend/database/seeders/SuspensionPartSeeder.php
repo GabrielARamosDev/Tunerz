@@ -16,9 +16,9 @@ class SuspensionPartSeeder extends Seeder
                 [
                     'suspension_id' => 1,
                     'spring_type' => 'coil',
-                    'spring_material' => 'steel alloy',
+                    'spring_material' => 'steel',
                     'damper_type' => 'telescopic',
-                    'damper_material' => 'aluminum alloy',
+                    'damper_material' => 'aluminum',
                     'has_abs' => true,
                     'created_at' => now(),
                     'updated_at' => now(),

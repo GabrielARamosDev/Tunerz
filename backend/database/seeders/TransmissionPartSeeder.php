@@ -17,7 +17,7 @@ class TransmissionPartSeeder extends Seeder
                     'transmission_id' => 1,
                     'clutch_type' => 'dry single',
                     'synchro_type' => 'cone',
-                    'material_case' => 'aluminum alloy',
+                    'material_case' => 'aluminum',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
