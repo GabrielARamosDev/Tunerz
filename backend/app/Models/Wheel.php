@@ -2,27 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Engine extends Model
+class Wheel extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'code',
+        'name',
         'manufacturer',
-        'displacement',
-        'valve_count',
-        'propulsion',
-        'fuel_type',
     ];
 
     public function specs()
     {
-        return $this->hasOne(EngineSpec::class);
-    }
-
-    public function parts()
-    {
-        return $this->hasOne(EnginePart::class);
+        return $this->hasOne(WheelSpec::class);
     }
 
     public function vehicles()

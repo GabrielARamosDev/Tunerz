@@ -25,8 +25,8 @@ class Brake extends Model
         return $this->hasOne(BrakePart::class);
     }
 
-    public function userVehicles()
+    public function vehicles()
     {
-        return $this->hasMany(UserVehicleBrake::class);
+        return $this->hasMany(Vehicle::class);
     }
 }

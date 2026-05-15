@@ -26,8 +26,8 @@ class Suspension extends Model
         return $this->hasOne(SuspensionPart::class);
     }
 
-    public function userVehicles()
+    public function vehicles()
     {
-        return $this->hasMany(UserVehicleSuspension::class);
+        return $this->hasMany(Vehicle::class);
     }
 }

@@ -39,29 +39,12 @@ return new class extends Migration
                 'awd', // all-wheel drive
                 '4wd', // four-wheel drive
             ]);
-            
-            $table->double('wheel_base_mm', 10, 2)->default(0);
-
-            $table->integer('front_tire_width_mm')->default(165);
-            $table->integer('front_tire_profile')->default(60);
-            $table->integer('front_wheel_radius_in')->default(15);
-            
-            $table->integer('rear_tire_width_mm')->default(165);
-            $table->integer('rear_tire_profile')->default(60);
-            $table->integer('rear_wheel_radius_in')->default(15);
-
-            $table->enum('wheel_material', [
-                'steel',
-                'aluminum alloy',
-                'forged aluminum',
-                'titanium',
-                'carbon fiber',
-                'magnesium',
-            ])->nullable();
 
             $table->double('length_mm', 10, 2)->default(0);
             $table->double('width_mm', 10, 2)->default(0);
             $table->double('height_mm', 10, 2)->default(0);
+
+            $table->double('wheel_base_mm', 10, 2)->default(0);
 
             $table->double('front_track_mm', 10, 2)->default(0);
             $table->double('rear_track_mm', 10, 2)->default(0);

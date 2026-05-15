@@ -36,6 +36,8 @@ class DatabaseSeeder extends Seeder
             SuspensionSeeder::class,
             SuspensionSpecSeeder::class,
             SuspensionPartSeeder::class,
+            WheelSeeder::class,
+            WheelSpecSeeder::class,
             ###
             VehicleSeeder::class,
             VehicleSpecSeeder::class,

@@ -26,8 +26,8 @@ class Transmission extends Model
         return $this->hasOne(TransmissionPart::class);
     }
 
-    public function userVehicles()
+    public function vehicles()
     {
-        return $this->hasMany(UserVehicleTransmission::class);
+        return $this->hasMany(Vehicle::class);
     }
 }
