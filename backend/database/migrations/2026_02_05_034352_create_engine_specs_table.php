@@ -57,7 +57,7 @@ return new class extends Migration
                 ->default(0);
             /* ================================================ */
 
-            $table->double('air_flow_cfm', 4, 2);
+            $table->double('air_flow_cfm', 6, 2);
             $table->double('max_safe_boost_bar', 4, 2)->default(0);
             
             $table->double('fuel_injection_time_ms', 4, 2);
@@ -69,11 +69,11 @@ return new class extends Migration
             $table->double('coolant_capacity_l', 4, 2);
             $table->double('oil_capacity_l', 4, 2);
 
-            $table->double('length_mm', 4, 2)->default(0);
-            $table->double('width_mm', 4, 2)->default(0);
-            $table->double('height_mm', 4, 2)->default(0);
+            $table->double('length_mm', 6, 2)->default(0);
+            $table->double('width_mm', 6, 2)->default(0);
+            $table->double('height_mm', 6, 2)->default(0);
 
-            $table->double('weight_kg', 4, 2)->default(0);
+            $table->double('weight_kg', 6, 2)->default(0);
 
             $table->timestamps();
         });
