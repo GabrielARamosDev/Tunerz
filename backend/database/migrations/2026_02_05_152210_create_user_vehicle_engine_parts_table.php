@@ -125,6 +125,7 @@ return new class extends Migration
             /* ================================================ */
 
             $table->enum('intake_manifold_material', [
+                'thermoplastics', 
                 'cast iron',
                 'aluminum',
                 'composite',
@@ -137,6 +138,7 @@ return new class extends Migration
                 'cold-air',  // Air filter outside the engine compartment to ingest cooler, denser air,
             ]);
             $table->enum('intake_piping_material', [
+                'thermoplastics', 
                 'aluminum',
                 'steel',
                 'silicone',
