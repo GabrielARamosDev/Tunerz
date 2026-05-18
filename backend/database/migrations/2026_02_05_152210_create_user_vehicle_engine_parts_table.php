@@ -8,14 +8,33 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('user_vehicle_engines', function (Blueprint $table) {
+        Schema::create('user_vehicle_engine_parts', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_vehicle_id')
+            $table->foreignId('engine_id')
                 ->references('id')
-                ->on('user_vehicles')
+                ->on('engines')
                 ->constrained()
                 ->cascadeOnDelete();
+
+            $table->enum('block_material', [
+                'cast iron',
+                'aluminum alloy',
+                'forged aluminum',
+                'magnesium',
+                'steel',
+                'forged steel',
+                'titanium',
+            ]);
+            $table->enum('head_material', [
+                'cast iron',
+                'aluminum alloy',
+                'forged aluminum',
+                'magnesium',
+                'steel',
+                'forged steel',
+                'titanium',
+            ]);
 
             $table->enum('piston_head_type', [
                 'flat',
@@ -41,23 +60,7 @@ return new class extends Migration
                 'titanium',
                 'aluminum alloy',
             ]);
-            $table->double('piston_bore_mm', 5, 2);
-            $table->double('piston_stroke_mm', 5, 2);
 
-            $table->double('compression_ratio', 4, 2);
-            $table->integer('displacement_cc');
-
-            $table->enum('camshaft_actuation', [
-                'mechanical',
-                'hydraulic',
-                'electronic',
-            ]);
-            $table->enum('camshaft_type', [
-                'roller',
-                'flat tappet',
-                'lobe',
-                'billet',
-            ]);
             $table->enum('camshaft_material', [
                 'cast iron',
                 'steel',
@@ -66,50 +69,74 @@ return new class extends Migration
                 'aluminum',
                 'titanium',
             ]);
-
-            $table->enum('valve_type', [
-                'poppet',
-                'rotary',
-                'mushroom',
+            $table->enum('camshaft_type', [
+                'roller',
+                'flat tappet',
+                'lobe',
+                'billet',
             ]);
+            $table->enum('camshaft_config', [
+                'ohc',      // overhead camshaft
+                'sohc',     // single overhead camshaft
+                'dohc',     // double overhead camshaft
+                'ohv',      // overhead valve
+            ]);
+            $table->enum('camshaft_actuation', [
+                'mechanical',
+                'hydraulic',
+                'electronic',
+                'desmodromic',
+            ]);
+
             $table->enum('valve_material', [
                 'stainless steel',
                 'titanium',
                 'alloy steel',
             ]);
-            
-            $table->double('intake_valve_diameter_mm', 5, 2);
-            $table->integer('intake_valve_seat_angle');
-            $table->double('exhaust_valve_diameter_mm', 5, 2);
-            $table->integer('exhaust_valve_seat_angle');
+            $table->enum('valve_type', [
+                'poppet',
+                'rotary',
+                'mushroom',
+            ]);
 
-            $table->boolean('has_VVT')->default(false);
-            $table->boolean('has_VVL')->default(false);
-
-            $table->enum('aspiration', [
-                'NA',                              // naturally aspirated
-                'turbocharged',                    // single turbo
-                'twin_turbocharged',  // sequential, parallel, etc
-                'supercharger',                    // roots, twin-screw, or centrifugal
-                'twin_charged',                    // turbo + supercharger
-                'electric_turbo',                  // e-turbo
-                'electric_supercharger',           // e-supercharger
+            $table->enum('fuel_type', [
+                'gasoline',
+                'ethanol',
+                'flex',     // gasoline + ethanol
+                'vng',      // vehicular natural gas
+                'diesel',
+            ]);
+            $table->enum('fuel_system', [
+                'spfi', // single-point fuel injection (tbi injection)
+                'mpfi', // multi-point fuel injection
+                'dfi',  // direct fuel injection
+                'carburator (vertical)',
+                'carburator (horizontal)',
             ]);
 
             /* ================================================ */
-            //Only aplicable if: aspiration = 'twin_turbocharged'
-            $table->enum('twin_turbocharged_config', [
-                'sequential',  // sequential, parallel, etc
-                'parallel',    // sequential, parallel, etc
-                'compound',    // sequential, parallel, etc
+            // Only aplicable if: fuel_system = 'carburator'
+            $table->enum('carburator_system', [ 
+                'fixed-venturi', 
+                'variable-venturi', 
             ])
                 ->nullable()
                 ->default(null);
             /* ================================================ */
 
-            $table->double('max_safe_boost_bar');
-
-            $table->timestamps(); 
+            $table->enum('intake_material', [
+                'aluminum',
+                'thermoplastics',
+                'carbon fiber'
+            ]);
+            $table->enum('intake_type', [
+                'stock',     // Factory-installed systems designed for air filtration and noise reduction.
+                'short ram', // A shorter, direct intake path often placed closer to the engine for better throttle response.
+                'ram-air',   // Positioned at the front of the vehicle to utilize forward momentum for forcing higher-density air into the engine.
+                'cold-air',  // Air filter outside the engine compartment to ingest cooler, denser air,
+            ]);
+            
+            $table->timestamps();
         });
     }
 
@@ -118,6 +145,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_vehicle_engines');
+        Schema::dropIfExists('user_vehicle_engine_parts');
     }
 };

@@ -11,13 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('brakes', function (Blueprint $table) {
+        Schema::create('suspensions', function (Blueprint $table) {
             $table->id();
 
             $table->string('code');
             $table->string('name');
             $table->string('manufacturer');
-            $table->string('type');              // disc, drum, combined
+
+            $table->enum('type', [
+                'independent', 
+                'semi-independent', 
+                'dependent'
+            ]);
+
+            $table->enum('configuration', [
+                'macpherson', 
+                'single wishbone',
+                'double wishbone',
+                'multi-link',
+                'transverse',
+            ]);
 
             $table->timestamps();
         });
@@ -28,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('brakes');
+        Schema::dropIfExists('suspensions');
     }
 };

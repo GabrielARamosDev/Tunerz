@@ -16,11 +16,11 @@ class ForcedInductionSeeder extends Seeder
     {
         $inductions = [
             [
-                'code' => 'GM_stock_0001',
-                'name' => 'stock',
-                'manufacturer' => 'GM',
+                'code' => 'TX050',
+                'name' => 'Stage 1 Turbo Kit',
+                'manufacturer' => 'Garret',
                 ###
-                'type' => 'NA',
+                'type' => 'single_turbocharged',
                 'twin_turbo_config' => null,
                 'twin_turbo_count' => null,
                 'supercharger_config' => null,

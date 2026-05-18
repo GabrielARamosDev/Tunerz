@@ -38,6 +38,18 @@ return new class extends Migration
                 ->references('id')
                 ->on('transmissions')
                 ->constrained();
+                
+            /**
+             * If 'null' means naturally aspirated.
+             * Same if 'type' is 'null' on 'forced_induction_systems' tables
+             */
+            $table->unsignedBigInteger('forced_induction_id')
+                ->nullable()
+                ->default(null);
+            $table->foreign('forced_induction_id')
+                ->references('id')
+                ->on('forced_induction_systems')
+                ->constrained();
 
             $table->unsignedBigInteger('front_suspension_id')
                 ->nullable()

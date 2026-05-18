@@ -21,7 +21,7 @@ return new class extends Migration
                 'v (15º)',
                 'v (30º)',
                 'v (60º)',
-                'flat (180º)',
+                'flat',
                 'flat (boxer)',
                 'rotary',
             ]);

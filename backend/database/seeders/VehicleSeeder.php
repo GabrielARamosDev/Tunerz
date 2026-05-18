@@ -19,7 +19,7 @@ class VehicleSeeder extends Seeder
                 'generation' => 2, 
                 'engine_id' => 1,
                 'transmission_id' => 1,
-                'forced_induction_id' => 1,
+                'forced_induction_id' => null,
                 'front_suspension_id' => 1,
                 'rear_suspension_id' => 1,
                 'front_brake_id' => 1,

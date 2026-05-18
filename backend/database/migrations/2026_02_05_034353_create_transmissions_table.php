@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('name');
             $table->string('manufacturer');
+            
             $table->enum('type', [
                 'manual', 
                 'semi-automatic', 

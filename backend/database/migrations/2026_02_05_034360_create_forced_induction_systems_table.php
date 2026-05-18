@@ -19,12 +19,11 @@ return new class extends Migration
             $table->string('manufacturer');
 
             $table->enum('type', [
-                'NA',                              // naturally aspirated
                 'single_turbocharged',             
-                'twin_turbocharged',               // sequential, parallel, etc
-                'supercharged',                    // roots, twin-screw, or centrifugal
-                'twin_charged',                    // turbo + supercharger
-            ])->default('NA');
+                'twin_turbocharged',               // sequential, parallel, compound
+                'supercharged',                    // roots, twin-screw, centrifugal
+                'twin_charged',                    // turbocharger + supercharger
+            ]);
 
             /* ================================================ */
             //Only aplicable if: aspiration = 'twin_turbocharged'

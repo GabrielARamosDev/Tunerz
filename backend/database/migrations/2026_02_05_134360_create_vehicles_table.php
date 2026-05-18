@@ -33,6 +33,10 @@ return new class extends Migration
                 ->on('transmissions')
                 ->constrained();
                 
+            /**
+             * If 'null' means naturally aspirated.
+             * Same if 'type' is 'null' on 'forced_induction_systems' tables
+             */
             $table->unsignedBigInteger('forced_induction_id')
                 ->nullable()
                 ->default(null);

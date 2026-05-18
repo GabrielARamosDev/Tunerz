@@ -12,7 +12,10 @@ use App\Constants\Roles;
 use App\Constants\User as UserConstants;
 use App\Constants\UserStatus;
 
+use App\DTO\VehicleDTO;
+
 use App\Http\Controllers\CrudController;
+
 use App\Models\Engine;
 use App\Models\EngineSpec;
 use App\Models\User;
@@ -130,11 +133,12 @@ class UserController extends CrudController
                 ])
                 ->get();
 
-            foreach ($user_vehicles as $i => $vehicle) {
-                $user_vehicles[$i] = UserVehicle::mountFrontendModel($vehicle);
-            }
+            $items = $user_vehicles->map(function ($user_vehicle) {
+                $DTO = new VehicleDTO($user_vehicle->toArray());
+                return $DTO->toArray();
+            });
 
-            return response()->json($user_vehicles, 200);
+            return response()->json($items, 200);
         }
 
         return response()->json([
@@ -196,14 +200,12 @@ class UserController extends CrudController
 
             try {
 
-                $specs = $vehicle->specs;
+                // // Get the engine associated with this vehicle
+                // $engine = Engine::with(['parts', 'specs'])->findOrFail($vehicle->engine_id);
 
-                // Get the engine associated with this vehicle
-                $engine = Engine::with(['parts', 'specs'])->findOrFail($vehicle->engine_id);
-
-                if (!$engine) {
-                    return response()->json(['message' => 'Nenhum motor encontrado para este veículo!'], 404);
-                }
+                // if (!$engine) {
+                //     return response()->json(['message' => 'Nenhum motor encontrado para este veículo!'], 404);
+                // }
 
                 // Create user vehicle record
                 $user_vehicle = UserVehicle::create([
@@ -225,6 +227,8 @@ class UserController extends CrudController
                     'front_wheel_id' => $vehicle->front_wheel_id,
                     'rear_wheel_id' => $vehicle->rear_wheel_id,
                 ]);
+
+                $specs = $vehicle->specs;
 
                 // Create user vehicle specs
                 UserVehicleSpecs::create([
@@ -262,7 +266,8 @@ class UserController extends CrudController
                     'rearWheel.specs', 'rearWheel.parts'
                 ]);
 
-                $new_vehicle = UserVehicle::mountFrontendModel($user_vehicle);
+                $DTO = new VehicleDTO($vehicle->toArray());
+                $new_vehicle = $DTO->toArray();
 
                 return response()->json($new_vehicle, 201);
             } catch (\Exception $e) {
