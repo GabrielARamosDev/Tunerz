@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\App\UserController;
 use App\Http\Controllers\App\VehicleController;
-use App\Http\Controllers\App\EngineController;
-use App\Http\Controllers\App\ForcedInductionController;
-use App\Http\Controllers\App\StageController;
+use App\Http\Controllers\App\UserVehicleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +18,6 @@ use App\Http\Controllers\App\StageController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-Route::get('/ping', function () {
-    return response()->json([
-        'message' => 'pong'
-    ], 200);
-});
 
 /* ============================================================== */
 
@@ -49,10 +41,17 @@ Route::group([
 Route::group([
     'middleware' => [ 'auth:sanctum' ],
     'namespace' => 'App',
-    // 'prefix' => 'app',
 ], function () {
 
+    Route::get('/ping', function () {
+        return response()->json([
+            'message' => 'pong'
+        ], 200);
+    });
+
     Route::get('/me', [AuthController::class, 'me']);
+
+    /* ============================================================== */
 
     Route::group([
         'namespace' => 'Users',
@@ -66,9 +65,9 @@ Route::group([
         'namespace' => 'User',
         'prefix' => 'user',
     ], function () {
-        Route::get('/vehicles', [UserController::class, 'vehicles']);
-        Route::post('/vehicle', [UserController::class, 'addVehicle']);
-        Route::delete('/vehicle/{id}', [UserController::class, 'removeVehicle']);
+        Route::get('/vehicles', [UserVehicleController::class, 'vehicles']);
+        Route::post('/vehicle', [UserVehicleController::class, 'addVehicle']);
+        Route::delete('/vehicle/{id}', [UserVehicleController::class, 'removeVehicle']);
     });
 
     Route::group([
@@ -86,22 +85,6 @@ Route::group([
         Route::get('/options/trims', [VehicleController::class, 'getTrims']);
         Route::get('/options/years', [VehicleController::class, 'getYears']);
         Route::get('/options/generations', [VehicleController::class, 'getGenerations']);
-    });
-
-    Route::group([
-        'namespace' => 'Engines',
-        'prefix' => 'engines',
-    ], function () {
-        Route::get('/', [EngineController::class, 'index']);
-        Route::get('/{id}', [EngineController::class, 'show']);
-    });
-
-    Route::group([
-        'namespace' => 'ForcedInductions',
-        'prefix' => 'forced-inductions',
-    ], function () {
-        Route::get('/', [ForcedInductionController::class, 'index']);
-        Route::get('/{id}', [ForcedInductionController::class, 'show']);
     });
 
 });
