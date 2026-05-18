@@ -62,10 +62,6 @@ return new class extends Migration
             $table->double('fuel_pressure_bar', 4, 2);
             $table->double('air_fuel_ratio', 4, 2);
 
-            $table->double('intake_lenght', 5, 2);
-            $table->double('intake_diameter_in', 4, 2);
-            $table->double('air_flow_cfm', 6, 2);
-
             $table->double('thermal_efficiency', 4, 2);
             $table->double('coolant_capacity_l', 4, 2);
             $table->double('oil_capacity_l', 4, 2);

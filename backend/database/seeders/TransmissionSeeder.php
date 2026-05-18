@@ -23,10 +23,14 @@ class TransmissionSeeder extends Seeder
                 ],
             ];
 
-            foreach ($transmissions as $transmission) {
+            foreach ($transmissions as $t) {
                 \App\Models\Transmission::updateOrCreate(
-                    ['name' => $transmission['name']],
-                    $transmission
+                    // chave única para evitar duplicatas
+                    [
+                        'code' => $t['code'], 
+                        'manufacturer' => $t['manufacturer'], 
+                    ], 
+                    $t
                 );
             }
     }

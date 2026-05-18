@@ -38,10 +38,6 @@ class EngineSpec extends Model
         'fuel_pressure_bar',
         'air_fuel_ratio', 
         ###
-        'intake_lenght_cm',
-        'intake_diameter_in',
-        'air_flow_cfm',
-        ###
         'thermal_efficiency',
         'coolant_capacity_l',
         'oil_capacity_l',

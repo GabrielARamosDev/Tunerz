@@ -16,7 +16,7 @@ class Vehicle extends Model
         'generation',
         'engine_id',
         'transmission_id',
-        'forcedInduction_id',
+        'forced_induction_id',
         'front_suspension_id',
         'rear_suspension_id',
         'front_brake_id',

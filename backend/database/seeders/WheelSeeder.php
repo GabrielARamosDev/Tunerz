@@ -20,10 +20,14 @@ class WheelSeeder extends Seeder
                 ],
             ];
 
-            foreach ($wheels as $wheel) {
+            foreach ($wheels as $w) {
                 \App\Models\Wheel::updateOrCreate(
-                    ['code' => $wheel['code']],
-                    $wheel
+                    // chave única para evitar duplicatas
+                    [
+                        'code' => $w['code'], 
+                        'manufacturer' => $w['manufacturer'], 
+                    ], 
+                    $w
                 );
             }
     }

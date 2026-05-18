@@ -36,7 +36,9 @@ return new class extends Migration
                 ->nullable()
                 ->default(null);
 
-            $table->enum('twin_turbo_count', [ 2, 4 ]);
+            $table->enum('twin_turbo_count', [ 2, 4 ])
+                ->nullable()
+                ->default(null);
             /* ================================================ */
 
             /* ================================================ */

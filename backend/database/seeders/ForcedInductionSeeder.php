@@ -16,13 +16,24 @@ class ForcedInductionSeeder extends Seeder
     {
         $inductions = [
             [
-                
+                'code' => 'GM_stock_0001',
+                'name' => 'stock',
+                'manufacturer' => 'GM',
+                ###
+                'type' => 'NA',
+                'twin_turbo_config' => null,
+                'twin_turbo_count' => null,
+                'supercharger_config' => null,
             ],
         ];
 
         foreach ($inductions as $i) {
             ForcedInduction::updateOrCreate(
-                ['code' => $i['code']],  // chave única para evitar duplicatas
+                // chave única para evitar duplicatas
+                [
+                    'code' => $i['code'], 
+                    'manufacturer' => $i['manufacturer'], 
+                ], 
                 $i     // campos a atualizar
             );
         }

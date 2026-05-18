@@ -26,8 +26,7 @@ return new class extends Migration
              */
             $table->double('turbine_diameter_mm', 6, 2)->nullable();
             $table->double('compressor_diameter_mm', 6, 2)->nullable();
-            $table->integer('turbocharger_weight_kg')->nullable();
-            $table->double('max_rotational_speed_rpm', 8, 0)->nullable();
+            $table->double('turbo_max_rpm', 8, 0)->nullable();
             /* ================================================ */
 
             /* ================================================ */
@@ -37,7 +36,6 @@ return new class extends Migration
             $table->double('supercharger_displacement_cc', 8, 2)->nullable();
             $table->double('pulley_diameter_mm', 6, 2)->nullable();
             $table->double('pulley_ratio', 4, 2)->nullable();
-            $table->integer('supercharger_weight_kg')->nullable();
             /* ================================================ */
 
             /* ================================================ */
@@ -51,7 +49,6 @@ return new class extends Migration
             $table->double('intercooler_inlet_diameter_mm', 6, 2)->nullable();
             $table->double('intercooler_outlet_diameter_mm', 6, 2)->nullable();
             $table->double('intercooler_pressure_drop_bar', 4, 2)->nullable();
-            $table->integer('intercooler_weight_kg')->nullable();
             /* ================================================ */
 
             /* ================================================ */
@@ -80,7 +77,10 @@ return new class extends Migration
             /**
              * Flow and pressure characteristics
              */
+            $table->double('intake_lenght_cm', 6, 2);
+            $table->double('intake_diameter_in', 5, 2);
             $table->double('air_flow_cfm', 8, 2)->nullable();
+            ###
             $table->double('boost_pressure_bar', 4, 2);
             $table->integer('surge_margin_percent')->nullable();
             $table->double('compressor_efficiency_percent', 5, 2)->nullable();
@@ -102,8 +102,6 @@ return new class extends Migration
             $table->integer('max_rpm')->nullable();
             $table->integer('safe_rpm')->nullable();
             $table->double('weight_kg', 6, 2)->nullable();
-            $table->integer('expected_life_hours')->nullable();
-            $table->boolean('requires_high_octane')->default(false);
             /* ================================================ */
 
             $table->timestamps();

@@ -23,7 +23,11 @@ class EngineSeeder extends Seeder
 
         foreach ($engines as $e) {
             Engine::updateOrCreate(
-                ['code' => $e['code']],  // chave única para evitar duplicatas
+                // chave única para evitar duplicatas
+                [
+                    'code' => $e['code'], 
+                    'manufacturer' => $e['manufacturer'], 
+                ], 
                 $e     // campos a atualizar
             );
         }
