@@ -2,17 +2,10 @@
 
 namespace App\DTO;
 
-class EngineDTO
+class EngineSpecDTO
 {
     public ?int $id = null;
-    public ?string $code = null;
-    public ?string $name = null;
-    public ?string $manufacturer = null;
-    public ?int $generation = null;
-    public ?string $architecture = null;
-    public ?string $rotationDirection = null;
-    
-    // Spec properties
+    public ?int $engineId = null;
     public ?int $stockPowerHp = null;
     public ?int $stockPowerRpm = null;
     public ?int $stockTorqueNm = null;
@@ -61,22 +54,15 @@ class EngineDTO
     {
         return [
             'id' => $this->id,
-            'code' => $this->code,
-            'name' => $this->name,
-            'manufacturer' => $this->manufacturer,
-            'generation' => $this->generation,
-            'architecture' => $this->architecture,
-            'rotationDirection' => $this->rotationDirection,
+            'engineId' => $this->engineId,
             'stockPowerHp' => $this->stockPowerHp,
-            'stockPowerRpm' => $this->stockPowerRpm,
             'stockTorqueNm' => $this->stockTorqueNm,
-            'stockTorqueRpm' => $this->stockTorqueRpm,
-            'stockPowerToWeightRatio' => $this->stockPowerToWeightRatio,
-            'stockTorqueToWeightRatio' => $this->stockTorqueToWeightRatio,
             'cylindersCount' => $this->cylindersCount,
             'displacementCc' => $this->displacementCc,
             'compressionRatio' => $this->compressionRatio,
             'valveCount' => $this->valveCount,
+            'stockIdleRpm' => $this->stockIdleRpm,
+            'stockRedlineRpm' => $this->stockRedlineRpm,
             'weightKg' => $this->weightKg,
         ];
     }

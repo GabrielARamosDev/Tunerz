@@ -2,26 +2,22 @@
 
 namespace App\DTO;
 
-class ForcedInductionDTO
+class ForcedInductionSpecDTO
 {
     public ?int $id = null;
-    public ?string $code = null;
-    public ?string $name = null;
-    public ?string $manufacturer = null;
-    public ?string $type = null;
-    public ?string $twinTurboConfig = null;
-    public ?int $twinTurboCount = null;
-    public ?string $superchargerConfig = null;
-    
-    // Spec properties
+    public ?int $forcedInductionId = null;
     public ?int $stockPowerHp = null;
     public ?int $stockPowerRpm = null;
     public ?int $stockTorqueNm = null;
     public ?int $stockTorqueRpm = null;
+    public ?float $stockPowerToWeightRatio = null;
+    public ?float $stockTorqueToWeightRatio = null;
     public ?int $modifiedPowerHp = null;
     public ?int $modifiedPowerRpm = null;
     public ?int $modifiedTorqueNm = null;
     public ?int $modifiedTorqueRpm = null;
+    public ?float $modifiedPowerToWeightRatio = null;
+    public ?float $modifiedTorqueToWeightRatio = null;
     public ?float $maxBoostBar = null;
     public ?float $minBoostBar = null;
     public ?float $peakBoostRpm = null;
@@ -30,8 +26,11 @@ class ForcedInductionDTO
     public ?int $maxInletTempCelsius = null;
     public ?int $maxOutletTempCelsius = null;
     public ?float $intercoolerTempDropCelsius = null;
+    public ?int $coolantTempCelsius = null;
+    public ?float $thermalEfficiency = null;
     public ?float $airFlowCfm = null;
     public ?float $boostPressureBar = null;
+    public ?int $surgeMarginPercent = null;
     public ?float $compressorEfficiencyPercent = null;
     public ?float $turbineEfficiencyPercent = null;
     public ?float $powerGainHp = null;
@@ -43,6 +42,7 @@ class ForcedInductionDTO
     public ?int $maxRpm = null;
     public ?int $safeRpm = null;
     public ?float $weightKg = null;
+    public ?int $expectedLifeHours = null;
     public ?bool $requiresHighOctane = null;
 
     public function __construct(array $data = [])
@@ -58,20 +58,21 @@ class ForcedInductionDTO
     {
         return [
             'id' => $this->id,
-            'code' => $this->code,
-            'name' => $this->name,
-            'manufacturer' => $this->manufacturer,
-            'type' => $this->type,
-            'twinTurboConfig' => $this->twinTurboConfig,
-            'twinTurboCount' => $this->twinTurboCount,
-            'superchargerConfig' => $this->superchargerConfig,
+            'forcedInductionId' => $this->forcedInductionId,
+            'stockPowerHp' => $this->stockPowerHp,
+            'stockTorqueNm' => $this->stockTorqueNm,
             'modifiedPowerHp' => $this->modifiedPowerHp,
             'modifiedTorqueNm' => $this->modifiedTorqueNm,
             'maxBoostBar' => $this->maxBoostBar,
+            'peakBoostRpm' => $this->peakBoostRpm,
             'powerGainHp' => $this->powerGainHp,
             'torqueGainNm' => $this->torqueGainNm,
+            'powerGainPercent' => $this->powerGainPercent,
+            'torqueGainPercent' => $this->torqueGainPercent,
             'spoolTimeMs' => $this->spoolTimeMs,
-            'weighKg' => $this->weightKg,
+            'lagMs' => $this->lagMs,
+            'maxRpm' => $this->maxRpm,
+            'weightKg' => $this->weightKg,
             'requiresHighOctane' => $this->requiresHighOctane,
         ];
     }
