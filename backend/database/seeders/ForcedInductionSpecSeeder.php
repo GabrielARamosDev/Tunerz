@@ -47,10 +47,6 @@ class ForcedInductionSpecSeeder extends Seeder
                 'coolant_temp_celsius' => 95,
                 'thermal_efficiency' => 0,
                 ###
-                'intake_lenght_cm' => 50,
-                'intake_diameter_in' => 3,
-                'air_flow_cfm' => 380.5,
-                ###
                 'boost_pressure_bar' => 0,
                 'surge_margin_percent' => 0,
                 'compressor_efficiency_percent' => null,

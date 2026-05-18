@@ -30,7 +30,7 @@ class EnginePartSeeder extends Seeder
                     'fuel_type' => 'flex',
                     'fuel_system' => 'mpfi',
                     'carburator_system' => null, 
-                    'intake_material' => 'thermoplastics',
+                    'intake_manifold_material' => 'thermoplastics',
                     'intake_type' => 'stock',
                     'created_at' => now(),
                     'updated_at' => now(),

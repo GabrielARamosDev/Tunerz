@@ -124,16 +124,23 @@ return new class extends Migration
                 ->default(null);
             /* ================================================ */
 
-            $table->enum('intake_material', [
+            $table->enum('intake_manifold_material', [
+                'cast iron',
                 'aluminum',
-                'thermoplastics',
-                'carbon fiber'
+                'composite',
+                'carbon fiber',
             ]);
             $table->enum('intake_type', [
                 'stock',     // Factory-installed systems designed for air filtration and noise reduction.
                 'short ram', // A shorter, direct intake path often placed closer to the engine for better throttle response.
                 'ram-air',   // Positioned at the front of the vehicle to utilize forward momentum for forcing higher-density air into the engine.
                 'cold-air',  // Air filter outside the engine compartment to ingest cooler, denser air,
+            ]);
+            $table->enum('piping_material', [
+                'aluminum',
+                'steel',
+                'silicone',
+                'carbon fiber',
             ]);
             
             $table->timestamps();

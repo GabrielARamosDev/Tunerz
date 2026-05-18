@@ -140,24 +140,6 @@ return new class extends Migration
             ])
                 ->nullable()
                 ->default(null);
-
-            $table->enum('intake_manifold_material', [
-                'cast iron',
-                'aluminum',
-                'composite',
-                'carbon fiber',
-            ])
-                ->nullable()
-                ->default(null);
-
-            $table->enum('piping_material', [
-                'aluminum',
-                'steel',
-                'silicone',
-                'carbon fiber',
-            ])
-                ->nullable()
-                ->default(null);
             /* ================================================ */
 
             $table->timestamps();

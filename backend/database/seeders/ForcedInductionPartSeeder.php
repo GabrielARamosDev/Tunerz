@@ -30,8 +30,6 @@ class ForcedInductionPartSeeder extends Seeder
                 'wastegate_material' => null, 
                 'blow_off_valve_type' => null, 
                 'blow_off_valve_material' => null, 
-                'intake_manifold_material' => 'aluminum', 
-                'piping_material' => 'aluminum', 
             ],
         ];
 

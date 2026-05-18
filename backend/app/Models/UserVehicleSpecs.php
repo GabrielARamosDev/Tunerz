@@ -9,16 +9,17 @@ class UserVehicleSpecs extends Model
     protected $table = 'user_vehicle_specs';
 
     protected $fillable = [
-        'vehicle_id',
+        'user_vehicle_id',
         'body_type',
-        'drivetrain',
+        'drivetrain', 
+        'steering_type', 
         'length_mm',
-        'width_mm',
+        'width_mm', 
         'height_mm',
         'wheel_base_mm',
         'front_track_mm',
         'rear_track_mm',
-        'weight_kg',
+        'weight_kg', 
         'fuel_tank_l',
         'drag_coefficient',
     ];

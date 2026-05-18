@@ -51,13 +51,15 @@ return new class extends Migration
                 ->nullable()
                 ->default(0);
             /* ================================================ */
-
-            $table->double('max_safe_boost_bar', 4, 2)->default(0);
             
             $table->double('fuel_injection_time_ms', 6, 2);
             $table->double('fuel_flowrate_cc_min', 6, 2);
             $table->double('fuel_pressure_bar', 5, 2);
             $table->double('air_fuel_ratio', 5, 2);
+
+            $table->double('intake_lenght_cm', 6, 2);
+            $table->double('intake_diameter_in', 5, 2);
+            $table->double('air_flow_cfm', 8, 2)->nullable();
 
             $table->double('thermal_efficiency', 4, 2);
             $table->double('coolant_capacity_l', 4, 2);

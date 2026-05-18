@@ -77,10 +77,6 @@ return new class extends Migration
             /**
              * Flow and pressure characteristics
              */
-            $table->double('intake_lenght_cm', 6, 2);
-            $table->double('intake_diameter_in', 5, 2);
-            $table->double('air_flow_cfm', 8, 2)->nullable();
-            ###
             $table->double('boost_pressure_bar', 4, 2);
             $table->integer('surge_margin_percent')->nullable();
             $table->double('compressor_efficiency_percent', 5, 2)->nullable();

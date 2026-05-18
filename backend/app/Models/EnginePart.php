@@ -23,7 +23,7 @@ class EnginePart extends Model
         'fuel_type',
         'fuel_system',
         'carburator_system',
-        'intake_material',
+        'intake_manifold_material',
         'intake_type',
     ];
 

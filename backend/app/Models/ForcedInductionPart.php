@@ -23,8 +23,6 @@ class ForcedInductionPart extends Model
         'wastegate_material', 
         'blow_off_valve_type', 
         'blow_off_valve_material', 
-        'intake_manifold_material', 
-        'piping_material', 
     ];
 
     public function forcedInduction()
