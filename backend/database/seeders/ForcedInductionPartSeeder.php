@@ -17,6 +17,8 @@ class ForcedInductionPartSeeder extends Seeder
         $induction_parts = [
             [
                 'forced_induction_id' => 1, 
+                'twin_turbo_config' => null,
+                'turbo_count' => null,
                 'turbine_material' => null, 
                 'turbine_blade_type' => null, 
                 'compressor_material' => null, 

@@ -15,10 +15,6 @@ class ForcedInduction extends Model
         'code',
         'name',
         'manufacturer',
-        'type',
-        'twin_turbo_config',
-        'twin_turbo_count',
-        'supercharger_config',
     ];
 
     public function specs()

@@ -18,6 +18,7 @@ class ForcedInductionSpecSeeder extends Seeder
             [
                 'forced_induction_id' => 1,
                 ###
+                'turbo_config_pair' => null,
                 'turbine_diameter_mm' => null,
                 'compressor_diameter_mm' => null,
                 'turbo_max_rpm' => null,

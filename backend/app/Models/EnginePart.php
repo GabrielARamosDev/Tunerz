@@ -25,6 +25,7 @@ class EnginePart extends Model
         'carburator_system',
         'intake_manifold_material',
         'intake_type',
+        'intake_piping_material', 
     ];
 
     public function engine()

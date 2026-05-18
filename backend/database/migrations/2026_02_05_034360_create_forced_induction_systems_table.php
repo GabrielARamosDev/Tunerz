@@ -18,39 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('manufacturer');
 
-            $table->enum('type', [
-                'single_turbocharged',             
-                'twin_turbocharged',               // sequential, parallel, compound
-                'supercharged',                    // roots, twin-screw, centrifugal
-                'twin_charged',                    // turbocharger + supercharger
-            ]);
-
-            /* ================================================ */
-            //Only aplicable if: aspiration = 'twin_turbocharged'
-            $table->enum('twin_turbo_config', [
-                'sequential', 
-                'parallel', 
-                'compound', 
-            ])
-                ->nullable()
-                ->default(null);
-
-            $table->enum('twin_turbo_count', [ 2, 4 ])
-                ->nullable()
-                ->default(null);
-            /* ================================================ */
-
-            /* ================================================ */
-            //Only aplicable if: aspiration = 'supercharged'
-            $table->enum('supercharger_config', [
-                'roots', 
-                'twin-screw', 
-                'centrifugal', 
-            ])
-                ->nullable()
-                ->default(null);
-            /* ================================================ */
-
             $table->timestamps();
         });
     }

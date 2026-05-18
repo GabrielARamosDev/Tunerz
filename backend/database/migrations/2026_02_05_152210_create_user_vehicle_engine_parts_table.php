@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('user_vehicle_engine_parts', function (Blueprint $table) {
+        Schema::create('uv_engine_parts', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('engine_id')
@@ -136,11 +136,19 @@ return new class extends Migration
                 'ram-air',   // Positioned at the front of the vehicle to utilize forward momentum for forcing higher-density air into the engine.
                 'cold-air',  // Air filter outside the engine compartment to ingest cooler, denser air,
             ]);
-            $table->enum('piping_material', [
+            $table->enum('intake_piping_material', [
                 'aluminum',
                 'steel',
                 'silicone',
                 'carbon fiber',
+            ]);
+
+            $table->enum('induction_system', [
+                'NA',                  // naturally aspirated
+                'single-turbocharged',             
+                'twin-turbocharged',   // sequential, parallel, compound
+                'supercharged',        // roots, twin-screw, centrifugal
+                'twin-charged',        // turbocharger + supercharger
             ]);
             
             $table->timestamps();

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_vehicle_forced_induction_system_parts', function (Blueprint $table) {
+        Schema::create('uv_forced_induction_system_parts', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('forced_induction_id')
@@ -19,6 +19,27 @@ return new class extends Migration
                 ->on('forced_induction_systems')
                 ->constrained()
                 ->cascadeOnDelete();
+
+            /* ================================================ */
+            // Only aplicable if: type = 'twin_turbocharged'
+            $table->enum('twin_turbo_config', [
+                'sequential', 
+                'parallel', 
+                'compound', 
+            ])
+                ->nullable()
+                ->default(null);
+            /* ================================================ */
+
+            /**
+             * Total number of installed turbos.
+             * 
+             * Can only be greater than 1 if the 'type' field of this table 
+             * is set to "twin-turbocharged".
+             */
+            $table->enum('turbo_count', [ 1, 2, 4 ])
+                ->nullable()
+                ->default(null);
 
             /* ================================================ */
             // Turbocharger specific fields
@@ -137,24 +158,6 @@ return new class extends Migration
                 'aluminum',
                 'steel',
                 'composite',
-            ])
-                ->nullable()
-                ->default(null);
-
-            $table->enum('intake_manifold_material', [
-                'cast iron',
-                'aluminum',
-                'composite',
-                'carbon fiber',
-            ])
-                ->nullable()
-                ->default(null);
-
-            $table->enum('piping_material', [
-                'aluminum',
-                'steel',
-                'silicone',
-                'carbon fiber',
             ])
                 ->nullable()
                 ->default(null);

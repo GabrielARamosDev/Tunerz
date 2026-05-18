@@ -19,11 +19,6 @@ class ForcedInductionSeeder extends Seeder
                 'code' => 'TX050',
                 'name' => 'Stage 1 Turbo Kit',
                 'manufacturer' => 'Garret',
-                ###
-                'type' => 'single_turbocharged',
-                'twin_turbo_config' => null,
-                'twin_turbo_count' => null,
-                'supercharger_config' => null,
             ],
         ];
 

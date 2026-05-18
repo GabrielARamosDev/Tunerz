@@ -20,6 +20,22 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            /**
+             * Designates which turbo-pair is related to this config, for the same 'forced_induction_system'.
+             * 
+             * If value = 'null' means the system is single-turbo.
+             * Otherwise:
+             *    - '1' means this config "page" is for pair #1;
+             *    - '2' means this config "page" is for pair #2;
+             * 
+             * If the system is twin-turbo with:
+             *    - 2 turbos, there should be only 1 pair, as well as only 1 'spec' items in this table;
+             *    - 4 turbos, there should be 2 pairs, as well as 2 'spec' items in this table;
+             */
+            $table->enum('turbo_config_pair', [ 1, 2 ])
+                ->nullable()
+                ->default(null);
+
             /* ================================================ */
             /**
              * Turbocharger dimensions and specifications

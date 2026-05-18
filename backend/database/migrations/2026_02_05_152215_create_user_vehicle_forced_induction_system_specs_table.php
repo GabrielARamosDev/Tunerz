@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_vehicle_forced_induction_system_specs', function (Blueprint $table) {
+        Schema::create('uv_forced_induction_system_specs', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('forced_induction_id')
@@ -19,6 +19,22 @@ return new class extends Migration
                 ->on('forced_induction_systems')
                 ->constrained()
                 ->cascadeOnDelete();
+
+            /**
+             * Designates which turbo-pair is related to this config, for the same 'forced_induction_system'.
+             * 
+             * If value = 'null' means the system is single-turbo.
+             * Otherwise:
+             *    - '1' means this config "page" is for pair #1;
+             *    - '2' means this config "page" is for pair #2;
+             * 
+             * If the system is twin-turbo with:
+             *    - 2 turbos, there should be only 1 pair, as well as only 1 'spec' items in this table;
+             *    - 4 turbos, there should be 2 pairs, as well as 2 'spec' items in this table;
+             */
+            $table->enum('turbo_config_pair', [ 1, 2 ])
+                ->nullable()
+                ->default(null);
 
             /* ================================================ */
             /**
@@ -77,10 +93,6 @@ return new class extends Migration
             /**
              * Flow and pressure characteristics
              */
-            $table->double('intake_lenght_cm', 6, 2);
-            $table->double('intake_diameter_in', 5, 2);
-            $table->double('air_flow_cfm', 8, 2)->nullable();
-            ###
             $table->double('boost_pressure_bar', 4, 2);
             $table->integer('surge_margin_percent')->nullable();
             $table->double('compressor_efficiency_percent', 5, 2)->nullable();

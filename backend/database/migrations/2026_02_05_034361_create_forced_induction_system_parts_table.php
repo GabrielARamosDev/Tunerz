@@ -21,6 +21,27 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             /* ================================================ */
+            // Only aplicable if: type = 'twin_turbocharged'
+            $table->enum('twin_turbo_config', [
+                'sequential', 
+                'parallel', 
+                'compound', 
+            ])
+                ->nullable()
+                ->default(null);
+            /* ================================================ */
+
+            /**
+             * Total number of installed turbos.
+             * 
+             * Can only be greater than 1 if the 'type' field of this table 
+             * is set to "twin-turbocharged".
+             */
+            $table->enum('turbo_count', [ 1, 2, 4 ])
+                ->nullable()
+                ->default(null);
+
+            /* ================================================ */
             // Turbocharger specific fields
             $table->enum('turbine_material', [
                 'cast iron',

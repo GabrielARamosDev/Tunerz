@@ -125,6 +125,7 @@ return new class extends Migration
             /* ================================================ */
 
             $table->enum('intake_manifold_material', [
+                'thermoplastics', 
                 'cast iron',
                 'aluminum',
                 'composite',
@@ -136,11 +137,20 @@ return new class extends Migration
                 'ram-air',   // Positioned at the front of the vehicle to utilize forward momentum for forcing higher-density air into the engine.
                 'cold-air',  // Air filter outside the engine compartment to ingest cooler, denser air,
             ]);
-            $table->enum('piping_material', [
+            $table->enum('intake_piping_material', [
+                'thermoplastics', 
                 'aluminum',
                 'steel',
                 'silicone',
                 'carbon fiber',
+            ]);
+
+            $table->enum('induction_system', [
+                'NA',                  // naturally aspirated
+                'single-turbocharged',             
+                'twin-turbocharged',   // sequential, parallel, compound
+                'supercharged',        // roots, twin-screw, centrifugal
+                'twin-charged',        // turbocharger + supercharger
             ]);
             
             $table->timestamps();

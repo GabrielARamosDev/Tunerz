@@ -32,6 +32,7 @@ class EnginePartSeeder extends Seeder
                     'carburator_system' => null, 
                     'intake_manifold_material' => 'thermoplastics',
                     'intake_type' => 'stock',
+                    'intake_piping_material' => 'thermoplastics', 
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],

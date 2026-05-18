@@ -10,6 +10,7 @@ class ForcedInductionSpec extends Model
 
     protected $fillable = [
         'forced_induction_id',
+        'turbo_config_pair',
         'turbine_diameter_mm', 
         'compressor_diameter_mm', 
         'turbo_max_rpm', 
