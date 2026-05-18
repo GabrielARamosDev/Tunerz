@@ -20,6 +20,11 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->enum('gear_cut_type', [
+                'helical',
+                'straight',
+            ]);
+
             $table->enum('clutch_type', [
                 'dry single',
                 'dry dual',

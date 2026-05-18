@@ -120,6 +120,7 @@ class UserController extends CrudController
                     'specs', 
                     'engine.specs', 'engine.parts', 
                     'transmission.specs', 'transmission.parts', 
+                    'forcedInduction.specs', 'forcedInduction.parts', 
                     'frontSuspension.specs', 'frontSuspension.parts', 
                     'rearSuspension.specs', 'rearSuspension.parts', 
                     'frontBrake.specs', 'frontBrake.parts', 
@@ -159,7 +160,8 @@ class UserController extends CrudController
                 'manufacturer' => 'required|string',
                 'model' => 'required|string',
                 'trim' => 'required|string',
-                'year' => 'required|integer',
+                'year' => 'required_without:generation|integer',
+                'generation' => 'required_without:year|integer',
                 'transmission_id' => 'nullable|exists:transmissions,id',
                 'brake_id' => 'nullable|exists:brakes,id',
                 'suspension_id' => 'nullable|exists:suspensions,id',
@@ -169,13 +171,20 @@ class UserController extends CrudController
             $vehicle = Vehicle::where('manufacturer', $request->manufacturer)
                 ->where('model', $request->model)
                 ->where('trim', $request->trim)
-                ->where('year', $request->year)
-                ->where('generation', $request->generation)
+                ->where(function ($query) use ($request) {
+                    $query->where('year', $request->year)->orWhere('generation', $request->generation);
+                })
                 ->with([
                     'specs', 
-                    'engine', 'transmission', 
-                    'frontSuspension', 'rearSuspension', 
-                    'frontBrake', 'rearBrake', 
+                    'engine.specs', 'engine.parts', 
+                    'transmission.specs', 'transmission.parts', 
+                    'forcedInduction.specs', 'forcedInduction.parts', 
+                    'frontSuspension.specs', 'frontSuspension.parts', 
+                    'rearSuspension.specs', 'rearSuspension.parts', 
+                    'frontBrake.specs', 'frontBrake.parts', 
+                    'rearBrake.specs', 'rearBrake.parts', 
+                    'frontWheel.specs', 'frontWheel.parts', 
+                    'rearWheel.specs', 'rearWheel.parts'
                 ])
                 ->firstOrFail();
 
@@ -183,19 +192,19 @@ class UserController extends CrudController
                 return response()->json(['message' => 'Veículo não encontrado!'], 404);
             }
 
-            $specs = $vehicle->specs;
-
-            // Get the engine associated with this vehicle
-            $engine = Engine::with(['specs'])
-                ->findOrFail($vehicle->engine_id);
-
-            if (!$engine) {
-                return response()->json(['message' => 'Nenhum motor encontrado para este veículo!'], 404);
-            }
-
             DB::beginTransaction();
 
             try {
+
+                $specs = $vehicle->specs;
+
+                // Get the engine associated with this vehicle
+                $engine = Engine::with(['parts', 'specs'])->findOrFail($vehicle->engine_id);
+
+                if (!$engine) {
+                    return response()->json(['message' => 'Nenhum motor encontrado para este veículo!'], 404);
+                }
+
                 // Create user vehicle record
                 $user_vehicle = UserVehicle::create([
                     'user_id' => $user->id,
@@ -208,6 +217,7 @@ class UserController extends CrudController
                     ###
                     'engine_id' => $vehicle->engine_id,
                     'transmission_id' => $vehicle->transmission_id,
+                    'forced_induction_id' => $vehicle->forced_induction_id,
                     'front_suspension_id' => $vehicle->front_suspension_id,
                     'rear_suspension_id' => $vehicle->rear_suspension_id,
                     'front_brake_id' => $vehicle->front_brake_id,
@@ -219,80 +229,22 @@ class UserController extends CrudController
                 // Create user vehicle specs
                 UserVehicleSpecs::create([
                     'user_vehicle_id' => $user_vehicle->id,
-                    'generation' => null,
-                    'platform' => null,
-                    'series' => null,
+                    'body_type' => $specs->body_type,
                     'drivetrain' => $specs->drivetrain,
-                    'transmission' => $specs->transmission,
-                    'weight' => $specs->weight,
-                    'weight_unit' => $specs->weight_unit,
-                    'width' => $specs->width,
+                    'steering_type' => $specs->steering_type,
+                    ###
                     'length' => $specs->length,
+                    'width' => $specs->width,
                     'height' => $specs->height,
+                    ###
+                    'wheel_base_mm' => $specs->wheel_base_mm,
+                    'front_track_mm' => $specs->front_track_mm,
+                    'rear_track_mm' => $specs->rear_track_mm,
+                    ###
+                    'weight' => $specs->weight,
+                    'fuel_tank_l' => $specs->fuel_tank_l,
+                    'drag_coefficient' => $specs->drag_coefficient,
                 ]);
-
-                // Create user vehicle engine record with engine data
-                $user_vehicle_engines = UserVehicleEngine::create([
-                    'user_vehicle_id' => $user_vehicle->id,
-                    'code' => $engine->code,
-                    'manufacturer' => $engine->manufacturer,
-                    'displacement' => $engine->displacement,
-                    'valve_count' => $engine->valve_count,
-                    'propulsion' => $engine->propulsion,
-                    'fuel_type' => $engine->fuel_type,
-                    'active' => 1,
-                ]);
-
-                // Get and create engine specs
-                $engine_specs = EngineSpec::findOrFail($engine->id);
-                UserVehicleEngineSpec::create([
-                    'user_vehicle_engine_id' => $user_vehicle_engines->id,
-                    'place' => $engine_specs->place,
-                    'orientation' => $engine_specs->orientation,
-                    'cylinder_configuration' => $engine_specs->cylinder_configuration,
-                    'cylinders_count' => $engine_specs->cylinders_count,
-                    'valves_per_cylinder' => $engine_specs->valves_per_cylinder,
-                    'valve_tappet' => $engine_specs->valve_tappet,
-                    'compression_ratio' => $engine_specs->compression_ratio,
-                    'aspiration' => $engine_specs->aspiration,
-                    'fuel_system' => $engine_specs->fuel_system,
-                    'camshaft_type' => $engine_specs->camshaft_type,
-                    'command_drive' => $engine_specs->command_drive,
-                    'bore_mm' => $engine_specs->bore_mm,
-                    'stroke_mm' => $engine_specs->stroke_mm,
-                    'stock_power_hp' => $engine_specs->stock_power_hp,
-                    'stock_power_rpm' => $engine_specs->stock_power_rpm,
-                    'stock_torque_nm' => $engine_specs->stock_torque_nm,
-                    'stock_torque_rpm' => $engine_specs->stock_torque_rpm,
-                    'specific_power_hp_per_liter' => $engine_specs->specific_power_hp_per_liter,
-                    'power_to_weight_ratio' => $engine_specs->power_to_weight_ratio,
-                    'torque_to_weight_ratio' => $engine_specs->torque_to_weight_ratio,
-                    'active' => 1,
-                ]);
-
-                // Create transmission association if provided
-                if ($request->has('transmission_id') && $request->transmission_id) {
-                    UserVehicleTransmission::create([
-                        'user_vehicle_id' => $user_vehicle->id,
-                        'transmission_id' => $request->transmission_id,
-                    ]);
-                }
-
-                // Create brake association if provided
-                if ($request->has('brake_id') && $request->brake_id) {
-                    UserVehicleBrake::create([
-                        'user_vehicle_id' => $user_vehicle->id,
-                        'brake_id' => $request->brake_id,
-                    ]);
-                }
-
-                // Create suspension association if provided
-                if ($request->has('suspension_id') && $request->suspension_id) {
-                    UserVehicleSuspension::create([
-                        'user_vehicle_id' => $user_vehicle->id,
-                        'suspension_id' => $request->suspension_id,
-                    ]);
-                }
 
                 DB::commit();
 
@@ -301,6 +253,7 @@ class UserController extends CrudController
                     'specs', 
                     'engine.specs', 'engine.parts', 
                     'transmission.specs', 'transmission.parts', 
+                    'forcedInduction.specs', 'forcedInduction.parts', 
                     'frontSuspension.specs', 'frontSuspension.parts', 
                     'rearSuspension.specs', 'rearSuspension.parts', 
                     'frontBrake.specs', 'frontBrake.parts', 

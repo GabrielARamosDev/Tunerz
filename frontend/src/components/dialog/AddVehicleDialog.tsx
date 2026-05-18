@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import api from '../../services/api';
 
@@ -26,7 +26,7 @@ interface AddVehicleDialogProps {
 
 const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps) => {
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = React.useState({
         manufacturer: '',
         model: '',
         trim: '',
@@ -34,7 +34,7 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
         generation: 0,
     });
 
-    const [options, setOptions] = useState({
+    const [options, setOptions] = React.useState({
         manufacturers: [] as string[],
         models: [] as string[],
         trims: [] as string[],
@@ -42,7 +42,9 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
         generations: [] as number[],
     });
 
-    const [loading, setLoading] = useState({
+    const [canSubmit, setCanSubmit] = React.useState(false);
+
+    const [loading, setLoading] = React.useState({
         manufacturers: false,
         models: false,
         trims: false,
@@ -53,14 +55,14 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
     /* ============================================================== */
 
     // Fetch manufacturers on dialog open
-    useEffect(() => {
+    React.useEffect(() => {
         if (open) {
             fetchManufacturers();
         }
     }, [open]);
 
     // Fetch models when manufacturer changes
-    useEffect(() => {
+    React.useEffect(() => {
         if (formData.manufacturer) {
             fetchModels();
         } else {
@@ -70,7 +72,7 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
     }, [formData.manufacturer]);
 
     // Fetch trims when model changes
-    useEffect(() => {
+    React.useEffect(() => {
         if (formData.model && formData.manufacturer) {
             fetchTrims();
         } else {
@@ -79,7 +81,7 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
         }
     }, [formData.model, formData.manufacturer]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (formData.trim && formData.model && formData.manufacturer) {
             fetchYears();
         } else {
@@ -88,7 +90,7 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
         }
     }, [formData.trim, formData.model, formData.manufacturer]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (formData.trim && formData.model && formData.manufacturer) {
             fetchGenerations();
         } else {
@@ -96,6 +98,19 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
             setFormData(prev => ({ ...prev, generation: 0 }));
         }
     }, [formData.year, formData.trim, formData.model, formData.manufacturer]);
+
+    React.useEffect(() => {
+        if (
+            (formData.generation || formData.year) 
+            && formData.trim 
+            && formData.model 
+            && formData.manufacturer
+        ) {
+            setCanSubmit(true);
+        } else {
+            setCanSubmit(false);
+        }
+    }, [formData.generation, formData.year, formData.trim, formData.model, formData.manufacturer]);
 
     /* ============================================================== */
 
@@ -190,7 +205,12 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
     };
 
     const handleSubmit = () => {
-        if (!formData.manufacturer || !formData.model || !formData.trim) {
+        if (
+            !formData.manufacturer 
+            || !formData.model 
+            || !formData.trim 
+            || (!formData.year || !formData.generation)
+        ) {
             alert('Por favor, preencha todos os campos obrigatórios');
             return;
         }
@@ -319,7 +339,11 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Cancelar</Button>
-                <Button onClick={handleSubmit} variant="contained">
+                <Button 
+                    onClick={handleSubmit} 
+                    variant="contained"
+                    disabled={!canSubmit}
+                >
                     Adicionar
                 </Button>
             </DialogActions>

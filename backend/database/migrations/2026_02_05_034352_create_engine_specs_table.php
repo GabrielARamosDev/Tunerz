@@ -57,10 +57,10 @@ return new class extends Migration
 
             $table->double('max_safe_boost_bar', 4, 2)->default(0);
             
-            $table->double('fuel_injection_time_ms', 4, 2);
-            $table->integer('fuel_flowrate_cc_min');
-            $table->double('fuel_pressure_bar', 4, 2);
-            $table->double('air_fuel_ratio', 4, 2);
+            $table->double('fuel_injection_time_ms', 6, 2);
+            $table->double('fuel_flowrate_cc_min', 6, 2);
+            $table->double('fuel_pressure_bar', 5, 2);
+            $table->double('air_fuel_ratio', 5, 2);
 
             $table->double('thermal_efficiency', 4, 2);
             $table->double('coolant_capacity_l', 4, 2);
