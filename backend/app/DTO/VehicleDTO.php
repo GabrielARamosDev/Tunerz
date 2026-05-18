@@ -10,22 +10,22 @@ class VehicleDTO
     public ?string $trim = null;
     public ?int $year = null;
     public ?int $generation = null;
-    public ?int $engineId = null;
-    public ?int $transmissionId = null;
-    public ?int $forcedInductionId = null;
-    public ?int $frontSuspensionId = null;
-    public ?int $rearSuspensionId = null;
-    public ?int $frontBrakeId = null;
-    public ?int $rearBrakeId = null;
-    public ?int $frontWheelId = null;
-    public ?int $rearWheelId = null;
+    public ?int $engine_id = null;
+    public ?int $transmission_id = null;
+    public ?int $forced_induction_id = null;
+    public ?int $front_s_id = null;
+    public ?int $rear_s_id = null;
+    public ?int $front_brake_id = null;
+    public ?int $rear_brake_id = null;
+    public ?int $front_wheel_id = null;
+    public ?int $rear_wheel_id = null;
     public ?string $imageUrl = null;
     
     // Spec properties
     public ?array $specs = null;
     public ?array $engine = null;
     public ?array $transmission = null;
-    public ?array $forcedInduction = null;
+    public ?array $forced_induction = null;
     public ?array $suspension = null;
     public ?array $brake = null;
     public ?array $wheel = null;
@@ -75,7 +75,7 @@ class VehicleDTO
             'specs' => $this->specs, 
             'engine' => $this->engine, 
             'transmission' => $this->transmission, 
-            'forcedInduction' => $this->forcedInduction, 
+            'forced_induction' => $this->forced_induction, 
             'suspension' => $this->suspension, 
             'brake' => $this->brake, 
             'wheel' => $this->wheel, 

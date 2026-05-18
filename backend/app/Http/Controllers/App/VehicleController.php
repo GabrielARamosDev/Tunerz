@@ -26,6 +26,8 @@ class VehicleController extends CrudController
             'rearWheel.specs', 'rearWheel.parts'
         ])->get();
 
+        // dd($vehicles->toArray());
+
         $items = $vehicles->map(function ($vehicle) {
             $DTO = new VehicleDTO($vehicle->toArray());
             return $DTO->toArray();

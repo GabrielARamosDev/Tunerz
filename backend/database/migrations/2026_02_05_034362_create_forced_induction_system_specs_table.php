@@ -55,7 +55,7 @@ return new class extends Migration
             /**
              * Boost characteristics
              */
-            $table->double('max_boost_bar', 5, 2);
+            $table->double('max_boost_bar', 5, 2)->default(0);
             $table->double('min_boost_bar', 5, 2)->default(0);
             $table->double('peak_boost_rpm', 6, 0)->nullable();
             $table->double('boost_response_ms', 6, 2)->nullable();

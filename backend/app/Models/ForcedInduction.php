@@ -23,16 +23,16 @@ class ForcedInduction extends Model
 
     public function specs()
     {
-        return $this->hasOne(ForcedInductionSpec::class, 'forced_induction_id');
+        return $this->hasOne(ForcedInductionSpec::class);
     }
 
     public function parts()
     {
-        return $this->hasOne(ForcedInductionPart::class, 'forced_induction_id');
+        return $this->hasOne(ForcedInductionPart::class);
     }
 
     public function vehicles()
     {
-        return $this->hasMany(Vehicle::class, 'forced_induction_id');
+        return $this->hasMany(Vehicle::class);
     }
 }

@@ -34,8 +34,8 @@ class ForcedInductionSpecSeeder extends Seeder
                 'intercooler_outlet_diameter_mm' => null,
                 'intercooler_pressure_drop_bar' => null,
                 ###
-                'max_boost_bar' => null,
-                'min_boost_bar' => null,
+                'max_boost_bar' => 0,
+                'min_boost_bar' => 0,
                 'peak_boost_rpm' => null,
                 'boost_response_ms' => null,
                 'boost_ramp_time_s' => null,
