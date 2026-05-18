@@ -52,9 +52,9 @@ return new class extends Migration
                 ->default(0);
             /* ================================================ */
             
-            $table->double('fuel_injection_time_ms', 6, 2);
             $table->double('fuel_flowrate_cc_min', 6, 2);
             $table->double('fuel_pressure_bar', 5, 2);
+            $table->double('fuel_injection_time_ms', 6, 2);
             $table->double('air_fuel_ratio', 5, 2);
 
             $table->double('intake_lenght_cm', 6, 2);
