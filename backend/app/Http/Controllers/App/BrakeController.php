@@ -1,17 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
+
+use App\Http\Controllers\CrudController;
+
+use Illuminate\Http\Request;
 
 use App\Http\Requests\StoreBrakeRequest;
 use App\Http\Requests\UpdateBrakeRequest;
+
 use App\Models\Brake;
 
-class BrakeController extends Controller
+class BrakeController extends CrudController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
     }
@@ -27,7 +32,7 @@ class BrakeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBrakeRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,7 +40,7 @@ class BrakeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Brake $brake)
+    public function show(Request $request, $id)
     {
         //
     }
@@ -43,7 +48,7 @@ class BrakeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Brake $brake)
+    public function edit(Request $request)
     {
         //
     }
@@ -51,7 +56,7 @@ class BrakeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBrakeRequest $request, Brake $brake)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -59,7 +64,7 @@ class BrakeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Brake $brake)
+    public function destroy($id)
     {
         //
     }

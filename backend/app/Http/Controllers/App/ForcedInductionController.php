@@ -6,19 +6,20 @@ use App\Http\Controllers\CrudController;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests\StoreTransmissionRequest;
-use App\Http\Requests\UpdateTransmissionRequest;
+use App\Http\Requests\StoreForcedInductionRequest;
+use App\Http\Requests\UpdateForcedInductionRequest;
 
-use App\Models\Transmission;
+use App\Models\ForcedInduction;
 
-class TransmissionController extends CrudController
+class ForcedInductionController extends CrudController
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of forced induction systems with their specifications.
      */
     public function index(Request $request)
     {
-        //
+        $forcedInductions = ForcedInduction::with(['specs', 'parts'])->get();
+        return response()->json($forcedInductions);
     }
 
     /**
@@ -38,17 +39,18 @@ class TransmissionController extends CrudController
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified forced induction system with its specifications and parts.
      */
     public function show(Request $request, $id)
     {
-        //
+        $forcedInduction = ForcedInduction::with(['specs', 'parts'])->findOrFail($id);
+        return response()->json($forcedInduction);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Transmission $transmission)
+    public function edit(ForcedInduction $forcedInduction)
     {
         //
     }

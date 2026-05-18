@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\CrudController;
+
+use Illuminate\Http\Request;
+
 use App\Http\Requests\StoreSuspensionRequest;
 use App\Http\Requests\UpdateSuspensionRequest;
+
 use App\Models\Suspension;
 
-class SuspensionController extends Controller
+class SuspensionController extends CrudController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
     }
@@ -27,7 +32,7 @@ class SuspensionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSuspensionRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,7 +40,7 @@ class SuspensionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Suspension $suspension)
+    public function show(Request $request, $id)
     {
         //
     }
@@ -51,7 +56,7 @@ class SuspensionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSuspensionRequest $request, Suspension $suspension)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -59,7 +64,7 @@ class SuspensionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Suspension $suspension)
+    public function destroy($id)
     {
         //
     }

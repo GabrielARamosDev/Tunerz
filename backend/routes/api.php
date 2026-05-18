@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\App\UserController;
 use App\Http\Controllers\App\VehicleController;
 use App\Http\Controllers\App\EngineController;
+use App\Http\Controllers\App\ForcedInductionController;
 use App\Http\Controllers\App\StageController;
 
 /*
@@ -93,6 +94,14 @@ Route::group([
     ], function () {
         Route::get('/', [EngineController::class, 'index']);
         Route::get('/{id}', [EngineController::class, 'show']);
+    });
+
+    Route::group([
+        'namespace' => 'ForcedInductions',
+        'prefix' => 'forced-inductions',
+    ], function () {
+        Route::get('/', [ForcedInductionController::class, 'index']);
+        Route::get('/{id}', [ForcedInductionController::class, 'show']);
     });
 
 });
