@@ -11,14 +11,14 @@ class UserVehicleEngineSpec extends Model
     protected $fillable = [
         'engine_id',
         ###
-        'stock_power_hp',
-        'stock_power_rpm',
-        'stock_torque_nm',
-        'stock_torque_rpm',
-        'stock_power_to_weight_ratio',
-        'stock_torque_to_weight_ratio',
-        'stock_idle_rpm',
-        'stock_redline_rpm',
+        'power_hp',
+        'power_rpm',
+        'torque_nm',
+        'torque_rpm',
+        'power_to_weight_ratio',
+        'torque_to_weight_ratio',
+        'idle_rpm',
+        'redline_rpm',
         ###
         'cylinders_count',
         'piston_bore_mm',

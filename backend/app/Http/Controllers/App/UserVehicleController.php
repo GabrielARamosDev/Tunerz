@@ -275,70 +275,68 @@ class UserVehicleController extends CrudController
                     'oil_capacity_l' => $transmission->specs->oil_capacity_l,
                 ]);
 
-                // Get the forced_induction associated with this vehicle
-                $forced_induction = ForcedInduction::with(['parts', 'specs'])->findOrFail($vehicle->forced_induction_id);
+                if ($vehicle->forced_induction_id !== null) {
+                    // Get the forced_induction associated with this vehicle
+                    $forced_induction = ForcedInduction::with(['parts', 'specs'])->findOrFail($vehicle->forced_induction_id);
 
-                if (!$forced_induction) {
-                    DB::rollBack();
+                    UserVehicleForcedInductionPart::create([
+                        'forced_induction_id' => $forced_induction->id,
+                        'twin_turbo_config' => $forced_induction->parts->twin_turbo_config,
+                        'turbo_count' => $forced_induction->parts->turbo_count,
+                        'turbine_material' => $forced_induction->parts->turbine_material,
+                        'turbine_blade_type' => $forced_induction->parts->turbine_blade_type,
+                        'compressor_material' => $forced_induction->parts->compressor_material,
+                        'compressor_design' => $forced_induction->parts->compressor_design,
+                        'supercharger_type' => $forced_induction->parts->supercharger_type,
+                        'supercharger_drive' => $forced_induction->parts->supercharger_drive,
+                        'supercharger_material' => $forced_induction->parts->supercharger_material,
+                        'intercooler_type' => $forced_induction->parts->intercooler_type,
+                        'intercooler_material' => $forced_induction->parts->intercooler_material,
+                        'wastegate_type' => $forced_induction->parts->wastegate_type,
+                        'wastegate_material' => $forced_induction->parts->wastegate_material,
+                        'blow_off_valve_type' => $forced_induction->parts->blow_off_valve_type,
+                        'blow_off_valve_material' => $forced_induction->parts->blow_off_valve_material,
+                    ]);
 
-                    return response()->json(['message' => 'Nenhuma indução encontrada para este veículo!'], 404);
+                    UserVehicleForcedInductionSpec::create([
+                        'forced_induction_id' => $forced_induction->id,
+                        'turbo_config_pair' => $forced_induction->specs->turbo_config_pair,
+                        'turbine_diameter_mm' => $forced_induction->specs->turbine_diameter_mm,
+                        'compressor_diameter_mm' => $forced_induction->specs->compressor_diameter_mm,
+                        'turbo_max_rpm' => $forced_induction->specs->turbo_max_rpm,
+                        'supercharger_displacement_cc' => $forced_induction->specs->supercharger_displacement_cc,
+                        'pulley_diameter_mm' => $forced_induction->specs->pulley_diameter_mm,
+                        'pulley_ratio' => $forced_induction->specs->pulley_ratio,
+                        'intercooler_volume_l' => $forced_induction->specs->intercooler_volume_l,
+                        'intercooler_core_length_mm' => $forced_induction->specs->intercooler_core_length_mm,
+                        'intercooler_core_width_mm' => $forced_induction->specs->intercooler_core_width_mm,
+                        'intercooler_core_height_mm' => $forced_induction->specs->intercooler_core_height_mm,
+                        'intercooler_inlet_diameter_mm' => $forced_induction->specs->intercooler_inlet_diameter_mm,
+                        'intercooler_outlet_diameter_mm' => $forced_induction->specs->intercooler_outlet_diameter_mm,
+                        'intercooler_pressure_drop_bar' => $forced_induction->specs->intercooler_pressure_drop_bar,
+                        'max_boost_bar' => $forced_induction->specs->max_boost_bar,
+                        'min_boost_bar' => $forced_induction->specs->min_boost_bar,
+                        'peak_boost_rpm' => $forced_induction->specs->peak_boost_rpm,
+                        'boost_response_ms' => $forced_induction->specs->boost_response_ms,
+                        'boost_ramp_time_s' => $forced_induction->specs->boost_ramp_time_s,
+                        'max_inlet_temp_celsius' => $forced_induction->specs->max_inlet_temp_celsius,
+                        'max_outlet_temp_celsius' => $forced_induction->specs->max_outlet_temp_celsius,
+                        'intercooler_temp_drop_celsius' => $forced_induction->specs->intercooler_temp_drop_celsius,
+                        'coolant_temp_celsius' => $forced_induction->specs->coolant_temp_celsius,
+                        'thermal_efficiency' => $forced_induction->specs->thermal_efficiency,
+                        'boost_pressure_bar' => $forced_induction->specs->boost_pressure_bar,
+                        'surge_margin_percent' => $forced_induction->specs->surge_margin_percent,
+                        'compressor_efficiency_percent' => $forced_induction->specs->compressor_efficiency_percent,
+                        'turbine_efficiency_percent' => $forced_induction->specs->turbine_efficiency_percent,
+                        'spool_time_ms' => $forced_induction->specs->spool_time_ms,
+                        'lag_ms' => $forced_induction->specs->lag_ms,
+                        'max_rpm' => $forced_induction->specs->max_rpm,
+                        'safe_rpm' => $forced_induction->specs->safe_rpm,
+                        'weight_kg' => $forced_induction->specs->weight_kg,
+                    ]);
+                } else {
+                    $user_vehicle->forced_induction_id = null;
                 }
-
-                UserVehicleForcedInductionPart::create([
-                    'forced_induction_id' => $forced_induction->id,
-                    'twin_turbo_config' => $forced_induction->parts->twin_turbo_config,
-                    'turbo_count' => $forced_induction->parts->turbo_count,
-                    'turbine_material' => $forced_induction->parts->turbine_material,
-                    'turbine_blade_type' => $forced_induction->parts->turbine_blade_type,
-                    'compressor_material' => $forced_induction->parts->compressor_material,
-                    'compressor_design' => $forced_induction->parts->compressor_design,
-                    'supercharger_type' => $forced_induction->parts->supercharger_type,
-                    'supercharger_drive' => $forced_induction->parts->supercharger_drive,
-                    'supercharger_material' => $forced_induction->parts->supercharger_material,
-                    'intercooler_type' => $forced_induction->parts->intercooler_type,
-                    'intercooler_material' => $forced_induction->parts->intercooler_material,
-                    'wastegate_type' => $forced_induction->parts->wastegate_type,
-                    'wastegate_material' => $forced_induction->parts->wastegate_material,
-                    'blow_off_valve_type' => $forced_induction->parts->blow_off_valve_type,
-                    'blow_off_valve_material' => $forced_induction->parts->blow_off_valve_material,
-                ]);
-
-                UserVehicleForcedInductionSpec::create([
-                    'forced_induction_id' => $forced_induction->id,
-                    'turbo_config_pair' => $forced_induction->specs->turbo_config_pair,
-                    'turbine_diameter_mm' => $forced_induction->specs->turbine_diameter_mm,
-                    'compressor_diameter_mm' => $forced_induction->specs->compressor_diameter_mm,
-                    'turbo_max_rpm' => $forced_induction->specs->turbo_max_rpm,
-                    'supercharger_displacement_cc' => $forced_induction->specs->supercharger_displacement_cc,
-                    'pulley_diameter_mm' => $forced_induction->specs->pulley_diameter_mm,
-                    'pulley_ratio' => $forced_induction->specs->pulley_ratio,
-                    'intercooler_volume_l' => $forced_induction->specs->intercooler_volume_l,
-                    'intercooler_core_length_mm' => $forced_induction->specs->intercooler_core_length_mm,
-                    'intercooler_core_width_mm' => $forced_induction->specs->intercooler_core_width_mm,
-                    'intercooler_core_height_mm' => $forced_induction->specs->intercooler_core_height_mm,
-                    'intercooler_inlet_diameter_mm' => $forced_induction->specs->intercooler_inlet_diameter_mm,
-                    'intercooler_outlet_diameter_mm' => $forced_induction->specs->intercooler_outlet_diameter_mm,
-                    'intercooler_pressure_drop_bar' => $forced_induction->specs->intercooler_pressure_drop_bar,
-                    'max_boost_bar' => $forced_induction->specs->max_boost_bar,
-                    'min_boost_bar' => $forced_induction->specs->min_boost_bar,
-                    'peak_boost_rpm' => $forced_induction->specs->peak_boost_rpm,
-                    'boost_response_ms' => $forced_induction->specs->boost_response_ms,
-                    'boost_ramp_time_s' => $forced_induction->specs->boost_ramp_time_s,
-                    'max_inlet_temp_celsius' => $forced_induction->specs->max_inlet_temp_celsius,
-                    'max_outlet_temp_celsius' => $forced_induction->specs->max_outlet_temp_celsius,
-                    'intercooler_temp_drop_celsius' => $forced_induction->specs->intercooler_temp_drop_celsius,
-                    'coolant_temp_celsius' => $forced_induction->specs->coolant_temp_celsius,
-                    'thermal_efficiency' => $forced_induction->specs->thermal_efficiency,
-                    'boost_pressure_bar' => $forced_induction->specs->boost_pressure_bar,
-                    'surge_margin_percent' => $forced_induction->specs->surge_margin_percent,
-                    'compressor_efficiency_percent' => $forced_induction->specs->compressor_efficiency_percent,
-                    'turbine_efficiency_percent' => $forced_induction->specs->turbine_efficiency_percent,
-                    'spool_time_ms' => $forced_induction->specs->spool_time_ms,
-                    'lag_ms' => $forced_induction->specs->lag_ms,
-                    'max_rpm' => $forced_induction->specs->max_rpm,
-                    'safe_rpm' => $forced_induction->specs->safe_rpm,
-                    'weight_kg' => $forced_induction->specs->weight_kg,
-                ]);
 
                 // Get the front suspension associated with this vehicle
                 $front_suspension = Suspension::with(['parts', 'specs'])->findOrFail($vehicle->front_suspension_id);
@@ -573,21 +571,28 @@ class UserVehicleController extends CrudController
                 
                 /* ================================================ */
 
-                DB::commit();
-
-                // Load and return the created user vehicle with relationships
-                $user_vehicle->load([
+                $relation_loader = [
                     'specs', 
                     'engine.specs', 'engine.parts', 
                     'transmission.specs', 'transmission.parts', 
-                    'forcedInduction.specs', 'forcedInduction.parts', 
                     'frontSuspension.specs', 'frontSuspension.parts', 
                     'rearSuspension.specs', 'rearSuspension.parts', 
                     'frontBrake.specs', 'frontBrake.parts', 
                     'rearBrake.specs', 'rearBrake.parts', 
                     'frontWheel.specs', 'frontWheel.parts', 
                     'rearWheel.specs', 'rearWheel.parts'
-                ]);
+                ];
+
+                if ($user_vehicle->forced_induction_id !== null) {
+                    $relation_loader[] = 'forcedInduction.specs';
+                    $relation_loader[] = 'forcedInduction.parts';
+                }
+
+                // Load and return the created user vehicle with relationships
+                $user_vehicle->load($relation_loader);
+                $user_vehicle->save();
+
+                DB::commit();
 
                 $DTO = new VehicleDTO($vehicle->toArray());
                 $new_vehicle = $DTO->toArray();
