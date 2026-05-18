@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class UserVehicleSuspensionPart extends Model
 {
-    use HasFactory;
-
+    protected $table = 'uv_suspension_parts';
+    
     protected $fillable = [
         'suspension_id',
         'spring_type',

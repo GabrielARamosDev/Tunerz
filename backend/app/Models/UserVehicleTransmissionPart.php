@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserVehicleTransmissionPart extends Model
 {
+    protected $table = 'uv_transmission_parts';
+    
     protected $fillable = [
         'transmission_id',
         'clutch_type',

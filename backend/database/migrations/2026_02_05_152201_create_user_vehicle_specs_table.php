@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_vehicle_specs', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('vehicle_id')
+            $table->foreignId('user_vehicle_id')
                 ->references('id')
                 ->on('vehicles')
                 ->constrained()
@@ -40,6 +40,12 @@ return new class extends Migration
                 '4wd', // four-wheel drive
             ]);
 
+            $table->enum('steering_type', [
+                'mechanical', 
+                'hydraulic', 
+                'eletric', 
+            ]);
+
             $table->double('length_mm', 10, 2)->default(0);
             $table->double('width_mm', 10, 2)->default(0);
             $table->double('height_mm', 10, 2)->default(0);
@@ -55,7 +61,7 @@ return new class extends Migration
 
             $table->double('drag_coefficient', 10, 2)->default(0);
 
-            $table->unique('vehicle_id');
+            $table->unique('user_vehicle_id');
 
             $table->timestamps();
         });

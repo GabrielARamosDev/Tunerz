@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserVehicleForcedInductionPart extends Model
 {
-    protected $table = 'forced_induction_system_parts';
+    protected $table = 'uv_forced_induction_system_parts';
 
     protected $fillable = [
         'forced_induction_id', 

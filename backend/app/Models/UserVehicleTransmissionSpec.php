@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class UserVehicleTransmissionSpec extends Model
 {
-    use HasFactory;
-
+    protected $table = 'uv_transmission_specs';
+    
     protected $fillable = [
         'transmission_id',
         'gears_count',

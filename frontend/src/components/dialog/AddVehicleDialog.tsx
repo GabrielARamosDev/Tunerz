@@ -84,20 +84,15 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
     React.useEffect(() => {
         if (formData.trim && formData.model && formData.manufacturer) {
             fetchYears();
+            fetchGenerations();
         } else {
             setOptions(prev => ({ ...prev, years: [] }));
             setFormData(prev => ({ ...prev, year: new Date().getFullYear() }));
-        }
-    }, [formData.trim, formData.model, formData.manufacturer]);
 
-    React.useEffect(() => {
-        if (formData.trim && formData.model && formData.manufacturer) {
-            fetchGenerations();
-        } else {
             setOptions(prev => ({ ...prev, generations: [] }));
             setFormData(prev => ({ ...prev, generation: 0 }));
         }
-    }, [formData.year, formData.trim, formData.model, formData.manufacturer]);
+    }, [formData.trim, formData.model, formData.manufacturer]);
 
     React.useEffect(() => {
         if (
@@ -183,7 +178,6 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
                     manufacturer: formData.manufacturer,
                     model: formData.model,
                     trim: formData.trim,
-                    year: formData.year,
                 },
             });
             setOptions(prev => ({ ...prev, generations: response.data }));
@@ -205,15 +199,15 @@ const AddVehicleDialog = ({ open, onClose, onAddVehicle }: AddVehicleDialogProps
     };
 
     const handleSubmit = () => {
-        if (
-            !formData.manufacturer 
-            || !formData.model 
-            || !formData.trim 
-            || (!formData.year || !formData.generation)
-        ) {
-            alert('Por favor, preencha todos os campos obrigatórios');
-            return;
-        }
+        // if (
+        //     !formData.manufacturer 
+        //     || !formData.model 
+        //     || !formData.trim 
+        //     || (!formData.year || !formData.generation)
+        // ) {
+        //     alert('Por favor, preencha todos os campos obrigatórios');
+        //     return;
+        // }
 
         onAddVehicle({
             manufacturer: formData.manufacturer,

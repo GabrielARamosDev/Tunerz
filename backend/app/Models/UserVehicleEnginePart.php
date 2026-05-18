@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserVehicleEnginePart extends Model
 {
+    protected $table = 'uv_engine_parts';
+
     protected $fillable = [
         'engine_id',
         'block_material',

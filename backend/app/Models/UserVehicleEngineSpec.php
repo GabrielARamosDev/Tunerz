@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserVehicleEngineSpec extends Model
 {
+    protected $table = 'uv_engine_specs';
+
     protected $fillable = [
         'engine_id',
         ###
