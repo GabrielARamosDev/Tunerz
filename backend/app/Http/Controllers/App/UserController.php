@@ -16,21 +16,31 @@ use App\DTO\VehicleDTO;
 
 use App\Http\Controllers\CrudController;
 
-use App\Models\Engine;
-use App\Models\EngineSpec;
 use App\Models\User;
-use App\Models\UserVehicle;
-use App\Models\UserVehicleTransmission;
-use App\Models\UserVehicleBrake;
-use App\Models\UserVehicleSuspension;
-use App\Models\UserVehicleEngine;
-use App\Models\UserVehicleEngineSpec;
-use App\Models\UserVehicleSpecs;
-use App\Models\Transmission;
-use App\Models\Brake;
-use App\Models\Suspension;
+###
 use App\Models\Vehicle;
 use App\Models\VehicleSpec;
+use App\Models\Engine;
+use App\Models\Transmission;
+use App\Models\ForcedInduction;
+use App\Models\Suspension;
+use App\Models\Brake;
+use App\Models\BrakePart;
+use App\Models\BrakeSpec;
+use App\Models\Wheel;
+use App\Models\WheelPart;
+use App\Models\WheelSpec;
+###
+use App\Models\UserVehicle;
+use App\Models\UserVehicleSpecs;
+use App\Models\UserVehicleEnginePart;
+use App\Models\UserVehicleEngineSpec;
+use App\Models\UserVehicleTransmissionPart;
+use App\Models\UserVehicleTransmissionSpec;
+use App\Models\UserVehicleForcedInductionPart;
+use App\Models\UserVehicleForcedInductionSpec;
+use App\Models\UserVehicleSuspensionPart;
+use App\Models\UserVehicleSuspensionSpec;
 
 class UserController extends CrudController
 {
@@ -166,9 +176,6 @@ class UserController extends CrudController
                 'trim' => 'required|string',
                 'year' => 'required_without:generation|integer',
                 'generation' => 'required_without:year|integer',
-                'transmission_id' => 'nullable|exists:transmissions,id',
-                'brake_id' => 'nullable|exists:brakes,id',
-                'suspension_id' => 'nullable|exists:suspensions,id',
             ]);
 
             // Find the vehicle by its specifications
@@ -199,13 +206,6 @@ class UserController extends CrudController
             DB::beginTransaction();
 
             try {
-
-                // // Get the engine associated with this vehicle
-                // $engine = Engine::with(['parts', 'specs'])->findOrFail($vehicle->engine_id);
-
-                // if (!$engine) {
-                //     return response()->json(['message' => 'Nenhum motor encontrado para este veículo!'], 404);
-                // }
 
                 // Create user vehicle record
                 $user_vehicle = UserVehicle::create([
@@ -249,6 +249,193 @@ class UserController extends CrudController
                     'fuel_tank_l' => $specs->fuel_tank_l,
                     'drag_coefficient' => $specs->drag_coefficient,
                 ]);
+            
+                /* ================================================ */
+
+                // Get the engine associated with this vehicle
+                $engine = Engine::with(['parts', 'specs'])->findOrFail($vehicle->engine_id);
+
+                if (!$engine) {
+                    DB::rollBack();
+
+                    return response()->json(['message' => 'Nenhum motor encontrado para este veículo!'], 404);
+                }
+
+                UserVehicleEnginePart::create([
+
+                ]);
+
+                UserVehicleEngineSpec::create([
+                    
+                ]);
+
+                // Get the transmission associated with this vehicle
+                $transmission = Transmission::with(['parts', 'specs'])->findOrFail($vehicle->transmission_id);
+
+                if (!$transmission) {
+                    DB::rollBack();
+
+                    return response()->json(['message' => 'Nenhuma transmissão encontrada para este veículo!'], 404);
+                }
+
+                UserVehicleTransmissionPart::create([
+
+                ]);
+
+                UserVehicleTransmissionSpec::create([
+                    
+                ]);
+
+                // Get the forced_induction associated with this vehicle
+                $forced_induction = ForcedInduction::with(['parts', 'specs'])->findOrFail($vehicle->forced_induction_id);
+
+                if (!$forced_induction) {
+                    DB::rollBack();
+
+                    return response()->json(['message' => 'Nenhuma indução encontrada para este veículo!'], 404);
+                }
+
+                UserVehicleForcedInductionPart::create([
+
+                ]);
+
+                UserVehicleForcedInductionSpec::create([
+                    
+                ]);
+
+                // Get the front suspension associated with this vehicle
+                $front_suspension = Suspension::with(['parts', 'specs'])->findOrFail($vehicle->front_suspension_id);
+
+                if (!$front_suspension) {
+                    DB::rollBack();
+
+                    return response()->json(['message' => 'Nenhuma suspensão dianteira encontrada para este veículo!'], 404);
+                }
+
+                // Get the rear suspension associated with this vehicle
+                $rear_suspension = Suspension::with(['parts', 'specs'])->findOrFail($vehicle->rear_suspension_id);
+
+                if (!$rear_suspension) {
+                    DB::rollBack();
+
+                    return response()->json(['message' => 'Nenhuma suspensão traseira encontrada para este veículo!'], 404);
+                }
+
+                if ($vehicle->front_suspension_id == $vehicle->rear_suspension_id) {
+                    UserVehicleSuspensionPart::create([
+
+                    ]);
+
+                    UserVehicleSuspensionSpec::create([
+                        
+                    ]);
+                } else {
+                    // Front
+                    UserVehicleSuspensionPart::create([
+
+                    ]);
+                    UserVehicleSuspensionSpec::create([
+                        
+                    ]);
+
+                    // Rear
+                    UserVehicleSuspensionPart::create([
+
+                    ]);
+                    UserVehicleSuspensionSpec::create([
+                        
+                    ]);
+                }
+
+                // Get the front brake associated with this vehicle
+                $front_brake = Brake::with(['parts', 'specs'])->findOrFail($vehicle->front_brake_id);
+
+                if (!$front_brake) {
+                    DB::rollBack();
+
+                    return response()->json(['message' => 'Nenhum freio dianteiro encontrada para este veículo!'], 404);
+                }
+
+                // Get the rear brake associated with this vehicle
+                $rear_brake = Brake::with(['parts', 'specs'])->findOrFail($vehicle->rear_brake_id);
+
+                if (!$rear_brake) {
+                    DB::rollBack();
+
+                    return response()->json(['message' => 'Nenhum freio traseiro encontrada para este veículo!'], 404);
+                }
+
+                if ($vehicle->front_brake_id == $vehicle->rear_brake_id) {
+                    BrakePart::create([
+
+                    ]);
+
+                    BrakeSpec::create([
+                        
+                    ]);
+                } else {
+                    // Front
+                    BrakePart::create([
+
+                    ]);
+                    BrakeSpec::create([
+                        
+                    ]);
+
+                    // Rear
+                    BrakePart::create([
+
+                    ]);
+                    BrakeSpec::create([
+                        
+                    ]);
+                }
+
+                // Get the front wheel associated with this vehicle
+                $front_wheel = Wheel::with(['parts', 'specs'])->findOrFail($vehicle->front_wheel_id);
+
+                if (!$front_wheel) {
+                    DB::rollBack();
+
+                    return response()->json(['message' => 'Nenhuma roda dianteira encontrada para este veículo!'], 404);
+                }
+
+                // Get the rear wheel associated with this vehicle
+                $rear_wheel = Wheel::with(['parts', 'specs'])->findOrFail($vehicle->rear_wheel_id);
+
+                if (!$rear_wheel) {
+                    DB::rollBack();
+
+                    return response()->json(['message' => 'Nenhuma roda traseira encontrada para este veículo!'], 404);
+                }
+
+                if ($vehicle->front_wheel_id == $vehicle->rear_wheel_id) {
+                    WheelPart::create([
+
+                    ]);
+
+                    WheelSpec::create([
+                        
+                    ]);
+                } else {
+                    // Front
+                    WheelPart::create([
+
+                    ]);
+                    WheelSpec::create([
+                        
+                    ]);
+
+                    // Rear
+                    WheelPart::create([
+
+                    ]);
+                    WheelSpec::create([
+                        
+                    ]);
+                }
+                
+                /* ================================================ */
 
                 DB::commit();
 
