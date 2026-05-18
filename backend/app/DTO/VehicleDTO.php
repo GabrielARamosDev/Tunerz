@@ -12,34 +12,53 @@ class VehicleDTO
     public ?int $generation = null;
     public ?int $engineId = null;
     public ?int $transmissionId = null;
+    public ?int $forcedInductionId = null;
     public ?int $frontSuspensionId = null;
     public ?int $rearSuspensionId = null;
     public ?int $frontBrakeId = null;
     public ?int $rearBrakeId = null;
     public ?int $frontWheelId = null;
     public ?int $rearWheelId = null;
-    public ?int $forcedInductionId = null;
     public ?string $imageUrl = null;
     
     // Spec properties
-    public ?string $bodyType = null;
-    public ?string $drivetrain = null;
-    public ?string $steeringType = null;
-    public ?float $lengthMm = null;
-    public ?float $widthMm = null;
-    public ?float $heightMm = null;
-    public ?float $wheelBaseMm = null;
-    public ?float $frontTrackMm = null;
-    public ?float $rearTrackMm = null;
-    public ?float $weightKg = null;
-    public ?float $fuelTankL = null;
-    public ?float $dragCoefficient = null;
+    public ?array $specs = null;
+    public ?array $engine = null;
+    public ?array $transmission = null;
+    public ?array $forcedInduction = null;
+    public ?array $suspension = null;
+    public ?array $brake = null;
+    public ?array $wheel = null;
 
     public function __construct(array $data = [])
     {
         foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
+            switch ($key) {
+                case 'front_suspension':
+                case 'rear_suspension':
+                case 'front_brake':
+                case 'rear_brake':
+                case 'front_wheel':
+                case 'rear_wheel': {
+
+                    $prefix = explode('_', $key)[0];
+
+                    $_key = str_replace(($prefix.'_'), '', $key);
+
+                    if (property_exists($this, $_key)) {
+                        if (!$this->$_key) {
+                            $this->$_key = [];
+                        }
+
+                        $this->$_key[$prefix] = $value;
+                    }
+                }
+                ###
+                default: {
+                    if (property_exists($this, $key)) {
+                        $this->$key = $value;
+                    }
+                }
             }
         }
     }
@@ -53,19 +72,13 @@ class VehicleDTO
             'trim' => $this->trim,
             'year' => $this->year,
             'generation' => $this->generation,
-            'engineId' => $this->engineId,
-            'transmissionId' => $this->transmissionId,
-            'frontSuspensionId' => $this->frontSuspensionId,
-            'rearSuspensionId' => $this->rearSuspensionId,
-            'frontBrakeId' => $this->frontBrakeId,
-            'rearBrakeId' => $this->rearBrakeId,
-            'frontWheelId' => $this->frontWheelId,
-            'rearWheelId' => $this->rearWheelId,
-            'forcedInductionId' => $this->forcedInductionId,
-            'bodyType' => $this->bodyType,
-            'drivetrain' => $this->drivetrain,
-            'weightKg' => $this->weightKg,
-            'fuelTankL' => $this->fuelTankL,
+            'specs' => $this->specs, 
+            'engine' => $this->engine, 
+            'transmission' => $this->transmission, 
+            'forcedInduction' => $this->forcedInduction, 
+            'suspension' => $this->suspension, 
+            'brake' => $this->brake, 
+            'wheel' => $this->wheel, 
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App;
 
+use App\DTO\VehicleDTO;
 use App\Http\Controllers\CrudController;
 
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class VehicleController extends CrudController
             'specs', 
             'engine.specs', 'engine.parts', 
             'transmission.specs', 'transmission.parts', 
+            'forcedInduction.specs', 'forcedInduction.parts', 
             'frontSuspension.specs', 'frontSuspension.parts', 
             'rearSuspension.specs', 'rearSuspension.parts', 
             'frontBrake.specs', 'frontBrake.parts', 
@@ -23,24 +25,18 @@ class VehicleController extends CrudController
             'frontWheel.specs', 'frontWheel.parts', 
             'rearWheel.specs', 'rearWheel.parts'
         ])->get();
-        
-        // Map year to year for frontend compatibility
-        $vehicles = $vehicles->map(function($vehicle) {
-            $vehicle->year = $vehicle->year;
-            unset($vehicle->year);
-            return $vehicle;
+
+        $items = $vehicles->map(function ($vehicle) {
+            $DTO = new VehicleDTO($vehicle->toArray());
+            return $DTO->toArray();
         });
         
-        return response()->json($vehicles);
+        return response()->json($items);
     }
 
     public function show(Request $request, $id)
     {
         $vehicle = Vehicle::with(['engine.specs'])->findOrFail($id);
-        
-        // Map year to year for frontend compatibility
-        $vehicle->year = $vehicle->year;
-        unset($vehicle->year);
         
         return response()->json($vehicle);
     }
@@ -59,10 +55,6 @@ class VehicleController extends CrudController
             ->with(['engine.specs'])
             ->firstOrFail();
 
-        // // Map year to year for frontend compatibility
-        // $vehicle->year = $vehicle->year;
-        // unset($vehicle->year);
-
         return response()->json($vehicle);
     }
 
@@ -75,10 +67,6 @@ class VehicleController extends CrudController
             unset($data['year']);
         }
         $vehicle = Vehicle::create($data);
-        
-        // Map year to year for frontend compatibility
-        $vehicle->year = $vehicle->year;
-        unset($vehicle->year);
         
         return response()->json($vehicle, 201);
     }

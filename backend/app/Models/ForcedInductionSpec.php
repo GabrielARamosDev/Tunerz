@@ -10,18 +10,6 @@ class ForcedInductionSpec extends Model
 
     protected $fillable = [
         'forced_induction_id',
-        'stock_power_hp',
-        'stock_power_rpm',
-        'stock_torque_nm',
-        'stock_torque_rpm',
-        'stock_power_to_weight_ratio',
-        'stock_torque_to_weight_ratio',
-        'modified_power_hp',
-        'modified_power_rpm',
-        'modified_torque_nm',
-        'modified_torque_rpm',
-        'modified_power_to_weight_ratio',
-        'modified_torque_to_weight_ratio',
         'max_boost_bar',
         'min_boost_bar',
         'peak_boost_rpm',

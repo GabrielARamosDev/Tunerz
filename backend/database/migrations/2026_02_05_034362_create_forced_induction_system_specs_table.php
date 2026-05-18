@@ -22,28 +22,36 @@ return new class extends Migration
 
             /* ================================================ */
             /**
-             * Stock values for comparison purpose
+             * Turbocharger dimensions and specifications
              */
-            $table->integer('stock_power_hp')->nullable();
-            $table->integer('stock_power_rpm')->nullable();
-            $table->integer('stock_torque_nm')->nullable();
-            $table->integer('stock_torque_rpm')->nullable();
-
-            $table->double('stock_power_to_weight_ratio', 8, 4)->nullable();
-            $table->double('stock_torque_to_weight_ratio', 8, 4)->nullable();
+            $table->double('turbine_diameter_mm', 6, 2)->nullable();
+            $table->double('compressor_diameter_mm', 6, 2)->nullable();
+            $table->integer('turbocharger_weight_kg')->nullable();
+            $table->double('max_rotational_speed_rpm', 8, 0)->nullable();
             /* ================================================ */
 
             /* ================================================ */
             /**
-             * Modified values with forced induction
+             * Supercharger dimensions and specifications
              */
-            $table->integer('modified_power_hp')->nullable();
-            $table->integer('modified_power_rpm')->nullable();
-            $table->integer('modified_torque_nm')->nullable();
-            $table->integer('modified_torque_rpm')->nullable();
+            $table->double('supercharger_displacement_cc', 8, 2)->nullable();
+            $table->double('pulley_diameter_mm', 6, 2)->nullable();
+            $table->double('pulley_ratio', 4, 2)->nullable();
+            $table->integer('supercharger_weight_kg')->nullable();
+            /* ================================================ */
 
-            $table->double('modified_power_to_weight_ratio', 8, 4)->nullable();
-            $table->double('modified_torque_to_weight_ratio', 8, 4)->nullable();
+            /* ================================================ */
+            /**
+             * Intercooler dimensions and specifications
+             */
+            $table->double('intercooler_volume_l', 6, 2)->nullable();
+            $table->double('intercooler_core_length_mm', 6, 2)->nullable();
+            $table->double('intercooler_core_width_mm', 6, 2)->nullable();
+            $table->double('intercooler_core_height_mm', 6, 2)->nullable();
+            $table->double('intercooler_inlet_diameter_mm', 6, 2)->nullable();
+            $table->double('intercooler_outlet_diameter_mm', 6, 2)->nullable();
+            $table->double('intercooler_pressure_drop_bar', 4, 2)->nullable();
+            $table->integer('intercooler_weight_kg')->nullable();
             /* ================================================ */
 
             /* ================================================ */
@@ -83,10 +91,6 @@ return new class extends Migration
             /**
              * Performance characteristics
              */
-            $table->double('power_gain_hp', 6, 2)->nullable();
-            $table->double('torque_gain_nm', 6, 2)->nullable();
-            $table->double('power_gain_percent', 5, 2)->nullable();
-            $table->double('torque_gain_percent', 5, 2)->nullable();
             $table->double('spool_time_ms', 6, 2)->nullable();
             $table->double('lag_ms', 6, 2)->nullable();
             /* ================================================ */
