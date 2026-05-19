@@ -133,6 +133,7 @@ class UserVehicleController extends CrudController
 
                 // Create user vehicle record
                 $user_vehicle = UserVehicle::create([
+                    'base_vehicle_id' => $vehicle->id,
                     'user_id' => $user->id,
                     ###
                     'manufacturer' => $vehicle->manufacturer,
@@ -187,6 +188,7 @@ class UserVehicleController extends CrudController
 
                 UserVehicleEnginePart::create([
                     'engine_id' => $engine->id,
+                    'user_vehicle_id' => $user_vehicle->id,
                     'block_material' => $engine->parts->block_material,
                     'head_material' => $engine->parts->head_material,
                     'piston_head_type' => $engine->parts->piston_head_type,
@@ -209,6 +211,7 @@ class UserVehicleController extends CrudController
 
                 UserVehicleEngineSpec::create([
                     'engine_id' => $engine->id,
+                    'user_vehicle_id' => $user_vehicle->id,
                     'power_hp' => $engine->specs->stock_power_hp,
                     'power_rpm' => $engine->specs->stock_power_rpm,
                     'torque_nm' => $engine->specs->stock_torque_nm,
@@ -255,6 +258,7 @@ class UserVehicleController extends CrudController
 
                 UserVehicleTransmissionPart::create([
                     'transmission_id' => $transmission->id,
+                    'user_vehicle_id' => $user_vehicle->id,
                     'clutch_type' => $transmission->parts->clutch_type,
                     'synchro_type' => $transmission->parts->synchro_type,
                     'material_case' => $transmission->parts->material_case,
@@ -262,6 +266,7 @@ class UserVehicleController extends CrudController
 
                 UserVehicleTransmissionSpec::create([
                     'transmission_id' => $transmission->id,
+                    'user_vehicle_id' => $user_vehicle->id,
                     'gears_count' => $transmission->specs->gears_count,
                     'gear_ratio_1' => $transmission->specs->gear_ratio_1,
                     'gear_ratio_2' => $transmission->specs->gear_ratio_2,
@@ -281,6 +286,7 @@ class UserVehicleController extends CrudController
 
                     UserVehicleForcedInductionPart::create([
                         'forced_induction_id' => $forced_induction->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'twin_turbo_config' => $forced_induction->parts->twin_turbo_config,
                         'turbo_count' => $forced_induction->parts->turbo_count,
                         'turbine_material' => $forced_induction->parts->turbine_material,
@@ -300,6 +306,7 @@ class UserVehicleController extends CrudController
 
                     UserVehicleForcedInductionSpec::create([
                         'forced_induction_id' => $forced_induction->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'turbo_config_pair' => $forced_induction->specs->turbo_config_pair,
                         'turbine_diameter_mm' => $forced_induction->specs->turbine_diameter_mm,
                         'compressor_diameter_mm' => $forced_induction->specs->compressor_diameter_mm,
@@ -359,6 +366,7 @@ class UserVehicleController extends CrudController
                 if ($vehicle->front_suspension_id == $vehicle->rear_suspension_id) {
                     UserVehicleSuspensionPart::create([
                         'suspension_id' => $front_suspension->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'spring_type' => $front_suspension->parts->spring_type,
                         'spring_material' => $front_suspension->parts->spring_material,
                         'damper_type' => $front_suspension->parts->damper_type,
@@ -368,6 +376,7 @@ class UserVehicleController extends CrudController
 
                     UserVehicleSuspensionSpec::create([
                         'suspension_id' => $front_suspension->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'spring_constant_nm' => $front_suspension->specs->spring_constant_nm,
                         'damping_ratio' => $front_suspension->specs->damping_ratio,
                         'ride_height_mm' => $front_suspension->specs->ride_height_mm,
@@ -382,6 +391,7 @@ class UserVehicleController extends CrudController
                     // Front
                     UserVehicleSuspensionPart::create([
                         'suspension_id' => $front_suspension->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'spring_type' => $front_suspension->parts->spring_type,
                         'spring_material' => $front_suspension->parts->spring_material,
                         'damper_type' => $front_suspension->parts->damper_type,
@@ -390,6 +400,7 @@ class UserVehicleController extends CrudController
                     ]);
                     UserVehicleSuspensionSpec::create([
                         'suspension_id' => $front_suspension->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'spring_constant_nm' => $front_suspension->specs->spring_constant_nm,
                         'damping_ratio' => $front_suspension->specs->damping_ratio,
                         'ride_height_mm' => $front_suspension->specs->ride_height_mm,
@@ -404,6 +415,7 @@ class UserVehicleController extends CrudController
                     // Rear
                     UserVehicleSuspensionPart::create([
                         'suspension_id' => $rear_suspension->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'spring_type' => $rear_suspension->parts->spring_type,
                         'spring_material' => $rear_suspension->parts->spring_material,
                         'damper_type' => $rear_suspension->parts->damper_type,
@@ -412,6 +424,7 @@ class UserVehicleController extends CrudController
                     ]);
                     UserVehicleSuspensionSpec::create([
                         'suspension_id' => $rear_suspension->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'spring_constant_nm' => $rear_suspension->specs->spring_constant_nm,
                         'damping_ratio' => $rear_suspension->specs->damping_ratio,
                         'ride_height_mm' => $rear_suspension->specs->ride_height_mm,
@@ -445,6 +458,7 @@ class UserVehicleController extends CrudController
                 if ($vehicle->front_brake_id == $vehicle->rear_brake_id) {
                     BrakePart::create([
                         'brake_id' => $front_brake->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'rotor_type' => $front_brake->parts->rotor_type,
                         'rotor_material' => $front_brake->parts->rotor_material,
                         'caliper_type' => $front_brake->parts->caliper_type,
@@ -456,6 +470,7 @@ class UserVehicleController extends CrudController
 
                     BrakeSpec::create([
                         'brake_id' => $front_brake->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'rotor_diameter_mm' => $front_brake->specs->rotor_diameter_mm,
                         'rotor_thickness_mm' => $front_brake->specs->rotor_thickness_mm,
                         'pad_thickness_mm' => $front_brake->specs->pad_thickness_mm,
@@ -467,6 +482,7 @@ class UserVehicleController extends CrudController
                     // Front
                     BrakePart::create([
                         'brake_id' => $front_brake->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'rotor_type' => $front_brake->parts->rotor_type,
                         'rotor_material' => $front_brake->parts->rotor_material,
                         'caliper_type' => $front_brake->parts->caliper_type,
@@ -477,6 +493,7 @@ class UserVehicleController extends CrudController
                     ]);
                     BrakeSpec::create([
                         'brake_id' => $front_brake->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'rotor_diameter_mm' => $front_brake->specs->rotor_diameter_mm,
                         'rotor_thickness_mm' => $front_brake->specs->rotor_thickness_mm,
                         'pad_thickness_mm' => $front_brake->specs->pad_thickness_mm,
@@ -488,6 +505,7 @@ class UserVehicleController extends CrudController
                     // Rear
                     BrakePart::create([
                         'brake_id' => $rear_brake->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'rotor_type' => $rear_brake->parts->rotor_type,
                         'rotor_material' => $rear_brake->parts->rotor_material,
                         'caliper_type' => $rear_brake->parts->caliper_type,
@@ -498,6 +516,7 @@ class UserVehicleController extends CrudController
                     ]);
                     BrakeSpec::create([
                         'brake_id' => $rear_brake->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'rotor_diameter_mm' => $rear_brake->specs->rotor_diameter_mm,
                         'rotor_thickness_mm' => $rear_brake->specs->rotor_thickness_mm,
                         'pad_thickness_mm' => $rear_brake->specs->pad_thickness_mm,
@@ -528,12 +547,14 @@ class UserVehicleController extends CrudController
                 if ($vehicle->front_wheel_id == $vehicle->rear_wheel_id) {
                     WheelPart::create([
                         'wheel_id' => $front_wheel->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'tire_material' => $front_wheel->parts->tire_material,
                         'wheel_material' => $front_wheel->parts->wheel_material,
                     ]);
 
                     WheelSpec::create([
                         'wheel_id' => $front_wheel->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'tire_width_mm' => $front_wheel->specs->tire_width_mm,
                         'tire_profile' => $front_wheel->specs->tire_profile,
                         'wheel_radius_in' => $front_wheel->specs->wheel_radius_in,
@@ -543,11 +564,13 @@ class UserVehicleController extends CrudController
                     // Front
                     WheelPart::create([
                         'wheel_id' => $front_wheel->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'tire_material' => $front_wheel->parts->tire_material,
                         'wheel_material' => $front_wheel->parts->wheel_material,
                     ]);
                     WheelSpec::create([
                         'wheel_id' => $front_wheel->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'tire_width_mm' => $front_wheel->specs->tire_width_mm,
                         'tire_profile' => $front_wheel->specs->tire_profile,
                         'wheel_radius_in' => $front_wheel->specs->wheel_radius_in,
@@ -557,11 +580,13 @@ class UserVehicleController extends CrudController
                     // Rear
                     WheelPart::create([
                         'wheel_id' => $rear_wheel->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'tire_material' => $rear_wheel->parts->tire_material,
                         'wheel_material' => $rear_wheel->parts->wheel_material,
                     ]);
                     WheelSpec::create([
                         'wheel_id' => $rear_wheel->id,
+                        'user_vehicle_id' => $user_vehicle->id,
                         'tire_width_mm' => $rear_wheel->specs->tire_width_mm,
                         'tire_profile' => $rear_wheel->specs->tire_profile,
                         'wheel_radius_in' => $rear_wheel->specs->wheel_radius_in,
@@ -594,7 +619,7 @@ class UserVehicleController extends CrudController
 
                 DB::commit();
 
-                $DTO = new VehicleDTO($vehicle->toArray());
+                $DTO = new VehicleDTO($user_vehicle->toArray());
                 $new_vehicle = $DTO->toArray();
 
                 return response()->json($new_vehicle, 201);

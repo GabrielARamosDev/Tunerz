@@ -20,6 +20,12 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->foreignId('user_vehicle_id')
+                ->references('id')
+                ->on('user_vehicles')
+                ->constrained()
+                ->cascadeOnDelete();
+
             /* ================================================ */
             // Only aplicable if: type = 'twin_turbocharged'
             $table->enum('twin_turbo_config', [

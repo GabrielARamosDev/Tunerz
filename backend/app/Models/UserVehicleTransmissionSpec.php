@@ -10,6 +10,7 @@ class UserVehicleTransmissionSpec extends Model
     
     protected $fillable = [
         'transmission_id',
+        'user_vehicle_id',
         'gears_count',
         'gear_ratio_1',
         'gear_ratio_2',

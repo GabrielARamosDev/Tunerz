@@ -10,6 +10,7 @@ class UserVehicleTransmissionPart extends Model
     
     protected $fillable = [
         'transmission_id',
+        'user_vehicle_id',
         'clutch_type',
         'synchro_type',
         'material_case',

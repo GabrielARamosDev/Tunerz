@@ -10,6 +10,7 @@ class UserVehicleSuspensionSpec extends Model
     
     protected $fillable = [
         'suspension_id',
+        'user_vehicle_id',
         'spring_constant_nm',
         'damping_ratio',
         'ride_height_mm',

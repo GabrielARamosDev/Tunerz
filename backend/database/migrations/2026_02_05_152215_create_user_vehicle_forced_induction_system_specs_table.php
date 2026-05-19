@@ -20,6 +20,12 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->foreignId('user_vehicle_id')
+                ->references('id')
+                ->on('user_vehicles')
+                ->constrained()
+                ->cascadeOnDelete();
+
             /**
              * Designates which turbo-pair is related to this config, for the same 'forced_induction_system'.
              * 

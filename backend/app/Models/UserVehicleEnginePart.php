@@ -10,6 +10,7 @@ class UserVehicleEnginePart extends Model
 
     protected $fillable = [
         'engine_id',
+        'user_vehicle_id',
         'block_material',
         'head_material',
         'piston_head_type',
@@ -33,5 +34,10 @@ class UserVehicleEnginePart extends Model
     public function engine()
     {
         return $this->belongsTo(Engine::class);
+    }
+
+    public function userVehicle()
+    {
+        return $this->belongsTo(userVehicle::class);
     }
 }

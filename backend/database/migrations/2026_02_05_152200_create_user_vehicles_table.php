@@ -11,6 +11,11 @@ return new class extends Migration
         Schema::create('user_vehicles', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignId('base_vehicle_id')
+                ->references('id')
+                ->on('vehicles')
+                ->constrained();
+
             $table->foreignId('user_id')
                 ->references('id')
                 ->on('users')

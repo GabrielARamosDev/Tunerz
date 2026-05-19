@@ -10,6 +10,7 @@ class UserVehicleSuspensionPart extends Model
     
     protected $fillable = [
         'suspension_id',
+        'user_vehicle_id',
         'spring_type',
         'spring_material',
         'damper_type',

@@ -20,6 +20,12 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->foreignId('user_vehicle_id')
+                ->references('id')
+                ->on('user_vehicles')
+                ->constrained()
+                ->cascadeOnDelete();
+
             $table->integer('gears_count');
             $table->double('gear_ratio_1', 5, 2);
             $table->double('gear_ratio_2', 5, 2);

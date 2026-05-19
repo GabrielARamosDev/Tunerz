@@ -20,6 +20,12 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->foreignId('user_vehicle_id')
+                ->references('id')
+                ->on('user_vehicles')
+                ->constrained()
+                ->cascadeOnDelete();
+
             $table->enum('gear_cut_type', [
                 'helical',
                 'straight',

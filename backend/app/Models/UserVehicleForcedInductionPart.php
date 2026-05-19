@@ -10,6 +10,7 @@ class UserVehicleForcedInductionPart extends Model
 
     protected $fillable = [
         'forced_induction_id', 
+        'user_vehicle_id',
         'twin_turbo_config',
         'turbo_count',
         'turbine_material', 

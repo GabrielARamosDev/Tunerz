@@ -10,6 +10,7 @@ class UserVehicleEngineSpec extends Model
 
     protected $fillable = [
         'engine_id',
+        'user_vehicle_id',
         ###
         'power_hp',
         'power_rpm',
