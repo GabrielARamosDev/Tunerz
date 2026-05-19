@@ -17,8 +17,7 @@ return new class extends Migration
             $table->foreignId('transmission_id')
                 ->references('id')
                 ->on('transmissions')
-                ->constrained()
-                ->cascadeOnDelete();
+                ->constrained();
 
             $table->foreignId('user_vehicle_id')
                 ->references('id')

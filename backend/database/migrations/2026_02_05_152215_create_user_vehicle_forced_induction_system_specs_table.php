@@ -17,8 +17,7 @@ return new class extends Migration
             $table->foreignId('forced_induction_id')
                 ->references('id')
                 ->on('forced_induction_systems')
-                ->constrained()
-                ->cascadeOnDelete();
+                ->constrained();
 
             $table->foreignId('user_vehicle_id')
                 ->references('id')

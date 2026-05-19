@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('uv_engine_parts', function (Blueprint $table) {
@@ -14,8 +17,7 @@ return new class extends Migration
             $table->foreignId('engine_id')
                 ->references('id')
                 ->on('engines')
-                ->constrained()
-                ->cascadeOnDelete();
+                ->constrained();
 
             $table->foreignId('user_vehicle_id')
                 ->references('id')
